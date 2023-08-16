@@ -1,0 +1,46 @@
+/**
+ * Theme Name: MuseusBR
+ * Description: Tema para o novo Cadastro Nacional de Museus
+ * Author: mateuswetah
+ * Template: blocksy
+ * Text Domain: museusbr
+ * Version: 0.0.1
+ */
+
+.hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
+    --theme-form-field-height: 48px;
+}
+.hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper .wp-block-search__button {
+    margin-left: 5px;
+}
+
+.home .wp-block-cover .wp-block-search__inside-wrapper {
+    --theme-form-field-height: 62px;
+}
+
+.hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 999px) {
+    .hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
+        justify-content: flex-start;
+    }
+    .hero-section .museusbr-banner-searchbar .wp-block-image {
+        display: none;
+    }
+    .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 1000px) {
+    .hero-section[data-type="type-2"] > [class*="ct-container"] {
+        display: block !important;
+    }
+    .hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
+        justify-content: flex-end;
+        float: right;
+        margin-right: 42px;
+    }
+}
