@@ -7,7 +7,7 @@ if (! defined('WP_DEBUG')) {
 	die( 'Direct access forbidden.' );
 }
 
-const MUSEUSBR_MUSEUS_COLLECTION_ID = 267;
+const MUSEUSBR_MUSEUS_COLLECTION_ID = 208;//267;
 
 /**
  * Registra Scripts e Styles
@@ -78,7 +78,37 @@ function museusbr_museus_login_redirect() {
 }	
 add_filter('login_redirect', 'museusbr_museus_login_redirect');
 
-// Museus Page
-require get_stylesheet_directory() . '/classes/class-museusbr-museus-page.php';
-new MuseusBR_Museus_Page();
+/**
+ * Redireciona o usuário após o login via modal para a paǵina de gestão dos museus
+ */
+function museusbr_museus_modal_login_redirect() {
+	return admin_url( 'edit.php?post_type=tnc_col_' . MUSEUSBR_MUSEUS_COLLECTION_ID . '_item' );	
+}
+add_filter('blocksy:account:modal:login:redirect_to', 'museusbr_museus_modal_login_redirect');
 
+/**
+ * Adiciona Thumbnail do item na página do museu
+ */
+function museusbr_museu_single_page_hero_description_before() {
+	if ( get_post_type() == 'tnc_col_' . MUSEUSBR_MUSEUS_COLLECTION_ID . '_item' ) 
+    	the_post_thumbnail('tainacan-medium', array('class' => 'museu-item-thumbnail'));
+}
+add_action('blocksy:hero:description:before', 'museusbr_museu_single_page_hero_description_before');
+
+
+/**
+ * Sobrescreve o conteúdo da single do museu
+ */
+function museusbr_uai( $content ) {
+
+	if ( ! is_singular( 'tnc_col_' . MUSEUSBR_MUSEUS_COLLECTION_ID . '_item' ) )
+		return $content;
+	
+	ob_start();
+	include( 'tainacan/museu-single-page.php' );
+	$new_content = ob_get_contents();
+	ob_end_clean();
+
+	return $new_content;
+}
+add_filter( 'the_content', 'museusbr_uai', 12, 1);
