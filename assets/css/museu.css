@@ -1,0 +1,61 @@
+/**
+ * Estiloss para o CPT do Museu
+ */
+.single.single-tnc_col_208_item {
+    --sections-tabs-width: 400px;
+    --section-tabs-height: 89px;
+    --section-tabs-count: 3;
+}
+.single.single-tnc_col_208_item .museu-item-thumbnail {
+    margin-top: 2.5rem;
+    margin-right: 4rem;
+    box-shadow: 26px 26px #222, 28px 28px 12px -1px rgba(0,0,0,0.5);
+    float: left;
+}
+.single.single-tnc_col_208_item .museu-item-description {
+    color: var(--theme-palette-color-8);
+    margin-top: 2.75rem;
+    font-weight: 300;
+    font-weight: 300;
+    font-size: 1.125rem;
+}
+
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
+    min-height: calc(var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));
+}
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
+    --theme-font-size: 18px;
+    --theme-text-transform: uppercase;
+    margin: 0.5rem 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(255,255,255, 0.0);
+    box-shadow: 0px 0px 0px 0px #000;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
+    --theme-headings-color: #000;
+}
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover,
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus,
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
+    background-color: rgba(255,255,255, 1.0);
+    box-shadow: 2px 2px 6px -3px #000;
+}
+.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
+    border-top: none;
+}
+@media screen and (min-width: 768px) {
+    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
+        flex-direction: column;
+    }
+    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
+        width: var(--sections-tabs-width, 400px);
+    }
+    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
+        width: calc(100% - var(--sections-tabs-width, 400px) - 2rem - 20px);
+        margin-left: auto;
+        margin-top: calc(-1 * var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));
+    }
+}

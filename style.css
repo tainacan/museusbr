@@ -6,6 +6,7 @@
  * Text Domain: museusbr
  * Version: 0.0.1
  */
+@import url('./assets/css/museu.css');
 
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
     --theme-form-field-height: 48px;
@@ -16,6 +17,17 @@
 
 .home .wp-block-cover .wp-block-search__inside-wrapper {
     --theme-form-field-height: 62px;
+}
+
+.home .wp-block-tainacan-faceted-search .theme-items-list,
+.home .wp-block-tainacan-faceted-search .theme-items-list #items-list-results,
+.home .wp-block-tainacan-faceted-search .theme-items-list .table-container {
+    padding: 0 !important;
+    margin: 0;
+}
+.home .wp-block-tainacan-faceted-search .theme-items-list .search-control {
+    display: none;
+    visibility: hidden;
 }
 
 .hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
