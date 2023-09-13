@@ -12,11 +12,18 @@ const MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE = 'tnc_col_' . MUSEUSBR_MUSEUS_COLLEC
 const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
 
 /**
- * Registra Scripts e Styles
+ * Registra Scripts e Estilos
  */
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'museusbr-style', get_stylesheet_uri() );
+});
+
+/** 
+ * Registra estilo do lado admin
+ */
+add_action( 'admin_enqueue_scripts', function () {
+	wp_enqueue_style( 'museusbr-admin-style', get_stylesheet_directory_uri() . '/admin.css' );
 });
 
 /**
@@ -27,7 +34,7 @@ function museusbr_user_is_gestor( $user = NULL ) {
 	if ( !isset($user) || $user === NULL )
 		$user = wp_get_current_user();
 
-	return in_array( MUSEUSBR_GESTOR_DE_MUSEU_ROLE, $user->roles );
+	return is_user_logged_in() && in_array( MUSEUSBR_GESTOR_DE_MUSEU_ROLE, $user->roles );
 }
 
 /**
@@ -100,10 +107,10 @@ add_filter('login_redirect', 'museusbr_museus_login_redirect', 10, 3);
  */
 function museusbr_museus_modal_login_redirect() {
 
-	if ( museusbr_user_is_gestor() )
+	//if ( museusbr_user_is_gestor() )
 		return admin_url( 'edit.php?post_type=tnc_col_' . MUSEUSBR_MUSEUS_COLLECTION_ID . '_item' );	
 	
-	return home_url();
+	//return home_url();
 }
 add_filter('blocksy:account:modal:login:redirect_to', 'museusbr_museus_modal_login_redirect');
 
@@ -172,3 +179,27 @@ function museusbr_custom_body_class($classes) {
     return $classes;
 }
 add_filter('admin_body_class', 'museusbr_custom_body_class');
+
+
+/*
+ * Adiciona parâmetros para o Admin Tainacan para esconder elementos que não são necessários
+ */
+function museusbr_set_tainacan_admin_options($options) {
+	
+	if ( museusbr_user_is_gestor() ) {
+		$options['hideTainacanHeader'] = true;
+		$options['hidePrimaryMenu'] = true;
+		$options['hideRepositorySubheader'] = true;
+		$options['hideCollectionSubheader'] = true;
+		$options['hideItemEditionCollectionName'] = true;
+		$options['hideItemEditionDocumentTextInput'] = true;
+		$options['hideItemEditionDocumentUrlInput'] = true;
+		$options['hideItemEditionCommentsToggle'] = true;
+		$options['hideItemEditionCollapses'] = true;
+		$options['hideItemEditionFocusMode'] = true;
+		$options['hideItemEditionRequiredOnlySwitch'] = true;
+		$options['hideItemEditionMetadataTypes'] = true;
+	}
+	return $options;
+};
+add_filter('tainacan-admin-ui-options', 'museusbr_set_tainacan_admin_options');
