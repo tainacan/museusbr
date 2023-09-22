@@ -5,10 +5,12 @@
 
 $prefix = blocksy_manager()->screen->get_prefix();
 
+$localization_metadata_section = get_theme_mod( 'museusbr_localization_metadata_section', 0 );
+
 $page_structure_type = get_theme_mod( $prefix . '_page_structure_type', 'type-dam');
 $template_columns_style = '';
 $display_items_related_to_this = get_theme_mod( $prefix . '_display_items_related_to_this', 'no' ) === 'yes';
-$column_documents_attachments_affix = get_theme_mod( $prefix . '_document_attachments_affix', 'no') === 'yes';
+$metadata_list_structure_type = get_theme_mod($prefix . '_metadata_list_structure_type', 'metadata-type-1');
 
 if ($page_structure_type == 'type-gm' || $page_structure_type == 'type-mg') {
     $column_documents_attachments_width = 60;
@@ -24,39 +26,85 @@ if ($page_structure_type == 'type-gm' || $page_structure_type == 'type-mg') {
     }
 }
 
+$item_id = get_the_ID();
+
+if ( tainacan_has_document() && tainacan_get_the_document_type() === 'attachment' ) {
+    add_filter( 'blocksy:hero:type-2:image:attachment_id', function() use($item_id) {
+        return tainacan_get_the_document_raw($item_id);
+    }, 10 );
+}
+
+$metadata_args = array(
+    'display_slug_as_class' => true,
+    'before' 				=> '<div class="tainacan-item-section__metadatum metadata-type-$type" id="$id">',
+    'after' 				=> '</div>',
+    'before_title' => '<h4 class="tainacan-metadata-label">',
+    'after_title' => '</h4>',
+    'before_value' => '<p class="tainacan-metadata-value">',
+    'after_value' => '</p>',
+    'exclude_title' => true
+);
+
+add_filter('tainacan-get-metadata-section-as-html-before-name--index-0', function($before, $metadata_section) {
+    $output = str_replace('<input', '<input checked="checked"', $before);
+    return $output;
+}, 10, 2);
+
+
+add_filter('tainacan-get-metadata-section-as-html-before-name', function($before, $metadata_section) {
+    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 1rem 2px 1.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
+    return $output;
+}, 10, 2);
+
+
+$sections_args = array(
+    'metadata_sections__not_in' => [ $localization_metadata_section, \Tainacan\Entities\Metadata_Section::$default_section_slug ],
+    'before' => '',
+    'after' => '',
+    'before_name' => '<input name="tabs" type="radio" id="tab-section-$id" />
+                <label for="tab-section-$id">
+                    <h3 class="tainacan-single-item-section" id="metadata-section-$slug">',
+    'after_name' => '</h3>
+                </label>',
+    'before_metadata_list' => '<section class="tainacan-item-section tainacan-item-section--metadata">' . do_action( 'tainacan-blocksy-single-item-metadata-begin' ) . '
+            <div class="tainacan-item-section__metadata ' . $metadata_list_structure_type . '" aria-labelledby="metadata-section-$slug">',
+    'after_metadata_list' => '</div>' . do_action( 'tainacan-blocksy-single-item-metadata-end' ) . '</section>',
+    'metadata_list_args' => $metadata_args
+);
+
 do_action( 'tainacan-blocksy-single-item-top' ); 
 
 do_action( 'tainacan-blocksy-single-item-after-title' );
 
 ?>
 
-<div class="<?php echo esc_attr('tainacan-item-single tainacan-item-single--layout-'. $page_structure_type . ($column_documents_attachments_affix ? ' tainacan-item-single--affix-column' : '')) ?>" style="<?php echo esc_attr($template_columns_style) ?>">
-<?php
-    if ($page_structure_type !== 'type-gtm') {
-        tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-document' );
-        do_action( 'tainacan-blocksy-single-item-after-document' );  
+<div class="tainacan-item-section tainacan-item-section--metadata-sections">
+    <h2 class="tainacan-single-item-section" id="tainacan-item-metadata-label">
+        <?php echo esc_html( get_theme_mod($prefix . '_section_metadata_label', __( 'Informações', 'tainacan-blocksy' ) ) ); ?>
+    </h2>
+    <div class="metadata-section-layout--tabs">
+        <?php tainacan_the_metadata_sections( $sections_args ); ?>
+    </div>
+</div>
 
-        tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-attachments' );
-        do_action( 'tainacan-blocksy-single-item-after-attachments' );
-    }
-    
-    tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-metadata' );
-    do_action( 'tainacan-blocksy-single-item-after-metadata' );
+<div class="tainacan-item-section tainacan-item-section--special-museusbr-gallery alignfull">
+<?php
+
+    tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-document' );
+    do_action( 'tainacan-blocksy-single-item-after-document' );  
+
+    tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-attachments' );
+?>
+</div>     
+<div class="tainacan-item-section tainacan-item-section--special-museusbr-localization alignfull">
+    <?php
+    tainacan_the_metadata_sections( array(
+        'metadata_section' => $localization_metadata_section,
+    ) );
 
     if ($display_items_related_to_this) {
         tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-items-related-to-this' );
         do_action( 'tainacan-blocksy-single-item-after-items-related-to-this' );
     }
 ?>
-</div>
-
-
-<?php
-    // Edit item button
-    if ( function_exists('tainacan_the_item_edit_link') ) {
-        echo '<div class="tainacan-item-single"><span class="tainacan-edit-item-collection">';
-            tainacan_the_item_edit_link();
-        echo '</span></div>';
-    }
-    do_action( 'tainacan-blocksy-single-item-bottom' );
-?>
+</div> 

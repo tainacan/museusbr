@@ -1,59 +1,124 @@
 /**
  * Estiloss para o CPT do Museu
  */
-.single.single-tnc_col_208_item {
+.single {
     --sections-tabs-width: 400px;
     --section-tabs-height: 89px;
-    --section-tabs-count: 3;
+    --section-tabs-count: 2;
 }
-.single.single-tnc_col_208_item .museu-item-thumbnail {
-    margin-top: 2.5rem;
-    margin-right: 4rem;
+.single .museu-item-thumbnail {
+    margin-top: 2.25rem !important;
+    margin-right: 7rem;
+    margin-bottom: 1.5rem;
     box-shadow: 26px 26px #222, 28px 28px 12px -1px rgba(0,0,0,0.5);
     float: left;
 }
-.single.single-tnc_col_208_item .museu-item-description {
+.single .museu-item-description {
     color: var(--theme-palette-color-8);
     margin-top: 2.75rem;
     font-weight: 300;
     font-weight: 300;
     font-size: 1.125rem;
 }
+.single .museu-item-sections-navigator ol {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: white;
+    list-style: none;
+}
+.single .museu-item-sections-navigator ol a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    text-align: center;
+}
+.single .museu-item-sections-navigator ol a,
+.single .museu-item-sections-navigator ol a:hover,
+.single .museu-item-sections-navigator ol a:focus {
+    color: white;
+}
+.single .museu-item-sections-navigator ol a .navigator-icon i {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+}
 
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
     min-height: calc(var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));
 }
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label > h3 {
     --theme-font-size: 18px;
     --theme-text-transform: uppercase;
-    margin: 0.5rem 1rem;
+    --theme-font-weight: 600;
+}
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
+    margin: 0.5rem 1rem 0.5rem 0rem;
     padding: 1rem;
+    text-align: left;
     border-radius: 8px;
     border: none;
     background-color: rgba(255,255,255, 0.0);
     box-shadow: 0px 0px 0px 0px #000;
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, padding-left 0.2s ease;
 }
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label > h3 {
     --theme-headings-color: #000;
 }
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover,
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus,
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
     background-color: rgba(255,255,255, 1.0);
     box-shadow: 2px 2px 6px -3px #000;
+    padding-left: 1.5rem;
 }
-.single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
     border-top: none;
 }
+.single .tainacan-item-section--special-museusbr-localization h2,
+.single .tainacan-item-section--special-museusbr-gallery h2,
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
+    width: var(--theme-default-editor, var(--theme-block-width));
+    max-width: var(--theme-default-editor, var(--theme-block-max-width));
+    margin-inline: var(--theme-default-editor, auto);
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > h3 {
+    display: none;
+    visibility: hidden;
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > h3 {
+    --theme-font-weight: 600;
+    --theme-font-size: 20px;
+    --theme-line-height: 1.2;
+}
+.single .tainacan-item-section--special-museusbr-localization,
+.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > p {
+    margin-bottom: 0px;
+}
 @media screen and (min-width: 768px) {
-    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
+    .single .entry-header {
+        padding-bottom: 96px !important;
+    }
+    .single .page-title{
+        margin-top: 0;
+    }
+    .single .museu-item-sections-navigator ol {
+        font-size: 1.2rem;
+        justify-content: space-evenly;
+    }
+    .single .museu-item-sections-navigator ol a .navigator-icon i {
+        font-size: 3.5rem;
+        padding: 0.5rem;
+    }
+    .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
         flex-direction: column;
     }
-    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
+    .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
         width: var(--sections-tabs-width, 400px);
     }
-    .single.single-tnc_col_208_item .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
+    .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
         width: calc(100% - var(--sections-tabs-width, 400px) - 2rem - 20px);
         margin-left: auto;
         margin-top: calc(-1 * var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));

@@ -65,7 +65,7 @@
     max-height: calc(100vh - 20px - 20px - 60px - var(--wordpress-topbar-height));
 }
 .user-is-gestor-do-museu #tainacan-admin-app .sticky-container .section-label .icon {
-    padding-left: 4px;
+    padding-left: 3px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .sticky-container .section-attachments .section {
     padding-top: 1rem;
@@ -104,7 +104,7 @@
 }
 .user-is-gestor-do-museu #tainacan-admin-app  .document-field-placeholder button {
     width: 100%;
-    border-radius: 4px;
+    border-radius: 3px;
     border: 1px solid var(--tainacan-secondary);
 }
 .user-is-gestor-do-museu input.input,
@@ -128,9 +128,12 @@
 .user-is-gestor-do-museu .taginput .taginput-container.is-focusable,
 .user-is-gestor-do-museu .select select {
     box-shadow: 0 0 0 transparent !important;
-    border-radius: 4px !important;
+    border-radius: 3px !important;
     border: 1px solid var(--tainacan-input-border-color);
     color: var(--tainacan-input-color);
+}
+.user-is-gestor-do-museu .taginput .taginput-container input {
+    height: calc(2.5em - 1px) !important;
 }
 .user-is-gestor-do-museu input.input:not(.is-danger):focus,
 .user-is-gestor-do-museu .input:not(.is-danger):focus,

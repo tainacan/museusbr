@@ -7,9 +7,12 @@ if (! defined('WP_DEBUG')) {
 	die( 'Direct access forbidden.' );
 }
 
-const MUSEUSBR_MUSEUS_COLLECTION_ID = 208;//267;
-const MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE = 'tnc_col_' . MUSEUSBR_MUSEUS_COLLECTION_ID . '_item';
+const MUSEUSBR_MUSEUS_COLLECTION_ID = 267;//208;
 const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
+
+function museusbr_get_collection_post_type() {
+	return 'tnc_col_' . get_theme_mod( 'museusbr_collection', MUSEUSBR_MUSEUS_COLLECTION_ID ) . '_item';
+}
 
 /**
  * Registra Scripts e Estilos
@@ -17,6 +20,11 @@ const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'museusbr-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'line-awesome-icons', 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' );
+	
+	if ( is_singular( museusbr_get_collection_post_type() ) ) {
+		wp_enqueue_style( 'museusbr-single-style', get_stylesheet_directory_uri() . '/assets/css/museu.css' );
+	}
 });
 
 /** 
@@ -24,7 +32,13 @@ add_action( 'wp_enqueue_scripts', function () {
  */
 add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_style( 'museusbr-admin-style', get_stylesheet_directory_uri() . '/admin.css' );
+	wp_enqueue_style( 'line-awesome-icons', 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' );
 });
+
+/** 
+ * Opções extras do customizer
+ */
+require get_stylesheet_directory() . '/inc/customizer.php';
 
 /**
  * Função para checar se o usuário atual é um gestor do museu
@@ -42,7 +56,7 @@ function museusbr_user_is_gestor( $user = NULL ) {
  */
 function museusbr_list_museus_collection_in_admin($args, $post_type){
 
-    if ( $post_type == MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE ){
+    if ( $post_type == museusbr_get_collection_post_type() ){
 		$args['show_ui'] = true;
 		$args['show_in_menu'] = true;
 		$args['menu_icon'] = 'dashicons-bank';
@@ -58,7 +72,7 @@ add_filter('register_post_type_args', 'museusbr_list_museus_collection_in_admin'
  */
 function museusbr_museus_collection_edit_post_link( $url, $post_ID) {
 
-	if ( get_post_type($post_ID) == MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE ) 
+	if ( get_post_type($post_ID) == museusbr_get_collection_post_type() ) 
 		$url = admin_url( '?page=tainacan_admin#/collections/' . MUSEUSBR_MUSEUS_COLLECTION_ID . '/items/' . $post_ID . '/edit' );
 
     return $url;
@@ -119,7 +133,7 @@ add_filter('blocksy:account:modal:login:redirect_to', 'museusbr_museus_modal_log
  */
 function museusbr_museu_single_page_hero_description_before() {
 
-	if ( get_post_type() == MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE ) {
+	if ( get_post_type() == museusbr_get_collection_post_type() ) {
     	the_post_thumbnail('tainacan-medium', array('class' => 'museu-item-thumbnail'));
 		
 		$item = tainacan_get_item();
@@ -131,13 +145,52 @@ function museusbr_museu_single_page_hero_description_before() {
 }
 add_action('blocksy:hero:description:before', 'museusbr_museu_single_page_hero_description_before');
 
+/**
+ * Adiciona navegação entre seções no cabeçalho
+ */
+function museusbr_museu_single_page_hero_custom_meta_after() {
+
+	if ( get_post_type() == museusbr_get_collection_post_type() ) {
+		?>
+			<nav class="museu-item-sections-navigator">
+				<ol>
+					<li>
+						<a href="#tainacan-item-metadata-label">
+							<span class="navigator-icon">
+								<i class="las la-info-circle"></i>
+							</span>
+							<span class="navigator-text"><?php _e( 'Informações', 'museusbr'); ?></span>
+						</a>
+					</li>
+					<li>
+						<a href="#tainacan-item-documents-label">
+							<span class="navigator-icon">
+								<i class="las la-image"></i>
+							</span>
+							<span class="navigator-text"><?php _e( 'Galeria de Fotos', 'museusbr'); ?></span>
+						</a>
+					</li>
+					<li>
+						<a href="#metadata-section-localizacao">
+							<span class="navigator-icon">
+								<i class="las la-map"></i>
+							</span>
+							<span class="navigator-text"><?php _e( 'Localização', 'museusbr'); ?></span>
+						</a>
+					</li>
+				</ol>
+			</nav>
+		<?php
+	}
+}
+add_action('blocksy:hero:custom_meta:after', 'museusbr_museu_single_page_hero_custom_meta_after');
 
 /**
  * Sobrescreve o conteúdo da single do museu
  */
 function museusbr_museu_single_page_content( $content ) {
 
-	if ( ! is_singular( MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE ) )
+	if ( ! is_singular( museusbr_get_collection_post_type() ) )
 		return $content;
 	
 	ob_start();
@@ -157,7 +210,7 @@ function museusbr_pre_get_post( $query ) {
     if ( !is_admin() )
         return;
 
-    if ( $query->is_main_query() && $query->query_vars['post_type'] == MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE ) {
+    if ( $query->is_main_query() && $query->query_vars['post_type'] == museusbr_get_collection_post_type() ) {
         if ( museusbr_user_is_gestor() )
             $query->query_vars['author'] = get_current_user_id();
     }
@@ -170,7 +223,7 @@ add_action( 'pre_get_posts', 'museusbr_pre_get_post' );
 function museusbr_custom_body_class($classes) {
 	global $pagenow;
 
-	if ( $pagenow == 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] === MUSEUSBR_MUSEUS_COLLECTION_POST_TYPE )
+	if ( $pagenow == 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] === museusbr_get_collection_post_type() )
         $classes .= ' post-type-museusbr-museus';
 
 	if ( museusbr_user_is_gestor() )
@@ -203,3 +256,7 @@ function museusbr_set_tainacan_admin_options($options) {
 	return $options;
 };
 add_filter('tainacan-admin-ui-options', 'museusbr_set_tainacan_admin_options');
+
+/* ----------------------------- INC IMPORTS  ----------------------------- */
+require get_stylesheet_directory() . '/inc/singleton.php';
+require get_stylesheet_directory() . '/inc/metadata-section-icon-hook.php';
