@@ -122,5 +122,7 @@
         width: calc(100% - var(--sections-tabs-width, 400px) - 2rem - 20px);
         margin-left: auto;
         margin-top: calc(-1 * var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));
+        position: sticky;
+        top: 0;
     }
 }

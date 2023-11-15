@@ -87,6 +87,28 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
     </div>
 </div>
 
+<script>
+    // Checks if document is loaded
+    const performWhenDocumentIsLoaded = callback => {
+        if (/comp|inter|loaded/.test(document.readyState))
+            callback();
+        else
+            document.addEventListener('DOMContentLoaded', callback, false);
+    }
+
+    performWhenDocumentIsLoaded(() => {
+        const sectionLabels = document.querySelector('.metadata-section-layout--tabs');
+        
+        if ( !sectionLabels )
+            return;
+
+        const totalOfTabbedSections = sectionLabels.childElementCount;
+        
+        if ( totalOfTabbedSections >= 3 )
+            sectionLabels.style.setProperty('--section-tabs-count', Math.round(24/3));
+    });
+</script>
+
 <div class="tainacan-item-section tainacan-item-section--special-museusbr-gallery alignfull">
 <?php
 

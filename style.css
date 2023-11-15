@@ -4,35 +4,28 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.0.1
+ * Version: 0.1.0
  */
+ /* Barra de busca dos banners */
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
     --theme-form-field-height: 48px;
 }
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper .wp-block-search__button {
     margin-left: 5px;
 }
-
-.home .wp-block-cover .wp-block-search__inside-wrapper {
-    --theme-form-field-height: 62px;
-}
-
-.home .wp-block-tainacan-faceted-search .theme-items-list,
-.home .wp-block-tainacan-faceted-search .theme-items-list #items-list-results,
-.home .wp-block-tainacan-faceted-search .theme-items-list .table-container {
-    padding: 0 !important;
-    margin: 0;
-}
-.home .wp-block-tainacan-faceted-search .theme-items-list .search-control {
-    display: none;
-    visibility: hidden;
-}
-
 .hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
     float: right;
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.home .wp-block-cover .wp-block-search__inside-wrapper {
+    --theme-form-field-height: 62px;
+}
+.home .wp-block-cover .wp-block-search__inside-wrapper .wp-block-search__button svg {
+    min-height: 40px;
+    min-width: 40px;
+}
+
 @media screen and (max-width: 999px) {
     .hero-section[data-type="type-2"] > [class*="ct-container"] .museusbr-banner-searchbar {
         justify-content: flex-start;
@@ -61,4 +54,61 @@
         float: right;
         margin-right: 42px;
     }
+}
+
+/* Cartões com links da home */
+@media screen and (max-width: 1200px) {
+    .home .wp-block-cover .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
+        flex-basis: 50%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .home .wp-block-cover .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
+        flex-basis: 100%;
+    }
+}
+
+/* Lista de itens do Tainacan na página inicial */
+.home .wp-block-tainacan-faceted-search .theme-items-list,
+.home .wp-block-tainacan-faceted-search .theme-items-list #items-list-results,
+.home .wp-block-tainacan-faceted-search .theme-items-list .table-container,
+.home .entry-content:not(.ct-container) .theme-items-list:not(.is-fullscreen) .table-container {
+    padding: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin: 0;
+}
+.home .wp-block-tainacan-faceted-search .theme-items-list .tainacan-leaflet-map-container {
+    border-radius: 0px;
+}
+.home .wp-block-tainacan-faceted-search .theme-items-list .search-control {
+    display: none;
+    visibility: hidden;
+}
+
+/* Botão de login */
+.ct-header-account {
+    --theme-button-min-height: 34px;
+    --theme-button-padding: 3px 15px;
+    --theme-button-font-size: 13px;
+}
+.ct-header-account .ct-account-item {
+    position: relative;
+    color: var(--theme-button-text-initial-color);
+    border: var(--theme-button-border);
+    background-color: var(--theme-button-background-initial-color);
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--theme-button-min-height);
+    padding: var(--theme-button-padding);
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center;
+    border-radius: var(--theme-button-border-radius, 3px);
+    transition: all .2s ease;
+    --has-link-decoration: var(--false);
 }
