@@ -2,11 +2,20 @@
     display: none;
     visibility: hidden;
 }
-.user-is-gestor-do-museu.toplevel_page_tainacan_admin #adminmenumain {
-    display: block;
+.user-is-gestor-do-museu #adminmenumain {
+    display: none;
 }
-.user-is-gestor-do-museu.toplevel_page_tainacan_admin #wpcontent {
+.user-is-gestor-do-museu #wpcontent {
     padding-left: 0;
+    margin-left: 0;
+}
+.user-is-gestor-do-museu #wpcontent .wrap {
+    margin: 24px 4.5%;
+}
+@media screen and (max-width: 782px) {
+    .user-is-gestor-do-museu #wpbody-content {
+        padding-bottom: 0;
+    }
 }
 .user-is-gestor-do-museu {
     --tainacan-secondary: #2271b1;
@@ -14,7 +23,7 @@
     --wordpress-topbar-height: 32px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app {
-    --tainacan-background-color: #f0f0f1;
+    --tainacan-background-color: #f9f9f9;
     --tainacan-sidebar-width: 0px;
     --tainacan-one-column: 1.25rem;
     --tainacan-gray1: #fafafa;
@@ -22,6 +31,7 @@
     --tainacan-label-color: #1d2327;
     --tainacan-input-color: #2c3338;
     --tainacan-input-border-color: #8c8f94;
+    --tainacan-input-border-radius: 3px;
     position: unset;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .is-secondary-content,
@@ -29,12 +39,20 @@
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container {
     height: calc(100vh - var(--wordpress-topbar-height));
 }
+.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container {
+    padding: 24px 4.5%;
+}
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column {
     padding-left: 0px;
     padding-right: 0px;
 }
-
-@media screen and (min-width: 770px) {
+@media screen and (min-width: 769px) {
+    .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.is-7 {
+      width: 65%;
+    }
+    .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.is-5 {
+      width: 35%;
+    }
     .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.main-column > .b-tabs .tab-content {
         padding-left: 0px;
         padding-right: 20px;
@@ -42,7 +60,17 @@
 }
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container > .tainacan-form {
     margin-bottom: 0px;
-    --tainacan-gray1: #c3c4c7;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title {
+    margin-top: 0;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0;
+    margin-right: 0px;
+    padding: 9px 0 4px;
+    line-height: 1.3;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title .breadcrumbs,
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title hr,
@@ -52,7 +80,8 @@
     visibility: hidden;
 }
 .user-is-gestor-do-museu #tainacan-admin-app [class^='metadata-section-slug-'],
-.user-is-gestor-do-museu #tainacan-admin-app .sticky-container {
+.user-is-gestor-do-museu #tainacan-admin-app .sticky-container,
+.user-is-gestor-do-museu #tainacan-admin-app .tab-item>.metadata-area>div {
     min-width: 255px;
     border: 1px solid var(--tainacan-gray2);
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
@@ -64,7 +93,7 @@
     max-height: calc(100vh - 20px - 20px - 60px - var(--wordpress-topbar-height));
 }
 .user-is-gestor-do-museu #tainacan-admin-app .sticky-container .section-label .icon {
-    padding-left: 3px;
+    padding-left: 8px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .sticky-container .section-attachments .section {
     padding-top: 1rem;
@@ -73,25 +102,36 @@
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container > .tainacan-form hr {
     background-color: var(--tainacan-gray2);
 }
-.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .metadata-section-header {
+.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .metadata-section-header,
+.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.is-5 .section-label {
     padding: 8px 12px;
     border-bottom: 1px solid var(--tainacan-gray2);
+    font-size: 1.125rem;
+}
+
+.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.is-5 .section-box {
+    padding-top: 1rem;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list {
-    column-width: 380px;
+    column-width: 350px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > * {
     break-inside: avoid;
-    margin-left: 3px;
-    margin-right: 3px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .field .collapse-handle + div {
     margin-top: 0.25em;
     font-size: 1.125em; /* Torna os inputs um pouco maiores */
 }
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > .tainacan-metadatum-component--tainacan-taxonomy,
-.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > .tainacan-metadatum-component--tainacan-geocoordinate {
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > .tainacan-metadatum-component--tainacan-geocoordinate,
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > .tainacan-metadatum-component--tainacan-compound {
     column-span: all;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .tainacan-metadatum-component--tainacan-metadata-type-url .add-link {
+    display: none;
+    visibility: hidden;
 }
 .user-is-gestor-do-museu #tainacan-admin-app  .document-field-placeholder {
     display: block;
@@ -104,68 +144,94 @@
     border-radius: 3px;
     border: 1px solid var(--tainacan-secondary);
 }
-.user-is-gestor-do-museu input.input,
-.user-is-gestor-do-museu .input,
-.user-is-gestor-do-museu textarea.textarea,
-.user-is-gestor-do-museu .textarea,
-.user-is-gestor-do-museu input[type="color"].input,
-.user-is-gestor-do-museu input[type="date"].input,
-.user-is-gestor-do-museu input[type="datetime-local"].input,
-.user-is-gestor-do-museu input[type="datetime"].input,
-.user-is-gestor-do-museu input[type="email"].input,
-.user-is-gestor-do-museu input[type="number"].input,
-.user-is-gestor-do-museu input[type="month"].input,
-.user-is-gestor-do-museu input[type="password"].input,
-.user-is-gestor-do-museu input[type="search"].input,
-.user-is-gestor-do-museu input[type="tel"].input,
-.user-is-gestor-do-museu input[type="text"].input,
-.user-is-gestor-do-museu input[type="time"].input,
-.user-is-gestor-do-museu input[type="url"].input,
-.user-is-gestor-do-museu input[type="week"].input,
-.user-is-gestor-do-museu .taginput .taginput-container.is-focusable,
-.user-is-gestor-do-museu .select select {
+.user-is-gestor-do-museu #tainacan-admin-app .metadatum-description-help-info {
+    margin-bottom: 0;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .page-container.item-edition-container .tainacan-form > .columns .column.main-column .metadata-section-metadata-list .field,
+.user-is-gestor-do-museu #tainacan-admin-app .page-container.item-creation-container .tainacan-form > .columns .column.main-column .metadata-section-metadata-list .field {
+    border-radius: 10px;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-last-active,
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-parent-active {
+    background-color: #cae4ec;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-last-active .b-radio.radio input[type="radio"]:not(:checked) + .check,
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-parent-active .b-radio.radio input[type="radio"]:not(checked) + .check {
+    visibility: hidden;
+}
+.user-is-gestor-do-museu #tainacan-admin-app input.input,
+.user-is-gestor-do-museu #tainacan-admin-app .input,
+.user-is-gestor-do-museu #tainacan-admin-app textarea.textarea,
+.user-is-gestor-do-museu #tainacan-admin-app .textarea,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="color"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="date"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime-local"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="email"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="number"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="month"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="password"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="search"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="tel"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="text"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="time"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="url"].input,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="week"].input,
+.user-is-gestor-do-museu #tainacan-admin-app .taginput .taginput-container.is-focusable,
+.user-is-gestor-do-museu #tainacan-admin-app .select select {
     box-shadow: 0 0 0 transparent !important;
     border-radius: 3px !important;
     border: 1px solid var(--tainacan-input-border-color);
     color: var(--tainacan-input-color);
 }
-.user-is-gestor-do-museu .taginput .taginput-container input {
+.user-is-gestor-do-museu #tainacan-admin-app .taginput .taginput-container input {
     height: calc(2.5em - 1px) !important;
 }
-.user-is-gestor-do-museu input.input:not(.is-danger):focus,
-.user-is-gestor-do-museu .input:not(.is-danger):focus,
-.user-is-gestor-do-museu textarea.textarea:not(.is-danger):focus,
-.user-is-gestor-do-museu .textarea:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="color"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="date"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="datetime-local"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="datetime"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="email"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="number"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="month"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="password"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="search"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="tel"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="text"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="time"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="url"].input:not(.is-danger):focus,
-.user-is-gestor-do-museu input[type="week"].input:not(.is-danger):focus {
+.user-is-gestor-do-museu #tainacan-admin-app input.input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app .input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app textarea.textarea:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app .textarea:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="color"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="date"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime-local"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="email"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="number"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="month"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="password"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="search"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="tel"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="text"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="time"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="url"].input:not(.is-danger):focus,
+.user-is-gestor-do-museu #tainacan-admin-app input[type="week"].input:not(.is-danger):focus {
     border-color: var(--tainacan-secondary) !important;
     box-shadow: 0 0 0 1px var(--tainacan-secondary) !important;
     --tainacan-gray4: var(--tainacan-secondary);
     outline: 2px solid transparent;
 }
-.user-is-gestor-do-museu .tainacan-checkbox-search-section input[type="search"].input:not(.is-danger) {
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-component--tainacan-compound .child-metadata-inputs {
+    padding-left: 4px;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-component--tainacan-compound .child-metadata-inputs .multiple-inputs {
+    column-width: 300px;
+    font-size: 0.875em;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-component--tainacan-compound .child-metadata-inputs .multiple-inputs > .field {
+    break-inside: avoid;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-checkbox-search-section input[type="search"].input:not(.is-danger) {
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
-.user-is-gestor-do-museu .button.is-outlined {
+.user-is-gestor-do-museu #tainacan-admin-app .button.is-outlined {
     color: var(--tainacan-secondary);
     border-color: var(--tainacan-secondary) !important;
     background-color: var(--tainacan-primary) !important;
 }
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .footer {
     position: absolute;
+    background-color: var(--tainacan-gray1);
     top: calc(100vh - 60px - var(--wordpress-topbar-height));
     border: 1px solid var(--tainacan-gray2);
     box-shadow: 0 -1px 1px rgba(0,0,0,.075);
@@ -176,4 +242,20 @@
     .user-is-gestor-do-museu {
         --wordpress-topbar-height: 46px;
     }
+}
+
+
+/* Ajustes específicos de metadados por ID */
+/* UF com mais colunas */
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-id--15202 .tainacan-finder-column.has-only-one-column ul,
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-id--15563 .tainacan-finder-column.has-only-one-column ul {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4
+}
+/* Status do Museu (Aberto ou Fechado) com menos colunas */
+.user-is-gestor-do-museu #tainacan-admin-app .tainacan-metadatum-id--269 .tainacan-finder-column.has-only-one-column ul {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1
 }

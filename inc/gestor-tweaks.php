@@ -13,7 +13,7 @@ function museusbr_user_is_gestor( $user = NULL ) {
 	if ( !isset($user) || $user === NULL )
 		$user = wp_get_current_user();
 
-	return is_user_logged_in() && in_array( MUSEUSBR_GESTOR_DE_MUSEU_ROLE, $user->roles );
+	return is_user_logged_in() && in_array( MUSEUSBR_GESTOR_DE_MUSEU_ROLE, $user->roles ? $user->roles : [] );
 }
 
 /**
@@ -117,13 +117,11 @@ function museusbr_set_tainacan_admin_options($options) {
 		$options['hideRepositorySubheader'] = true;
 		$options['hideCollectionSubheader'] = true;
 		$options['hideItemEditionCollectionName'] = true;
-		$options['hideItemEditionDocumentTextInput'] = true;
-		$options['hideItemEditionDocumentUrlInput'] = true;
 		$options['hideItemEditionCommentsToggle'] = true;
 		$options['hideItemEditionCollapses'] = true;
-		$options['hideItemEditionFocusMode'] = true;
-		$options['hideItemEditionRequiredOnlySwitch'] = true;
 		$options['hideItemEditionMetadataTypes'] = true;
+		$options['hideItemSingleExposers'] = true;
+		$options['hideItemSingleActivities'] = true;
 	}
 	return $options;
 };

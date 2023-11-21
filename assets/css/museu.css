@@ -1,5 +1,5 @@
 /**
- * Estiloss para o CPT do Museu
+ * Estilos para o CPT do Museu
  */
 .single {
     --sections-tabs-width: 400px;
@@ -7,7 +7,7 @@
     --section-tabs-count: 2;
 }
 .single .museu-item-thumbnail {
-    margin-top: 2.25rem !important;
+    margin-top: 2.875rem !important;
     margin-right: 7rem;
     margin-bottom: 1.5rem;
     box-shadow: 26px 26px #222, 28px 28px 12px -1px rgba(0,0,0,0.5);
@@ -15,10 +15,56 @@
 }
 .single .museu-item-description {
     color: var(--theme-palette-color-8);
-    margin-top: 2.75rem;
+    margin-top: 2.75rem !important;
     font-weight: 300;
     font-weight: 300;
     font-size: 1.125rem;
+}
+.single .museu-item-other-metadata {
+    color: white;
+    width: 100%;
+    margin-top: 2.75rem !important;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
+    font-size: 0.875rem;
+}
+.single .museu-item-other-metadata a,
+.single .museu-item-other-metadata a:hover,
+.single .museu-item-other-metadata a:focus {
+    color: white;
+}
+.single .museu-item-other-metadata p:empty {
+    display: none;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-type-taxonomy {
+    display: none;
+    visibility: hidden;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list h3 {
+    display: none;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .tainacan-compound-group .label {
+    display: none;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list i.las {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-compound-group {
+    display: flex;
+    gap: 1rem;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a {
+    background: var(--theme-palette-color-3);
+    border-radius: 0.25rem;
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+    font-size: 0;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a:hover,
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a:focus {
+    background: var(--theme-palette-color-2);
 }
 .single .museu-item-sections-navigator ol {
     padding: 1rem;
@@ -54,9 +100,22 @@
     --theme-text-transform: uppercase;
     --theme-font-weight: 600;
 }
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-compound-group {
+    column-width: 200px;
+}
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-compound-group > * {
+    break-inside: avoid;
+}
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-compound-group h4 {
+    --theme-font-size: 16px;
+    --theme-font-weight: 600;
+}
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label {
     margin: 0.5rem 1rem 0.5rem 0rem;
     padding: 1rem;
+    display: flex;
+    gap: 2px 0.5rem;
+    align-items: center;
     text-align: left;
     border-radius: 8px;
     border: none;
@@ -77,32 +136,66 @@
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
     border-top: none;
 }
+.single .tainacan-item-section--special-museusbr-gallery {
+    margin-top: 3.75rem;
+}
 .single .tainacan-item-section--special-museusbr-localization h2,
 .single .tainacan-item-section--special-museusbr-gallery h2,
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list,
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
     width: var(--theme-default-editor, var(--theme-block-width));
     max-width: var(--theme-default-editor, var(--theme-block-max-width));
     margin-inline: var(--theme-default-editor, auto);
 }
-.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > h3 {
-    display: none;
-    visibility: hidden;
-}
-.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > h3 {
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list {
+    column-width: 272px;
     --theme-font-weight: 600;
     --theme-font-size: 20px;
     --theme-line-height: 1.2;
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > * {
+    break-inside: avoid;
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list h3 {
+    --theme-font-weight: 600;
+    --theme-font-size: 20px;
+    --theme-line-height: 1.2;
+    --metadata-label-alignment: left;
+    --has-theme-content-spacing: 0.5;
+}
+.single .tainacan-item-section--metadata-sections .tainacan-metadata-label,
+.single .tainacan-item-section--special-museusbr-localization .tainacan-metadata-label {
+
+    --has-theme-content-spacing: 0.5;
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate {
+    column-span: all;
+    width: 100vw;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    margin-left: calc(-0.5 * (100vw - 100%));
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > h3 {
+    display: none;
+    visibility: hidden;
 }
 .single .tainacan-item-section--special-museusbr-localization,
 .single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > p {
     margin-bottom: 0px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1000px) {
     .single .entry-header {
         padding-bottom: 96px !important;
     }
     .single .page-title{
         margin-top: 0;
+    }
+    .single .museu-item-other-metadata {
+        float: none;
+        float: right;
+        width: 22%;
+        margin-top: 0rem;
+        margin-left: 5rem;
     }
     .single .museu-item-sections-navigator ol {
         font-size: 1.2rem;
@@ -122,6 +215,7 @@
         width: calc(100% - var(--sections-tabs-width, 400px) - 2rem - 20px);
         margin-left: auto;
         margin-top: calc(-1 * var(--section-tabs-count, 3) * calc(var(--section-tabs-height, 89px) + 1rem));
+        padding-top: 1rem;
         position: sticky;
         top: 0;
     }

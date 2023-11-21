@@ -45,14 +45,23 @@ $metadata_args = array(
     'exclude_title' => true
 );
 
-add_filter('tainacan-get-metadata-section-as-html-before-name--index-0', function($before, $metadata_section) {
+add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metadatum_value_before, $item_metadatum) {
+    
+    // Metadatado do Valor da Entrada
+    if ( $item_metadatum->get_metadatum()->get_id() == 1513 )
+        $metadatum_value_before .= 'R$';
+
+    return $metadatum_value_before;
+}, 10, 2 );
+
+add_filter('tainacan-get-metadata-section-as-html-before-name--index-1', function($before, $metadata_section) {
     $output = str_replace('<input', '<input checked="checked"', $before);
     return $output;
 }, 10, 2);
 
 
 add_filter('tainacan-get-metadata-section-as-html-before-name', function($before, $metadata_section) {
-    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 1rem 2px 1.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
+    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 0.5rem 2px 1.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
     return $output;
 }, 10, 2);
 
@@ -86,28 +95,6 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
         <?php tainacan_the_metadata_sections( $sections_args ); ?>
     </div>
 </div>
-
-<script>
-    // Checks if document is loaded
-    const performWhenDocumentIsLoaded = callback => {
-        if (/comp|inter|loaded/.test(document.readyState))
-            callback();
-        else
-            document.addEventListener('DOMContentLoaded', callback, false);
-    }
-
-    performWhenDocumentIsLoaded(() => {
-        const sectionLabels = document.querySelector('.metadata-section-layout--tabs');
-        
-        if ( !sectionLabels )
-            return;
-
-        const totalOfTabbedSections = sectionLabels.childElementCount;
-        
-        if ( totalOfTabbedSections >= 3 )
-            sectionLabels.style.setProperty('--section-tabs-count', Math.round(24/3));
-    });
-</script>
 
 <div class="tainacan-item-section tainacan-item-section--special-museusbr-gallery alignfull">
 <?php

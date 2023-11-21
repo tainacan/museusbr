@@ -7,7 +7,7 @@ if (! defined('WP_DEBUG')) {
 	die( 'Direct access forbidden.' );
 }
 
-const MUSEUSBR_MUSEUS_COLLECTION_ID = 267;//208;
+const MUSEUSBR_MUSEUS_COLLECTION_ID = 208;//267;
 const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
 
 function museusbr_get_collection_post_type() {
@@ -26,7 +26,8 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'line-awesome-icons', 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' );
 	
 	if ( is_singular( museusbr_get_collection_post_type() ) ) {
-		wp_enqueue_style( 'museusbr-single-style', get_stylesheet_directory_uri() . '/assets/css/museu.css' );
+		wp_enqueue_style( 'museusbr-single-style', get_stylesheet_directory_uri() . '/assets/css/museu.css', array(), '0.1.0' );
+		wp_enqueue_script( 'museusbr-single-script', get_stylesheet_directory_uri() . '/assets/js/museu.js', array(), '0.1.0', true );
 	}
 });
 
@@ -89,8 +90,49 @@ function museusbr_museu_single_page_hero_description_before() {
 		
 		$item = tainacan_get_item();
 
-		if ($item instanceof \Tainacan\Entities\Item)
+		if ($item instanceof \Tainacan\Entities\Item) {
+
+			add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metadatum_value_before, $item_metadatum) {
+
+				$metadatum_id = $item_metadatum->get_metadatum()->get_id();
+
+				// Metadado do Site do Museu
+				if ( $metadatum_id == 1200 )
+					$metadatum_value_before .= '<i class="las la-link"></i>';
+
+				// Metadados de Email
+				if ( $metadatum_id == 1213 || $metadatum_id == 1216 )
+					$metadatum_value_before .= '<i class="las la-envelope"></i>';
+
+				// Metadados de Telefone
+				if ( $metadatum_id == 1219 || $metadatum_id == 1222 )
+					$metadatum_value_before .= '<i class="las la-phone"></i>';
+				
+				// Metadado de Contato Extra
+				if ( $metadatum_id == 14629 )
+					$metadatum_value_before .= '<i class="las la-id-card"></i>';
+			
+				return $metadatum_value_before;
+			}, 10, 2 );
+
+			echo '<div class="museu-item-other-metadata">';
+
+				$sections_args = array(
+					'metadata_section' => 'default_section',
+					'hide_name'	=> true,
+					'before' => '',
+					'after' => '',
+					'metadata_list_args' => array(
+						'exclude_core' => true,
+						'display_slug_as_class' => true
+					)
+				);
+
+				tainacan_the_metadata_sections($sections_args);
+
+			echo '</div>';
 			echo '<div class="museu-item-description">' . $item->get_description() . '</div>';
+		}
 
 	}
 }
@@ -113,7 +155,7 @@ function museusbr_museu_single_page_hero_custom_meta_after() {
 							<span class="navigator-text"><?php _e( 'Informações', 'museusbr'); ?></span>
 						</a>
 					</li>
-					<li>
+					<li id="tainacan-item-documents-label-nav">
 						<a href="#tainacan-item-documents-label">
 							<span class="navigator-icon">
 								<i class="las la-image"></i>

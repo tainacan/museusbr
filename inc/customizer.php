@@ -72,3 +72,20 @@ function museusbr_options_panel($options) {
     return $options;
 }
 add_filter( 'blocksy_extensions_customizer_options', 'museusbr_options_panel', 10, 1 );
+
+function tainacan_blocksy_render_document_instead_of_featured_image() {
+    $prefix = blocksy_manager()->screen->get_prefix();
+
+    if ( str_contains($prefix, 'tnc_col_') && str_contains($prefix, '_item_single') ) {
+
+        $page_hero_section_style = get_theme_mod($prefix . '_hero_section' , get_theme_mod($prefix . '_page_header_background_style', 'type-1'));
+        if ( $page_hero_section_style === 'type-2' ) {
+
+            add_filter( 'blocksy:hero:type-2:image:attachment_id', function() {
+                if ( tainacan_get_the_document_type() === 'attachment' );
+                    return tainacan_get_the_document_raw();
+            }, 10 );
+        }
+    }
+}
+add_action( 'blocksy:hero:before', 'tainacan_blocksy_render_document_instead_of_featured_image');

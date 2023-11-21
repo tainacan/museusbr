@@ -67,7 +67,6 @@ class MUSEUSBRMetadataSectionIconHook {
         
 		return ob_get_clean();
 	}
-
 }
 
 MUSEUSBRMetadataSectionIconHook::get_instance();
