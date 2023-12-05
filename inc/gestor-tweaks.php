@@ -57,10 +57,7 @@ add_filter('login_redirect', 'museusbr_museus_login_redirect', 10, 3);
  */
 function museusbr_museus_modal_login_redirect() {
 
-	if ( museusbr_user_is_gestor() )
-		return admin_url( 'edit.php?post_type=tnc_col_' . museusbr_get_collection_id() . '_item' );	
-	
-	return home_url();
+	return admin_url( 'edit.php?post_type=tnc_col_' . museusbr_get_collection_id() . '_item' );	
 }
 add_filter('blocksy:account:modal:login:redirect_to', 'museusbr_museus_modal_login_redirect');
 
@@ -84,7 +81,7 @@ function museusbr_pre_get_post( $query ) {
 
     if ( $query->is_main_query() && $query->query_vars['post_type'] == museusbr_get_collection_post_type() ) {
         if ( museusbr_user_is_gestor() )
-            $query->query_vars['author'] = get_current_user_id();
+			$query->set( 'author', get_current_user_id() );
     }
 }
 add_action( 'pre_get_posts', 'museusbr_pre_get_post' );

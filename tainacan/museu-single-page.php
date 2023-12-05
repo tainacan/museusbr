@@ -5,6 +5,21 @@
 
 $prefix = blocksy_manager()->screen->get_prefix();
 
+/**
+ * Lista somente os museus do usuário atual, se ele for gestor
+ */
+function museusbr_single_museu_pre_get_post( $query ) {
+    if ( is_admin() )
+        return;
+    if ( in_array($query->query_vars['post_type'], ['tainacan-metadatum', 'tainacan-metasection']) ) {
+        if ( museusbr_user_is_gestor() ){
+            $query->set( 'post_status', 'publish' );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'museusbr_single_museu_pre_get_post' );
+
+
 $localization_metadata_section = get_theme_mod( 'museusbr_localization_metadata_section', 0 );
 
 $page_structure_type = get_theme_mod( $prefix . '_page_structure_type', 'type-dam');
@@ -61,7 +76,7 @@ add_filter('tainacan-get-metadata-section-as-html-before-name--index-1', functio
 
 
 add_filter('tainacan-get-metadata-section-as-html-before-name', function($before, $metadata_section) {
-    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 0.5rem 2px 1.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
+    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 0.5rem 2px 0.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
     return $output;
 }, 10, 2);
 

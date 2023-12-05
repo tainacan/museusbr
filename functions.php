@@ -83,22 +83,28 @@ add_filter('register_post_type_args', 'museusbr_list_museus_collection_in_admin'
 /**
  * Adiciona Thumbnail do item na página do museu
  */
-function museusbr_museu_single_page_hero_description_before() {
+function museusbr_museu_single_page_hero_custom_meta_before() {
 
 	if ( get_post_type() == museusbr_get_collection_post_type() ) {
-    	the_post_thumbnail('tainacan-medium', array('class' => 'museu-item-thumbnail'));
 		
 		$item = tainacan_get_item();
 
 		if ($item instanceof \Tainacan\Entities\Item) {
 
+			function museusbr_single_museu_banner_pre_get_post( $query ) {
+				if ( is_admin() )
+					return;
+				if ( in_array($query->query_vars['post_type'], ['tainacan-metadatum', 'tainacan-metasection']) ) {
+					if ( museusbr_user_is_gestor() ){
+						$query->set( 'post_status', 'publish' );
+					}
+				}
+			}
+			add_action( 'pre_get_posts', 'museusbr_single_museu_banner_pre_get_post' );			
+
 			add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metadatum_value_before, $item_metadatum) {
 
 				$metadatum_id = $item_metadatum->get_metadatum()->get_id();
-
-				// Metadado do Site do Museu
-				if ( $metadatum_id == 1200 )
-					$metadatum_value_before .= '<i class="las la-link"></i>';
 
 				// Metadados de Email
 				if ( $metadatum_id == 1213 || $metadatum_id == 1216 )
@@ -115,28 +121,53 @@ function museusbr_museu_single_page_hero_description_before() {
 				return $metadatum_value_before;
 			}, 10, 2 );
 
-			echo '<div class="museu-item-other-metadata">';
+			?>
+			<div class="museu-item-thumbnail-container"> 
+				<?php the_post_thumbnail('tainacan-medium', array('class' => 'museu-item-thumbnail')); ?>
+			
+				<div class="museu-item-other-metadata">
+					<?php
+						$sections_args = array(
+							'metadata_section' => 'default_section',
+							'hide_name'	=> true,
+							'before' => '',
+							'after' => '',
+							'metadata_list_args' => array(
+								'exclude_core' => true,
+								'display_slug_as_class' => true
+							)
+						);
 
-				$sections_args = array(
-					'metadata_section' => 'default_section',
-					'hide_name'	=> true,
-					'before' => '',
-					'after' => '',
-					'metadata_list_args' => array(
-						'exclude_core' => true,
-						'display_slug_as_class' => true
-					)
-				);
+						tainacan_the_metadata_sections($sections_args);
+					?>
+				</div>
+			</div>
 
-				tainacan_the_metadata_sections($sections_args);
+			<div class="museu-item-extra-container">
+				<div class="museu-item-other-metadata">
+					<?php
+						$sections_args = array(
+							'metadata_section' => 'default_section',
+							'hide_name'	=> true,
+							'before' => '',
+							'after' => '',
+							'metadata_list_args' => array(
+								'exclude_core' => true,
+								'display_slug_as_class' => true
+							)
+						);
 
-			echo '</div>';
-			echo '<div class="museu-item-description">' . $item->get_description() . '</div>';
+						tainacan_the_metadata_sections($sections_args);
+					?>
+				</div>
+				<div class="museu-item-description-and-meta-wrapper"> <!-- Is closed in the museusbr_museu_single_page_hero_custom_meta_after function -->
+					<div class="museu-item-description"><?php echo $item->get_description(); ?></div>
+				<?php
 		}
 
 	}
 }
-add_action('blocksy:hero:description:before', 'museusbr_museu_single_page_hero_description_before');
+add_action('blocksy:hero:custom_meta:before', 'museusbr_museu_single_page_hero_custom_meta_before');
 
 /**
  * Adiciona navegação entre seções no cabeçalho
@@ -144,7 +175,9 @@ add_action('blocksy:hero:description:before', 'museusbr_museu_single_page_hero_d
 function museusbr_museu_single_page_hero_custom_meta_after() {
 
 	if ( get_post_type() == museusbr_get_collection_post_type() ) {
-		?>
+		?>	
+				</div> <!-- Close the "museu-item-description-and-meta-wrapper" div -->
+			</div> <!-- Close the "museu-item-extra-container" div -->
 			<nav class="museu-item-sections-navigator">
 				<ol>
 					<li>
@@ -199,3 +232,4 @@ add_filter( 'the_content', 'museusbr_museu_single_page_content', 12, 1);
 /* ----------------------------- INC IMPORTS  ----------------------------- */
 require get_stylesheet_directory() . '/inc/singleton.php';
 require get_stylesheet_directory() . '/inc/metadata-section-icon-hook.php';
+require get_stylesheet_directory() . '/inc/block-styles.php';
