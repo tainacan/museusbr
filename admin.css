@@ -1,14 +1,18 @@
-body.user-is-gestor-do-museu #wpwrap {
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap {
     background-image: url('./assets/images/bg-form.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
-body.user-is-gestor-do-museu #wpwrap h1,
-body.user-is-gestor-do-museu #wpwrap h2,
-body.user-is-gestor-do-museu #wpwrap .tainacan-page-title h1,
-body.user-is-gestor-do-museu #wpwrap .tainacan-page-title h2,
-body.user-is-gestor-do-museu #wpwrap #wpfooter,
-body.user-is-gestor-do-museu #wpwrap #wpfooter a {
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap h1,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap h2,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .tainacan-page-title h1,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .tainacan-page-title h2,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap #wpfooter,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap #wpfooter a,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .subsubsub a .count,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .subsubsub a.current,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .subsubsub a.current .count,
+body.user-is-gestor-do-museu:not(.profile-php) #wpwrap .tablenav .one-page .displaying-num {
     color: white;
 }
 body.user-is-gestor-do-museu {
@@ -48,13 +52,12 @@ body.user-is-gestor-do-museu {
     display: none;
     visibility: hidden;
 }
-@media screen and (max-width: 782px) {
-    .user-is-gestor-do-museu #wpbody-content {
-        padding-bottom: 0;
-    }
+.user-is-gestor-do-museu #wpbody-content {
+    padding-bottom: 0;
 }
 .user-is-gestor-do-museu {
     --tainacan-secondary: #2271b1;
+    --tainacan-turquoise5: #2271b1;
     --tainacan-primary: #f6f7f7;
     --wordpress-topbar-height: 82px;
 }
@@ -103,6 +106,7 @@ body.user-is-gestor-do-museu {
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title h1 {
     color: var(--tainacan-white);
+    --tainacan-gray4: var(--tainacan-white);
     font-size: 23px;
     font-weight: 400;
     margin: 0;
