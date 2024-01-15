@@ -4,7 +4,7 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.1.0
+ * Version: 0.1.1
  */
  /* Barra de busca dos banners */
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
@@ -140,4 +140,31 @@
 	top: 0;
 	right: 0;
 	position: absolute;
+}
+
+/* Esconde o aviso de metadado customizado */
+.theme-items-list .metadata-alert {
+    display: none;
+    visibility: hidden;
+}
+.theme-items-list {
+    --theme-box-shadow: 0 4px 12px -6px rgba(0,0,0,0.7);
+}
+.theme-items-list .search-control {
+    background: var(--tainacan-primary) !important;
+    margin: 0 !important;
+    padding: 26px 0 9px 0 !important;
+}
+.theme-items-list .search-control::before {
+    content: '';
+    background: var(--tainacan-primary);
+    position: absolute;
+    top: 0;
+    left: -50%;
+    height: 100%;
+    width: 200vw;
+    z-index: -1;
+}
+.theme-items-list .search-control .dropdown.is-inline .dropdown-content {
+    background: var(--tainacan-primary) !important;
 }

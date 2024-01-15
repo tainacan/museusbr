@@ -19,8 +19,8 @@ function museusbr_single_museu_pre_get_post( $query ) {
 }
 add_action( 'pre_get_posts', 'museusbr_single_museu_pre_get_post' );
 
-
 $localization_metadata_section = get_theme_mod( 'museusbr_localization_metadata_section', 0 );
+$internal_data_for_banner_metadata_section = get_theme_mod( 'museusbr_internal_data_for_banner_metadata_section', 0 );
 
 $page_structure_type = get_theme_mod( $prefix . '_page_structure_type', 'type-dam');
 $template_columns_style = '';
@@ -82,7 +82,7 @@ add_filter('tainacan-get-metadata-section-as-html-before-name', function($before
 
 
 $sections_args = array(
-    'metadata_sections__not_in' => [ $localization_metadata_section, \Tainacan\Entities\Metadata_Section::$default_section_slug ],
+    'metadata_sections__not_in' => [ $localization_metadata_section, $internal_data_for_banner_metadata_section, \Tainacan\Entities\Metadata_Section::$default_section_slug ],
     'before' => '',
     'after' => '',
     'before_name' => '<input name="tabs" type="radio" id="tab-section-$id" />
@@ -104,7 +104,7 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
 
 <div class="tainacan-item-section tainacan-item-section--metadata-sections">
     <h2 class="tainacan-single-item-section" id="tainacan-item-metadata-label">
-        <?php echo esc_html( get_theme_mod($prefix . '_section_metadata_label', __( 'Informações', 'tainacan-blocksy' ) ) ); ?>
+        <?php echo esc_html( get_theme_mod($prefix . '_section_metadata_label', __( 'Navegue pelas informações', 'tainacan-blocksy' ) ) ); ?>
     </h2>
     <div class="metadata-section-layout--tabs">
         <?php tainacan_the_metadata_sections( $sections_args ); ?>

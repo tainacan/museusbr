@@ -1,6 +1,10 @@
 <?php
 
+/**
+ * Esta classe contém a lógica para adicionar um campo de ícone para as seções de metadados 
+ */
 class MUSEUSBRMetadataSectionIconHook {
+
 	use Singleton;
 
 	public $icon_field = 'museusbr_metadata_section_icon';

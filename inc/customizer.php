@@ -61,6 +61,17 @@ function museusbr_options_panel($options) {
                             $metadata_sections_options
                         )
                     ],
+                    'museusbr_internal_data_for_banner_metadata_section' => [
+                        'label' => __( 'Seção de metadados internos para banner', 'museusbr' ),
+                        'type' => 'ct-select',
+                        'value' => 0,
+                        'view' => 'text',
+                        'design' => 'inline',
+                        'sync' => '',
+                        'choices' => blocksy_ordered_keys(
+                            $metadata_sections_options
+                        )
+                    ],
                 ]
             ]
         ]

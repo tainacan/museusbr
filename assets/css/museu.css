@@ -30,6 +30,7 @@
     font-weight: 300;
     font-weight: 300;
     font-size: 1.125rem;
+    line-height: 1.45;
 }
 .single .museu-item-other-metadata {
     color: white;
@@ -64,9 +65,11 @@
     display: none;
     visibility: hidden;
 }
-.single .museu-item-thumbnail-container .metadata-section__metadata-list > div:not(.metadata-slug-codigo-identificador-ibram-2):not(.metadata-slug-museu-matriz) {
-    display: none;
-    visibility: hidden;
+.single .museu-item-thumbnail-container .metadata-section__metadata-list > .metadata-slug-registrado,
+.single .museu-item-thumbnail-container .metadata-section__metadata-list > .metadata-slug-cadastrado {
+    font-size: 0;
+    line-height: 0;
+    margin-bottom: 1rem;
 }
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-museu-matriz h3,
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-codigo-identificador-ibram-2 h3 {
@@ -83,7 +86,8 @@
     font-size: 1.25rem;
     margin-right: 0.5rem;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a,
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-brasiliana a {
     display: inline-flex;
     align-items: center;
     min-height: var(--theme-button-min-height);
@@ -105,7 +109,9 @@
     font-size: 0;
 }
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a:hover,
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a:focus {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a:focus,
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-brasiliana a:hover,
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-brasiliana a:focus {
     background-color: var(--theme-palette-color-1);
 }
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a::after {
@@ -121,9 +127,26 @@
     display: block;
     font-size: 1rem;
 }
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-brasiliana a::after {
+    font-size: 1.5rem;
+    line-height: 1;
+    content: '';
+    margin-left: 0.875rem;
+    background-image: url('../images/brasiliana.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-brasiliana a::before {
+    content: 'Ver na Brasiliana';
+    display: block;
+    font-size: 1rem;
+}
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-compound-group {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
     margin-bottom: 1.5rem;
 }
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a {
@@ -190,11 +213,10 @@
     padding: 0.5rem;
 }
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label > h3 {
-    --theme-font-size: 16px;
+    --theme-font-size: 14px;
     --theme-text-transform: uppercase;
     --theme-font-weight: 600;
-    margin-left: 0.25rem !important;
-    margin-right: 0.5rem !important;
+    margin: .25rem 1.5rem !important;
 }
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-compound-group {
     column-width: 200px;
@@ -210,13 +232,15 @@
     margin: 0.5rem;
     padding: 0.5rem;
     display: flex;
+    flex-direction: column;
     gap: 2px 0.5rem;
+    justify-content: center;
     align-items: center;
-    text-align: left;
+    text-align: center;
     border-radius: 8px;
     border: none;
-    background-color: rgba(255,255,255, 0.0);
-    box-shadow: 0px 0px 0px 0px #000;
+    background-color: rgba(255,255,255, 1.0);
+    box-shadow: 2px 2px 6px -3px #000;
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, padding-left 0.2s ease;
 }
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label > h3 {
@@ -225,9 +249,17 @@
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover,
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus,
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label {
-    background-color: rgba(255,255,255, 1.0);
-    box-shadow: 2px 2px 6px -3px #000;
-    padding-left: 1rem;
+    background-color: var(--theme-palette-color-2);
+}
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover h3,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus h3,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label h3 {
+    --theme-headings-color: white;
+}
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:hover i::before,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs label:focus i::before,
+.single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs input:checked + label i::before {
+    color: white;
 }
 .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
     border-top: none;
@@ -244,8 +276,15 @@
     max-width: var(--theme-default-editor, var(--theme-block-max-width));
     margin-inline: var(--theme-default-editor, auto);
 }
+
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
+    flex-basis: 320px;
+    margin: 0;
+}
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list {
-    column-width: 272px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
     --theme-font-weight: 600;
     --theme-font-size: 20px;
     --theme-line-height: 1.2;
@@ -267,6 +306,7 @@
 }
 .single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate {
     column-span: all;
+    min-width: 100vw;
     width: 100vw;
     margin-top: 2rem;
     margin-bottom: 0;
@@ -280,14 +320,17 @@
 .single .tainacan-item-section--special-museusbr-localization .metadata-type-geocoordinate > p {
     margin-bottom: 0px;
 }
+.single .tainacan-metadata-value:empty {
+    display: none;
+}
 @media screen and (min-width: 768px) {
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
         display: grid;
         gap: 1rem;
         justify-content: space-between;
         align-items: stretch;
-        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-        grid-template-rows: repeat(2, 100px);
+        grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+        grid-template-rows: 142px;
     }
 }
 @media screen and (min-width: 1000px) {
@@ -320,11 +363,15 @@
         padding: 0.5rem;
     }
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
-        padding-top: 2rem;
+        padding-top: 4rem;
+        --theme-content-spacing: 2.875rem;
+    }
+    .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section .tainacan-compound-group {
+        --theme-content-spacing: 1.5rem;
     }
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section > div { 
         column-width: var(--metadata-column-width, 380px);
-        column-gap: 2rem;
+        column-gap: 3rem;
     }
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section > div > div {
         break-inside: avoid;

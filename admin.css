@@ -308,3 +308,27 @@ body.user-is-gestor-do-museu {
     -webkit-column-count: 1;
     column-count: 1
 }
+
+/* Modal de Mídias, alteração do campo Legenda */
+.user-is-gestor-do-museu .media-sidebar .setting[data-setting="caption"] .name {
+    font-size: 0;
+}
+.user-is-gestor-do-museu .media-sidebar .setting[data-setting="caption"] .name::after {
+    font-size: 15px;
+    content: 'Créditos';
+}
+.user-is-gestor-do-museu .media-sidebar .setting .name {
+    font-size: 15px;
+}
+.user-is-gestor-do-museu .media-sidebar .copy-to-clipboard-container,
+.user-is-gestor-do-museu .media-sidebar .setting[data-setting="url"] {
+    display: none;
+}
+
+/* Seção de dados internos para o banner não deve aparecer para o gestor */
+.user-is-gestor-do-museu #metadata-section-id-99890,
+.user-is-gestor-do-museu .metadata-section-slug-dados-internos-para-o-banner {
+    margin-top: 2rem;
+    display: none !important;
+    visibility: hidden !important;
+}
