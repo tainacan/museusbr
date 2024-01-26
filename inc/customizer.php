@@ -86,7 +86,7 @@ add_filter( 'blocksy_extensions_customizer_options', 'museusbr_options_panel', 1
 function tainacan_blocksy_render_document_instead_of_featured_image() {
     $prefix = blocksy_manager()->screen->get_prefix();
 
-    if ( str_contains($prefix, 'tnc_col_') && str_contains($prefix, '_item_single') ) {
+    if ( str_contains($prefix, museusbr_get_collection_post_type() ) && str_contains($prefix, '_item_single') ) {
 
         $page_hero_section_style = get_theme_mod($prefix . '_hero_section' , get_theme_mod($prefix . '_page_header_background_style', 'type-1'));
         if ( $page_hero_section_style === 'type-2' ) {

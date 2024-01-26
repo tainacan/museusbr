@@ -10,6 +10,9 @@
  */
 function museusbr_user_is_gestor( $user = NULL ) {
 	
+	if ( !is_user_logged_in() )
+			return false;
+
 	if ( !isset($user) || $user === NULL )
 		$user = wp_get_current_user();
 

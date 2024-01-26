@@ -18,10 +18,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.home .wp-block-cover .wp-block-search__inside-wrapper {
+.home .wp-block-getwid-section .wp-block-search__inside-wrapper {
     --theme-form-field-height: 62px;
 }
-.home .wp-block-cover .wp-block-search__inside-wrapper .wp-block-search__button svg {
+.home .wp-block-getwid-section .wp-block-search__inside-wrapper .wp-block-search__button svg {
     min-height: 40px;
     min-width: 40px;
 }
@@ -58,33 +58,16 @@
 
 /* Cartões com links da home */
 @media screen and (max-width: 1200px) {
-    .home .wp-block-cover .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
+    .home .wp-block-getwid-section .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
         flex-basis: 50%;
     }
 }
 @media screen and (max-width: 768px) {
-    .home .wp-block-cover .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
+    .home .wp-block-getwid-section .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
         flex-basis: 100%;
     }
 }
 
-/* Lista de itens do Tainacan na página inicial */
-.home .wp-block-tainacan-faceted-search .theme-items-list,
-.home .wp-block-tainacan-faceted-search .theme-items-list #items-list-results,
-.home .wp-block-tainacan-faceted-search .theme-items-list .table-container,
-.home .entry-content:not(.ct-container) .theme-items-list:not(.is-fullscreen) .table-container {
-    padding: 0 !important;
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    margin: 0;
-}
-.home .wp-block-tainacan-faceted-search .theme-items-list .tainacan-leaflet-map-container {
-    border-radius: 0px;
-}
-.home .wp-block-tainacan-faceted-search .theme-items-list .search-control {
-    display: none;
-    visibility: hidden;
-}
 
 /* Botão de login */
 .ct-header-account {

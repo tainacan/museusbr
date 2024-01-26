@@ -7,11 +7,11 @@ function museusbr_the_login_message( $message ) {
     return $message . '<div class="museusbr-login-message">
         <p>
             Estamos de cara nova e trabalhando para melhorar ainda mais a experiência dos usuários!
-            Nesse primeiro momento, os usuários já cadastrados na antiga plataforma MuseusBR, vinculados ao IDCutura, poderão ativar sua conta utilizando o recurso “<a href="https://museusbr.tainacan.org/wp-login.php?action=lostpassword">Recuperar senha.</a>”
+            Neste momento, não estamos aceitando novos cadastros de museus. O IBRAM abrirá uma campanha de recadastramento ainda no primeiro semestre deste ano e fará uma chamada pública para novos cadastros, atualizações de informação e demais ações para potencialização do Cadastro Nacional de Museus.</a>
         </p>
         <p>Em caso de dúvidas, não hesite em entrar em contato com nossa equipe:</p>
         <ul>
-            <li><a href="mailto:icnm@museus.gov.br">icnm@museus.gov.br</a></li>
+            <li><a href="mailto:cnm@museus.gov.br">cnm@museus.gov.br</a></li>
             <li><a href="mailto:registro@museus.gov.br">registro@museus.gov.br</a></li>
             <li><a href="tel:+556135214291">(61) 3521-4291</a></li>
             <li><a href="tel:+556135214329">(61) 3521-4329</a></li>

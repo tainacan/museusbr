@@ -31,6 +31,11 @@
     font-weight: 300;
     font-size: 1.125rem;
     line-height: 1.45;
+    overflow-x: hidden;
+    max-height: 350px;
+    word-break: break-word;
+    max-width: 100%;
+    overflow-y: auto;
 }
 .single .museu-item-other-metadata {
     color: white;
