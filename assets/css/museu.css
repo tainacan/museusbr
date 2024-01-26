@@ -30,12 +30,14 @@
     font-weight: 300;
     font-weight: 300;
     font-size: 1.125rem;
-    line-height: 1.45;
+    line-height: 1.35;
     overflow-x: hidden;
     max-height: 350px;
     word-break: break-word;
     max-width: 100%;
     overflow-y: auto;
+    scrollbar-color: rgba(256, 256, 256, 0.6) transparent;
+    scrollbar-width: thin;
 }
 .single .museu-item-other-metadata {
     color: white;
