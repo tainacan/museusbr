@@ -82,7 +82,6 @@ function museusbr_list_museus_collection_in_admin($args, $post_type){
 }
 add_filter('register_post_type_args', 'museusbr_list_museus_collection_in_admin', 10, 2);
 
-
 /* ----------------------------- INC IMPORTS  ----------------------------- */
 require get_stylesheet_directory() . '/inc/museu-single-tweaks.php';
 require get_stylesheet_directory() . '/inc/customizer.php';
@@ -91,3 +90,4 @@ require get_stylesheet_directory() . '/inc/singleton.php';
 require get_stylesheet_directory() . '/inc/metadata-section-icon-hook.php';
 require get_stylesheet_directory() . '/inc/block-styles.php';
 require get_stylesheet_directory() . '/inc/login-form-tweaks.php';
+require get_stylesheet_directory() . '/inc/metabase.php';

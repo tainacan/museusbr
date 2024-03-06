@@ -316,6 +316,14 @@ body.user-is-gestor-do-museu {
 .user-is-gestor-do-museu .media-sidebar .setting[data-setting="caption"] .name::after {
     font-size: 15px;
     content: 'Créditos';
+    font-weight: bold;
+}
+.user-is-gestor-do-museu .media-sidebar #alt-text-description {
+    font-size: 0;
+}
+.user-is-gestor-do-museu .media-sidebar #alt-text-description::after {
+    content: 'Campo para acessibilidade. Se não for útil para leitores de tela, deixe em branco.';
+    font-size: 12px;
 }
 .user-is-gestor-do-museu .media-sidebar .setting .name {
     font-size: 15px;

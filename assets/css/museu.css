@@ -114,6 +114,7 @@
     border: var(--theme-button-border);
     background-color: var(--theme-palette-color-2);
     font-size: 0;
+    margin-bottom: 0.75rem;
 }
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a:hover,
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-site-4 a:focus,
@@ -194,6 +195,13 @@
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-instagram-2 .wp-block-buttons > a::before {
   content: "\f16d";
 }
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-mastodon .wp-block-buttons > a::before {
+    content: "\f4f6";
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-spotify .wp-block-buttons > a::before {
+    content: "\f1bc";
+}
+
 .single .museu-item-sections-navigator ol {
     padding: 1rem;
     display: flex;
