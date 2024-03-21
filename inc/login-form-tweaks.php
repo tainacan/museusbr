@@ -6,10 +6,9 @@
 function museusbr_the_login_message( $message ) {
     return $message . '<div class="museusbr-login-message">
         <p>
-            Estamos de cara nova e trabalhando para melhorar ainda mais a experiência dos usuários!
-            Neste momento, não estamos aceitando novos cadastros de museus. O IBRAM abrirá uma campanha de recadastramento ainda no primeiro semestre deste ano e fará uma chamada pública para novos cadastros, atualizações de informação e demais ações para potencialização do Cadastro Nacional de Museus.</a>
+            Estamos de cara nova e trabalhando para melhorar ainda mais a experiência dos usuários! A nova Plataforma MuseusBR em breve será aberta para novos cadastros.
         </p>
-        <p>Em caso de dúvidas, não hesite em entrar em contato com nossa equipe:</p>
+        <p>Até lá, caso deseje cadastrar novo museu, atualizar informações de museu já cadastrado ou obter dados e tirar dúvidas, não hesite em entrar em contato com nossa equipe:</p>
         <ul>
             <li><a href="mailto:cnm@museus.gov.br">cnm@museus.gov.br</a></li>
             <li><a href="mailto:registro@museus.gov.br">registro@museus.gov.br</a></li>

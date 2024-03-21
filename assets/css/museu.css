@@ -377,6 +377,9 @@
         font-size: 3.5rem;
         padding: 0.5rem;
     }
+    .single .tainacan-item-section--metadata-sections {
+        max-width: var(--theme-normal-container-max-width);
+    }
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs .tainacan-item-section {
         padding-top: 4rem;
         --theme-content-spacing: 2.875rem;

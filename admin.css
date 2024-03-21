@@ -309,7 +309,11 @@ body.user-is-gestor-do-museu {
     column-count: 1
 }
 
-/* Modal de Mídias, alteração do campo Legenda */
+/* Modal de Mídias, alteração de alguns campos */
+.user-is-gestor-do-museu .media-sidebar .attachment-info {
+    display: none;
+    visibility: hidden;
+}
 .user-is-gestor-do-museu .media-sidebar .setting[data-setting="caption"] .name {
     font-size: 0;
 }

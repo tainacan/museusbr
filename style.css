@@ -4,7 +4,7 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.2.0
+ * Version: 0.2.1
  */
  /* Barra de busca dos banners */
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
@@ -132,6 +132,9 @@
 }
 .theme-items-list {
     --theme-box-shadow: 0 4px 12px -6px rgba(0,0,0,0.7);
+}
+.theme-items-list:not(.tainacan-modal) {
+    z-index: 0;
 }
 .theme-items-list .search-control {
     background: var(--tainacan-primary) !important;
