@@ -201,6 +201,18 @@
 .single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-spotify .wp-block-buttons > a::before {
     content: "\f1bc";
 }
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-tiktok .wp-block-buttons > a {
+    background-image: url('../images/tiktok.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+}
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-threads .wp-block-buttons > a {
+    background-image: url('../images/threads.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+}
 
 .single .museu-item-sections-navigator ol {
     padding: 1rem;
@@ -338,6 +350,7 @@
 .single .tainacan-metadata-value:empty {
     display: none;
 }
+
 @media screen and (min-width: 768px) {
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {
         display: grid;

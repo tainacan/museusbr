@@ -45,7 +45,6 @@ function museusbr_museu_single_page_hero_custom_meta_before() {
 				return $metadatum_value_before;
 			}, 10, 2 );
 
-
             add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metadatum_value_before, $item_metadatum) {
 
                 // Metadatado do REGISTRADO
