@@ -157,57 +157,58 @@
     margin-top: 1rem;
     margin-bottom: 1.5rem;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url .wp-block-buttons > a {
     background: var(--theme-palette-color-3);
     border-radius: 0.25rem;
     width: 36px;
     height: 36px;
     padding: 4px;
     font-size: 0;
+    display: block;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type > p {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url > p {
     display: none;
     margin-top: 0.125rem;
 }   
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a:hover,
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a:focus {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url .wp-block-buttons > a:hover,
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url .wp-block-buttons > a:focus {
     background: var(--theme-palette-color-2);
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url .wp-block-buttons > a::before {
     font-family: 'Line Awesome Brands';
     font-weight: 900;
     font-size: 1.75rem;
     line-height: 1;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-youtube .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-youtube .wp-block-buttons > a::before {
   content: "\f167";
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-facebook-2 .wp-block-buttons  > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-facebook-2 .wp-block-buttons  > a::before {
   content: "\f39e";
   font-size: 1.5rem;
   line-height: 1.125;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-twitter-2 .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-twitter-2 .wp-block-buttons > a::before {
   content: "\f099";
   font-size: 1.5rem;
   line-height: 1.25;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-instagram-2 .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-instagram-2 .wp-block-buttons > a::before {
   content: "\f16d";
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-mastodon .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-mastodon .wp-block-buttons > a::before {
     content: "\f4f6";
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-spotify .wp-block-buttons > a::before {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-spotify .wp-block-buttons > a::before {
     content: "\f1bc";
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-tiktok .wp-block-buttons > a {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-tiktok .wp-block-buttons > a {
     background-image: url('../images/tiktok.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 24px 24px;
 }
-.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-ainacan_url_plugin_metadata_type.metadata-slug-threads .wp-block-buttons > a {
+.single .museu-item-other-metadata .metadata-section__metadata-list .metadata-slug-redes-sociais-3 .tainacan-metadatum.metadata-type-url.metadata-slug-threads .wp-block-buttons > a {
     background-image: url('../images/threads.png');
     background-position: center;
     background-repeat: no-repeat;
