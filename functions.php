@@ -82,6 +82,35 @@ function museusbr_list_museus_collection_in_admin($args, $post_type){
 }
 add_filter('register_post_type_args', 'museusbr_list_museus_collection_in_admin', 10, 2);
 
+/**
+ * Pré-preenche o metadado do Código de Itentificação do Ibram com o ID do item
+ */
+function museusbr_preset_codigo_id($item) {
+	if ( $item instanceof \Tainacan\Entities\Item ) {
+		$collection_id = $item->get_collection_id();
+
+	 	if ( $collection_id == museusbr_get_collection_id() ) {
+			
+			// O metadado da instituição deve vir pré-preenchido
+			$codigo_metadatum = new \Tainacan\Entities\Metadatum( 15171 );
+
+			if ( $codigo_metadatum instanceof \Tainacan\Entities\Metadatum ) {
+				
+				$new_codigo_item_metadatum = new \Tainacan\Entities\Item_Metadata_Entity( $item, $codigo_metadatum );
+		
+				if ( !$new_codigo_item_metadatum->has_value() ) {
+					$new_codigo_item_metadatum->set_value( $item->get_id() );
+		
+					if ( $new_codigo_item_metadatum->validate() )
+						\Tainacan\Repositories\Item_Metadata::get_instance()->insert( $new_codigo_item_metadatum );
+				}
+
+			}
+		}
+	}
+};
+add_action('tainacan-insert', 'museusbr_preset_codigo_id', 10, 1);
+
 /* ----------------------------- INC IMPORTS  ----------------------------- */
 require get_stylesheet_directory() . '/inc/museu-single-tweaks.php';
 require get_stylesheet_directory() . '/inc/customizer.php';
