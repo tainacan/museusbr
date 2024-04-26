@@ -351,6 +351,14 @@
 .single .tainacan-metadata-value:empty {
     display: none;
 }
+.single .museu-selos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+}
 
 @media screen and (min-width: 768px) {
     .single .tainacan-item-section--metadata-sections .metadata-section-layout--tabs {

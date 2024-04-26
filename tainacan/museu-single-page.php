@@ -66,7 +66,30 @@ add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metada
     if ( $item_metadatum->get_metadatum()->get_id() == 1513 )
         $metadatum_value_before .= 'R$';
 
+    // Metadados dos selos
+    if ( $item_metadatum->get_metadatum()->get_metadata_section_id() == 127131 &&  $item_metadatum->get_metadatum()->get_metadata_type() == 'Tainacan\\Metadata_Types\\Taxonomy' ) {
+        $values = is_array( $item_metadatum->get_value() ) ? $item_metadatum->get_value() : [ $item_metadatum->get_value() ];
+        
+        $metadatum_value_before .= '<div class="museu-selos">';
+        foreach ($values as $value) {
+            if ( $value instanceof Tainacan\Entities\Term ) {
+                $metadatum_value_before .= '<a title="' . $value->get_description() . '" href="' . $value->get_url() . '"><img src="' . $value->get_header_image() . '" alt="' . $value->get_name() . '" style="width: 150px; height: auto;"></a>';
+            }
+        }
+        $metadatum_value_before .= '</div><div class="screen-reader-text">';
+    }
+
     return $metadatum_value_before;
+}, 10, 2 );
+
+add_filter( 'tainacan-get-item-metadatum-as-html-after-value', function($metadatum_value_after, $item_metadatum) {
+
+    // Metadados dos selos
+    if ( $item_metadatum->get_metadatum()->get_metadata_section_id() == 127131 &&  $item_metadatum->get_metadatum()->get_metadata_type() == 'Tainacan\\Metadata_Types\\Taxonomy' ) {
+        $metadatum_value_after .= '</div>';
+    }
+
+    return $metadatum_value_after;
 }, 10, 2 );
 
 add_filter('tainacan-get-metadata-section-as-html-before-name--index-1', function($before, $metadata_section) {
