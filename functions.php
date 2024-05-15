@@ -120,3 +120,4 @@ require get_stylesheet_directory() . '/inc/metadata-section-icon-hook.php';
 require get_stylesheet_directory() . '/inc/block-styles.php';
 require get_stylesheet_directory() . '/inc/login-form-tweaks.php';
 require get_stylesheet_directory() . '/inc/metabase.php';
+require get_stylesheet_directory() . '/inc/certificado.php';

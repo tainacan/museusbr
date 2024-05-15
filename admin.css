@@ -344,3 +344,8 @@ body.user-is-gestor-do-museu {
     display: none !important;
     visibility: hidden !important;
 }
+
+/* Tabela de Museus */
+.column-museu_certificado {
+    width: 180px;
+}
