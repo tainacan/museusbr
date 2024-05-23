@@ -1,5 +1,5 @@
 body.user-is-gestor-do-museu:not(.profile-php) #wpwrap {
-    background-image: url('./assets/images/bg-form.png');
+    background-image: url('../images/bg-form.png');
     background-size: cover;
     background-repeat: no-repeat;
 }

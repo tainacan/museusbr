@@ -61,7 +61,28 @@ class MUSEUSBR_Certificado_Page {
      * Add the custom css to the page
      */
     function admin_print_certificado_custom_css() {
-        wp_enqueue_style( 'museusbr-certificado-style', get_stylesheet_directory_uri() . '/certificado.css', array(), wp_get_theme()->get('Version'), 'print' );
+        wp_dequeue_style( 'dashicons' );
+        wp_dequeue_style( 'admin-bar' );
+        wp_dequeue_style( 'common' );
+        wp_dequeue_style( 'forms' );
+        wp_dequeue_style( 'admin-menu' );
+        wp_dequeue_style( 'dashboard' );
+        wp_dequeue_style( 'list-tables' );
+        wp_dequeue_style( 'edit' );
+        wp_dequeue_style( 'revisions' );
+        wp_dequeue_style( 'media' );
+        wp_dequeue_style( 'themes' );
+        wp_dequeue_style( 'about' );
+        wp_dequeue_style( 'nav-menus' );
+        wp_dequeue_style( 'wp-pointer' );
+        wp_dequeue_style( 'widgets' );
+        wp_dequeue_style( 'site-icon' );
+        wp_dequeue_style( 'l10n' );
+        wp_dequeue_style( 'buttons' );
+        wp_dequeue_style( 'wp-auth-check' );
+        wp_dequeue_style( 'media-views' );
+        wp_dequeue_style( 'museusbr-admin-style' );
+        wp_enqueue_style( 'museusbr-certificado-style', get_stylesheet_directory_uri() . '/assets/css/certificado.css', array(), wp_get_theme()->get('Version'), 'print' );
     }
 
     /**
@@ -118,8 +139,7 @@ class MUSEUSBR_Certificado_Page {
         if ( !$certificado_items->have_posts() ) {
             ?>
                 <div class="wrap">
-                    <h1><?php _e( 'Certificado de Registro no MuseusBR', 'museusbr'); ?></h1>
-                    <p><?php _e( 'Certificado não encontrado', 'museusbr' ); ?></p>
+                   <h1><?php  _e('Museu não encontrado', 'museusbr'); ?></h1>
                 </div>
             <?php 
 
@@ -131,14 +151,72 @@ class MUSEUSBR_Certificado_Page {
         ?>
             <div class="wrap">
                 
-                <h1 
-                        style="font-size: 0.75cm;"
-                        class="wp-heading-inline">
-                    <?php _e('Certificado de Registro no MuseusBR', 'museusbr'); ?>
-                </h1>
-                <p style="font-size: 0.5cm">
-                    Certificamos que <strong><?php the_title(); ?></strong> foi registrado no Cadastro Nacional de Museus através da plataforma MuseusBR.
-                </p>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="10%" height="91">&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><h1>CERTIFICADO</h1></td>
+                        <td width="10%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><p>Certificamos que a instituição <br />
+                        <strong><?php the_title(); ?></strong><br />foi registrado(a) no Cadastro Nacional de Museus através da plataforma MuseusBR.</p></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><p>Brasília, DF, <?php echo date(get_option('date_format')); ?></p></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/img-assinatura.png" alt="" width="282" height="65" /></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle">Imagem assinatura de alguem do Ibram</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><hr /></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-sbm.png" class="logo" /></td>
+                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-ibram.png" class="logo" /></td>
+                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-gov.png" class="logo" /></td>
+                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-museu.png" class="logo" /></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
                 
             </div>
         <?php

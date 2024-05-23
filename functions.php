@@ -47,7 +47,7 @@ add_action( 'wp_enqueue_scripts', 'museusbr_register_scripts_and_styles' );
  * Registra estilo do lado admin
  */
 function museusbr_admin_enqueue_styles() {
-	wp_enqueue_style( 'museusbr-admin-style', get_stylesheet_directory_uri() . '/admin.css' );
+	wp_enqueue_style( 'museusbr-admin-style', get_stylesheet_directory_uri() . '/assets/css/admin.css' );
 	wp_enqueue_style( 'line-awesome-icons', 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' );
 }
 add_action( 'admin_enqueue_scripts', 'museusbr_admin_enqueue_styles' );
