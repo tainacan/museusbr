@@ -48,6 +48,10 @@ add_action( 'wp_enqueue_scripts', 'museusbr_register_scripts_and_styles' );
  */
 function museusbr_admin_enqueue_styles() {
 	wp_enqueue_style( 'museusbr-admin-style', get_stylesheet_directory_uri() . '/assets/css/admin.css' );
+	wp_enqueue_script( 'museusbr-admin-script', get_stylesheet_directory_uri() . '/assets/js/admin.js', array('wp-hooks'), wp_get_theme()->get('Version') );
+	wp_localize_script( 'museusbr-admin-script', 'museusbr_theme', array(
+        'museus_collection_id' => museusbr_get_collection_id()
+    ) );
 	wp_enqueue_style( 'line-awesome-icons', 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' );
 }
 add_action( 'admin_enqueue_scripts', 'museusbr_admin_enqueue_styles' );

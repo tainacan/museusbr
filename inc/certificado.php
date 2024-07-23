@@ -54,7 +54,9 @@ class MUSEUSBR_Certificado_Page {
      * Change the admin title
      */
     function certificado_admin_title($admin_title, $title) {
-        return __( 'Certificado de Registro no MuseusBR', 'museusbr');
+        if ( isset( $_GET['page'] ) && $_GET['page'] === 'certificado' )
+            $admin_title = __( 'Certificado de Registro no MuseusBR', 'museusbr' );
+        return $admin_title;
     }
 
     /**
@@ -90,7 +92,7 @@ class MUSEUSBR_Certificado_Page {
      */
     function museu_certificado_column() {
         global $post;
-        ?>
+        if ( $post->ID == 124523 ) : ?>
         <a 
             style="cursor: pointer;"
             onclick="
@@ -111,7 +113,7 @@ class MUSEUSBR_Certificado_Page {
             ">
             <?php echo __('Imprimir certificado', 'museusbr'); ?>
         </a>
-        <?php
+        <?php endif;
     }
 
     /**
