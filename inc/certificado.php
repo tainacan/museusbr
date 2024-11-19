@@ -1,6 +1,6 @@
 <?php
 
-if ( is_admin() ) {
+if ( is_admin() && MUSEUSBR_ENABLE_CERTIFICADO_CADASTRO ) {
     new MUSEUSBR_Certificado_Page();
 }
 
@@ -17,8 +17,8 @@ class MUSEUSBR_Certificado_Page {
      */
     public function __construct() {
         add_action( 'admin_menu', array($this, 'add_menu_certificado_page' ));
-        add_filter( 'manage_' . museusbr_get_collection_post_type() . '_posts_columns', array( $this, 'set_custom_museu_certificado_column' ));
-        add_action( 'manage_' . museusbr_get_collection_post_type() . '_posts_custom_column' , array( $this, 'museu_certificado_column'), 10, 2 );
+        add_filter( 'manage_' . museusbr_get_museus_collection_post_type() . '_posts_columns', array( $this, 'set_custom_museu_certificado_column' ));
+        add_action( 'manage_' . museusbr_get_museus_collection_post_type() . '_posts_custom_column' , array( $this, 'museu_certificado_column'), 10, 2 );
         add_action( 'admin_print_styles-admin_page_certificado', array( $this, 'admin_print_certificado_custom_css' ) );
         add_filter( 'admin_title', array( $this, 'certificado_admin_title' ), 10, 2);
 
@@ -55,7 +55,7 @@ class MUSEUSBR_Certificado_Page {
      */
     function certificado_admin_title($admin_title, $title) {
         if ( isset( $_GET['page'] ) && $_GET['page'] === 'certificado' )
-            $admin_title = __( 'Certificado de Registro no MuseusBR', 'museusbr' );
+            $admin_title = __( 'Certificado de Cadastro no MuseusBR', 'museusbr' );
         return $admin_title;
     }
 
@@ -90,10 +90,15 @@ class MUSEUSBR_Certificado_Page {
     /**
      * Display the custom column
      */
-    function museu_certificado_column() {
+    function museu_certificado_column($column_name) {
         global $post;
-        if ( $post->ID == 124523 ) : ?>
+
+        if ( $column_name != 'museu_certificado' )
+            return;
+
+        ?>
         <a 
+            class="wp-button button"
             style="cursor: pointer;"
             onclick="
                 var iframe = document.createElement('iframe');
@@ -113,7 +118,7 @@ class MUSEUSBR_Certificado_Page {
             ">
             <?php echo __('Imprimir certificado', 'museusbr'); ?>
         </a>
-        <?php endif;
+        <?php
     }
 
     /**
@@ -136,7 +141,7 @@ class MUSEUSBR_Certificado_Page {
 
         $this->id_certificado = $_GET['id'];
         
-        $certificado_items = $this->tainacan_items_repository->fetch( array( 'id' => $this->id_certificado ), museusbr_get_collection_id() );
+        $certificado_items = $this->tainacan_items_repository->fetch( array( 'id' => $this->id_certificado ), museusbr_get_museus_collection_id() );
 
         if ( !$certificado_items->have_posts() ) {
             ?>

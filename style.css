@@ -4,8 +4,9 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.2.10
+ * Version: 0.3.0
  */
+
  /* Barra de busca dos banners */
 .hero-section .museusbr-banner-searchbar .wp-block-search__inside-wrapper {
     --theme-form-field-height: 48px;
@@ -68,6 +69,20 @@
     }
 }
 
+/* Bloco de Abas */
+.wp-block-getwid-tabs {
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+.wp-block-getwid-tabs a {
+    color: var(--theme-headings-color);
+}
+.wp-block-getwid-tabs .wp-block-getwid-tabs__nav-link {
+    border-radius: 10px 10px 0px 0px;
+}
+.wp-block-getwid-tabs .wp-block-getwid-tabs__tab-content {
+    padding: 0;
+}
 
 /* Botão de login */
 .ct-header-account {
@@ -153,4 +168,52 @@
 }
 .theme-items-list .search-control .dropdown.is-inline .dropdown-content {
     background: var(--tainacan-primary) !important;
+}
+
+/* Formulário de Login */
+#user-registration,
+.ur-frontend-form {
+    background-color: transparent !important;
+}
+
+/* Formulário de Registro */
+.user-registration.ur-frontend-form {
+	padding: 0;
+	border: none;
+}
+.user-registration.ur-frontend-form  .ur-form-row {
+    gap: 2rem;	
+	justify-content: space-between;
+}
+.user-registration.ur-frontend-form  .ur-grid-1 {
+    max-width: 400px;	
+}
+.user-registration.ur-frontend-form .ur-grid-1::before {
+    content: 'Crie login e senha';
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+.user-registration.ur-frontend-form  .ur-grid-2 {
+	max-width: 55%;
+}
+.user-registration.ur-frontend-form .ur-grid-2::before {
+    content: 'Dados do usuário';
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+@media screen and (max-width: 768px ) {
+    .user-registration.ur-frontend-form  .ur-form-row {
+        flex-direction: column;
+    }
+    .user-registration.ur-frontend-form  .ur-grid-1 {
+        max-width: 100%;
+        width: 100% !important;
+        
+    }
+    .user-registration.ur-frontend-form  .ur-grid-2 {
+        max-width: 100%;
+        width: 100% !important;
+    }
 }

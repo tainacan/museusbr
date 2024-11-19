@@ -1,0 +1,248 @@
+.admin_page_registro .container,
+.admin_page_registro .modal,
+.admin_page_registro .media-modal {
+    font-size: 14px;
+    --bulma-primary-h: 200deg;
+    --bulma-primary-l: 36%;
+    --bulma-link-h: 209deg;
+    --bulma-link-l: 55%;
+    --bulma-info-h: 225deg;
+    --bulma-info-s: 3%;
+    --bulma-success-h: 151deg;
+    --bulma-success-s: 64%;
+    --bulma-success-l: 56%;
+    --bulma-warning-h: 32deg;
+    --bulma-warning-s: 98%;
+    --bulma-warning-l: 50%;
+    --bulma-danger-h: 350deg;
+    --bulma-danger-s: 51%;
+    --bulma-danger-l: 49%;
+    --bulma-scheme-h: 209;
+    --bulma-family-primary: Roboto,Oxygen,Ubuntu,Helvetica Neue,Helvetica,Arial,sans-serif;
+    --bulma-family-secondary: Roboto,Oxygen,Ubuntu,Helvetica Neue,Helvetica,Arial,sans-serif;
+    --bulma-button-padding-vertical: 0.25em;
+    --bulma-button-padding-horizontal: 1.5em;
+}
+.admin_page_registro .control,
+.admin_page_registro .input,
+.admin_page_registro .select,
+.admin_page_registro .textarea {
+    --bulma-input-radius: 3px;
+}
+.admin_page_registro .box {
+    --bulma-box-radius: 4px;
+    --bulma-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    --bulma-box-padding: 16px;
+    border: 1px solid #e6e6e6;
+}
+.admin_page_registro .title.is-1 {
+    font-size: 36px;
+    font-weight: 300;
+}
+.admin_page_registro .title.is-1 .tag {
+    --bulma-title-strong-weight: 600;
+    border-radius: 2px;
+    height: 1.65em;
+    font-size: 0.5em;
+    padding: 0.15em 0.5em;
+    margin-top: 0.65em;
+}
+.user-is-gestor-do-museu.admin_page_registro .title.is-1 {
+    font-weight: 300;
+}
+.admin_page_registro .title.is-2 {
+    font-size: 18px;
+    font-weight: 500;
+}
+.admin_page_registro .label {
+    font-size: 14px;
+    font-weight: normal;
+}
+.admin_page_registro .media-left .image {
+    border-radius: 2px;
+    border: 1px solid #e6e6e6;
+    width: 64px;
+}
+.admin_page_registro .button {
+    display: inline-flex;
+    align-items: baseline;
+    min-height: unset;
+    gap: 0.25em;
+}
+.admin_page_registro .button,
+.admin_page_registro .button:hover,
+.admin_page_registro .button:focus,
+.admin_page_registro .button:focus-visible {
+    font-weight: var(--bulma-button-weight);
+    padding: calc(var(--bulma-button-padding-vertical) - var(--bulma-button-border-width)) calc(var(--bulma-button-padding-horizontal) - var(--bulma-button-border-width));
+    background-color: hsl(var(--bulma-button-h),var(--bulma-button-s),calc(var(--bulma-button-background-l) + var(--bulma-button-background-l-delta)));
+    border-color: hsl(var(--bulma-button-h),var(--bulma-button-s),calc(var(--bulma-button-border-l) + var(--bulma-button-border-l-delta)));
+    border-style: var(--bulma-button-border-style);
+    border-width: var(--bulma-button-border-width);
+    box-shadow: 0 .0625em .125em hsla(var(--bulma-button-outer-shadow-h),var(--bulma-button-outer-shadow-s),var(--bulma-button-outer-shadow-l),var(--bulma-button-outer-shadow-a)),0 .125em .25em hsla(var(--bulma-button-outer-shadow-h),var(--bulma-button-outer-shadow-s),var(--bulma-button-outer-shadow-l),var(--bulma-button-outer-shadow-a));
+    color: hsl(var(--bulma-button-h),var(--bulma-button-s),var(--bulma-button-color-l));
+    cursor: pointer;
+}
+.admin_page_registro .button .icon {
+    align-self: center;
+    line-height: 1em;
+}
+.admin_page_registro .button .icon svg {
+    height: 20px;
+}
+.admin_page_registro .attachment-edit-buttons {
+    display: flex;
+    gap: 1em;
+}
+.admin_page_registro .box .title.is-2 {
+    position: relative;
+    font-size: 17px;
+    font-weight: bold;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    width: 100%;
+    --bulma-icon-dimensions: 0.75em;
+}
+.admin_page_registro .box .title.is-2:not(.m-0)::after {
+    content: '';
+    width: calc(100% + 32px);
+    height: 100%;
+    left: -16px;
+    bottom: -12px;
+    position: absolute;
+    border-bottom: 1px solid #e6e6e6;
+}
+.admin_page_registro .box .title.is-2 .icon svg {
+    height: 18px;
+    color: #505253;
+}
+.admin_page_registro .box .field {
+    padding: 0.75rem 0.75rem 0.5rem 0rem;
+    margin-bottom: 0;
+}
+
+.admin_page_registro #file-preview-modal,
+.admin_page_registro #log-preview-modal {
+    --bulma-modal-z: 99999;
+    margin-top: 32px;
+}
+.admin_page_registro #log-preview-modal {
+    --bulma-modal-content-width: 386px;
+}
+.admin_page_registro #file-preview-modal .modal-card,
+.admin_page_registro #log-preview-modal .modal-card {
+    margin-right: 0;
+    max-height: 100vh;
+    height: 100%;
+}
+.admin_page_registro #file-preview-modal .modal-card-head,
+.admin_page_registro #log-preview-modal .modal-card-head {
+    border-start-end-radius: 0;
+}
+.admin_page_registro #file-preview-modal .modal-card-foot,
+.admin_page_registro #log-preview-modal .modal-card-foot {
+    border-end-end-radius: 0;
+}
+.admin_page_registro .might-have-text-warning:has( + .control > input[value=""] ) {
+    color: hsl(var(--bulma-warning-h),var(--bulma-warning-s),var(--bulma-warning-l)) !important;
+}
+
+.admin_page_registro .file.is-light {
+    --bulma-file-background-l: var(--bulma-light-l);
+    --bulma-file-cta-color-l: var(--bulma-link-light-invert-l);
+    --bulma-file-name-color-l: var(--bulma-link-light-invert-l);
+    width: 100%;
+    text-align: center;
+}
+.admin_page_registro .file .file-label {
+    font-size: 0.875em;
+}
+.admin_page_registro .file .file-cta {
+    border-style: dashed;
+    justify-content: center;
+    width: 100%;
+}
+.admin_page_registro .file.is-boxed .file-cta {
+    min-height: 88px;
+}
+.admin_page_registro .file-input.is-loading + .file-cta {
+    color: transparent !important;
+    pointer-events: none;
+}
+.admin_page_registro .file-input.is-loading + .file-cta::after {
+    left: calc(50% - .5em);
+    position: absolute;
+    position: absolute !important;
+    top: calc(50% - .5em);
+}
+.file-input.is-loading + .file-cta::after {
+    animation: spinAround .5s linear infinite;
+    border-bottom: 2px solid var(--bulma-loading-color);
+    border-left: 2px solid var(--bulma-loading-color);
+    border-radius: var(--bulma-radius-rounded);
+    border-right: 2px solid transparent;
+    border-top: 2px solid transparent;
+    content: "";
+    display: block;
+    height: 1em;
+    position: relative;
+    width: 1em;
+}
+
+.log-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0rem;
+}
+.log-list .log-item {
+    margin: 0 auto;
+    position: relative;
+    width: 50%;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+.log-list .log-item:first-child {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border: none !important;
+    margin: 0 auto 2rem auto !important;
+    text-align: center !important;
+}
+.log-list .log-item:nth-child(odd) {
+    padding-right: 2.5rem;
+    padding-left: 2px;
+    margin-left: 1px;
+    text-align: right;
+    border-right: 2px solid gray;
+}
+.log-list .log-item:nth-child(even) {
+    padding-left: 2rem;
+    padding-right: 2px;
+    margin-right: 1px;
+    text-align: left;
+    border-left: 2px solid gray;
+}
+.log-list .log-item:last-child {
+    border-image: linear-gradient(to top, white 0%, white 50%, gray 50%, gray 100%) 2;
+}
+.log-list .log-item .status-bullet {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    position: absolute;
+    border-radius: 100em;
+}
+.log-list .log-item:first-child .status-bullet {
+    bottom: -2rem;
+    right: calc(50% - 0.75rem) !important;
+}
+.log-list .log-item:nth-child(odd) .status-bullet {
+    right: -0.75rem;
+}
+.log-list .log-item:nth-child(even) .status-bullet {
+    left: calc(-0.75rem - 2px);
+}

@@ -6,13 +6,13 @@
 $prefix = blocksy_manager()->screen->get_prefix();
 
 /**
- * Lista somente os museus do usuário atual, se ele for gestor
+ * Não mostra metadados e seções de metadados privados para usuários que não são gestores ou parceiros
  */
 function museusbr_single_museu_pre_get_post( $query ) {
     if ( is_admin() )
         return;
     if ( in_array($query->query_vars['post_type'], ['tainacan-metadatum', 'tainacan-metasection']) ) {
-        if ( museusbr_user_is_gestor() ){
+        if ( museusbr_user_is_gestor_or_parceiro() ){
             $query->set( 'post_status', 'publish' );
         }
     }
@@ -147,6 +147,9 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
     <?php
     tainacan_the_metadata_sections( array(
         'metadata_section' => $localization_metadata_section,
+        'metadata_list_args' => array(
+            'display_slug_as_class' => true
+        )
     ) );
 
     if ($display_items_related_to_this) {

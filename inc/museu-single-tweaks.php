@@ -9,7 +9,7 @@
  */
 function museusbr_museu_single_page_hero_custom_meta_before() {
 
-	if ( get_post_type() == museusbr_get_collection_post_type() ) {
+	if ( get_post_type() == museusbr_get_museus_collection_post_type() ) {
 		
 		$item = tainacan_get_item();
 
@@ -19,7 +19,7 @@ function museusbr_museu_single_page_hero_custom_meta_before() {
 				if ( is_admin() )
 					return;
 				if ( in_array($query->query_vars['post_type'], ['tainacan-metadatum', 'tainacan-metasection']) ) {
-					if ( museusbr_user_is_gestor() ) {
+					if ( museusbr_user_is_gestor_or_parceiro() ) {
 						$query->set( 'post_status', 'publish' );
 					}
 				}
@@ -112,7 +112,7 @@ add_action('blocksy:hero:custom_meta:before', 'museusbr_museu_single_page_hero_c
  */
 function museusbr_museu_single_page_hero_custom_meta_after() {
 
-	if ( get_post_type() == museusbr_get_collection_post_type() ) {
+	if ( get_post_type() == museusbr_get_museus_collection_post_type() ) {
 		?>	
 				</div> <!-- Close the "museu-item-description-and-meta-wrapper" div -->
 			</div> <!-- Close the "museu-item-extra-container" div -->
@@ -154,7 +154,7 @@ add_action('blocksy:hero:custom_meta:after', 'museusbr_museu_single_page_hero_cu
  */
 function museusbr_museu_single_page_content( $content ) {
 
-	if ( ! is_singular( museusbr_get_collection_post_type() ) )
+	if ( ! is_singular( museusbr_get_museus_collection_post_type() ) )
 		return $content;
 	
 	ob_start();

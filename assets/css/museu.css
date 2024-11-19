@@ -294,28 +294,40 @@
     grid-column: 1/-1;
 }
 .single .tainacan-item-section--special-museusbr-gallery {
-    margin-top: 3.75rem;
+    margin-top: 2.5rem;
+    background: #02181E;
+    padding: 2.5rem 0 0.5rem 0;
 }
 .single .tainacan-item-section--special-museusbr-localization h2,
 .single .tainacan-item-section--special-museusbr-gallery h2,
+.single .tainacan-item-section--special-museusbr-gallery .tainacan-media-component,
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list,
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
     width: var(--theme-default-editor, var(--theme-block-width));
     max-width: var(--theme-default-editor, var(--theme-block-max-width));
     margin-inline: var(--theme-default-editor, auto);
 }
-
-.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
-    flex-basis: 320px;
-    margin: 0;
+.single .tainacan-item-section--special-museusbr-gallery h2 {
+    color: white;
+}
+.single .tainacan-item-section--special-museusbr-gallery .tainacan-media-component {
+    --swiper-theme-color: var(--theme-palette-color-8);
+    --swiper-navigation-color: var(--theme-palette-color-8);
+    --tainacan-media-metadata-color: var(--theme-palette-color-8);
+    --tainacan-media-background: #02181E;
 }
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem 2rem;
+    gap: 1rem 3rem;
     --theme-font-weight: 600;
     --theme-font-size: 20px;
     --theme-line-height: 1.2;
+}
+.single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > *:not(.metadata-type-geocoordinate) {
+    flex-basis: 360px;
+    flex-basis: max-content;
+    margin: 0;
 }
 .single .tainacan-item-section--special-museusbr-localization .metadata-section__metadata-list > * {
     break-inside: avoid;
