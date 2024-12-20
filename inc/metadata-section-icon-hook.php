@@ -45,16 +45,16 @@ class MUSEUSBRMetadataSectionIconHook {
 		?>
 		<div class="tainacan-museusbr-metadata-section-icon"> 
 			<div class="field tainacan-collection--section-header">
-				<h4><?php _e( 'Opções do MuseusBR', 'museusbr' ); ?></h4>
+				<h4>Opções do MuseusBr</h4>
 				<hr>
 			</div>
 			<div class="field">
-				<label class="label"><?php _e('Ícone da seção:', 'museusbr'); ?></label>
+				<label class="label">Ícone da seção: </label>
 				<div class="control has-icons-right">
 					<input
 							class="input"
 							type="text"
-							placeholder="<?php _e('las la-university', 'museusbr'); ?>"
+							placeholder="las la-university"
 							name="<?php echo $this->icon_field; ?>"
 							oninput="
 								var icon = event.target.nextElementSibling.children[0];
@@ -64,7 +64,7 @@ class MUSEUSBRMetadataSectionIconHook {
 						<i id="museusbr-metadata-section-icon" class="las"></i>
 					</span>
 				</div>
-				<p class="help"><?php _e('Digite as classes necessárias para formar o ícone desejado. Mais informações ', 'museusbr'); ?><a href="https://icons8.com/line-awesome" target="_blank"><?php _e('na documentação da LineAwesome', 'museusbr'); ?></a>.</p>
+				<p class="help">Digite as classes necessárias para formar o ícone desejado. Mais informações<a href="https://icons8.com/line-awesome" target="_blank"> na documentação da LineAwesome</a>.</p>
 			</div>
 		</div>
 		<?php

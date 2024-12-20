@@ -31,8 +31,8 @@ class MUSEUSBR_Certificado_Page {
     public function add_menu_certificado_page() {
         add_submenu_page(
             '', // Definindo o parent como nulo para não criar um menu, apenas registrar a página
-            __('Certificado', 'museusbr'),
-            __('Certificado', 'museusbr'),
+            'Certificado',
+            'Certificado',
             'read',
             'certificado',
             array($this, 'render_certificado_page')
@@ -43,9 +43,9 @@ class MUSEUSBR_Certificado_Page {
      * Add the custom column to the table
      */
     function set_custom_museu_certificado_column($columns) {
-        $columns['author'] = __( 'Autor', 'museusbr' );
+        $columns['author'] = 'Autor';
         unset($columns['comments']);
-        $columns['museu_certificado'] = __( 'Certificado', 'museusbr' );
+        $columns['museu_certificado'] = 'Cadastro';
        
         return $columns;
     }
@@ -55,7 +55,7 @@ class MUSEUSBR_Certificado_Page {
      */
     function certificado_admin_title($admin_title, $title) {
         if ( isset( $_GET['page'] ) && $_GET['page'] === 'certificado' )
-            $admin_title = __( 'Certificado de Cadastro no MuseusBR', 'museusbr' );
+            $admin_title = 'Certificado de Cadastro no MuseusBr';
         return $admin_title;
     }
 
@@ -96,29 +96,31 @@ class MUSEUSBR_Certificado_Page {
         if ( $column_name != 'museu_certificado' )
             return;
 
-        ?>
-        <a 
-            class="wp-button button"
-            style="cursor: pointer;"
-            onclick="
-                var iframe = document.createElement('iframe');
-                iframe.className='pdfIframe'
-                document.body.appendChild(iframe);
-                iframe.style.display = 'none';
-                iframe.onload = function () {
-                    setTimeout(function () {
-                        iframe.focus();
-                        iframe.contentWindow.print();
-                        window.URL.revokeObjectURL('<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>')
-                        document.body.removeChild(iframe)
-                    }, 1);
-                };
-                iframe.src = '<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>';
-                
-            ">
-            <?php echo __('Imprimir certificado', 'museusbr'); ?>
-        </a>
-        <?php
+        if ( get_post_status( $post ) !== 'publish' ) : ?>
+            <p>O certificado poderá ser impresso assim que o cadastro for publicado.</p>
+        <?php else : ?>
+            <a 
+                class="wp-button button"
+                style="cursor: pointer;"
+                onclick="
+                    var iframe = document.createElement('iframe');
+                    iframe.className='pdfIframe'
+                    document.body.appendChild(iframe);
+                    iframe.style.display = 'none';
+                    iframe.onload = function () {
+                        setTimeout(function () {
+                            iframe.focus();
+                            iframe.contentWindow.print();
+                            window.URL.revokeObjectURL('<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>')
+                            document.body.removeChild(iframe)
+                        }, 1);
+                    };
+                    iframe.src = '<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>';
+                    
+                ">
+                Imprimir certificado
+            </a>
+        <?php endif;
     }
 
     /**
@@ -131,8 +133,8 @@ class MUSEUSBR_Certificado_Page {
         if ( !isset($_GET['id']) ) {
             ?>  
                 <div class="wrap">
-                    <h1><?php _e( 'Certificado', 'museusbr'); ?></h1>
-                    <p><?php _e( 'ID do museu certificado não informado.', 'museusbr' ); ?></p>
+                    <h1>Certificado</h1>
+                    <p>ID do museu certificado não informado.</p>
                 </div>
             <?php
             
@@ -146,7 +148,7 @@ class MUSEUSBR_Certificado_Page {
         if ( !$certificado_items->have_posts() ) {
             ?>
                 <div class="wrap">
-                   <h1><?php  _e('Museu não encontrado', 'museusbr'); ?></h1>
+                   <h1>Museu não encontrado</h1>
                 </div>
             <?php 
 
@@ -154,6 +156,35 @@ class MUSEUSBR_Certificado_Page {
         }
 
         $certificado_items->the_post();
+        $item = tainacan_get_item( get_the_ID() );
+
+        $codigo_identificador_ibram = '';
+			
+        try {
+            // O metadado da instituição deve vir pré-preenchido
+            $codigo_metadatum = new \Tainacan\Entities\Metadatum( museusbr_get_codigo_identificador_ibram_metadatum_id() );
+
+            if ( $codigo_metadatum instanceof \Tainacan\Entities\Metadatum ) {
+                
+                $codigo_item_metadatum = new \Tainacan\Entities\Item_Metadata_Entity( $item, $codigo_metadatum );
+        
+                if ( $codigo_item_metadatum->has_value() )
+                    $codigo_identificador_ibram = $codigo_item_metadatum->get_value();
+            }
+
+        } catch (Exception $e) {
+            error_log('Erro ao tentar acessar o metadado do Código de Identificação do Ibram: ' . $e->getMessage());
+        }
+
+        if ( !$codigo_identificador_ibram || empty($codigo_identificador_ibram) ) {
+            ?>
+                <div class="wrap">
+                   <h1>Código identificador do Museu não encontrado</h1>
+                </div>
+            <?php 
+
+            return;
+        }
 
         ?>
             <div class="wrap">
@@ -165,14 +196,18 @@ class MUSEUSBR_Certificado_Page {
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td width="10%" height="91">&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle"><h1>CERTIFICADO</h1></td>
+                        <td width="10%" height="40">&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><h1><strong>CERTIFICADO DE MUSEU CADASTRADO</strong></h1></td>
+                        <td width="10%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="10%" height="30">&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><h1 style="text-transform: uppercase;"><?php the_title(); ?></h1></td>
                         <td width="10%">&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle"><p>Certificamos que a instituição <br />
-                        <strong><?php the_title(); ?></strong><br />foi registrado(a) no Cadastro Nacional de Museus através da plataforma MuseusBR.</p></td>
+                        <td colspan="4" align="center" valign="middle"><p>O Ministério da Cultura, por meio do Instituto Brasileiro de Museus, reconhece a instituição <strong><?php the_title(); ?></strong>, código identificador <strong><?php echo $codigo_identificador_ibram; ?></strong> a partir dos critérios estabelecidos no art. 1º do Estatuto de Museus, Lei nº 11.904, de 14 de janeiro de 2009. Informações verificadas pelo Cadastro Nacional de Museus.</p></td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
@@ -187,17 +222,12 @@ class MUSEUSBR_Certificado_Page {
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle">&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
                         <td colspan="4" align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/img-assinatura.png" alt="" width="282" height="65" /></td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle">Imagem assinatura de alguem do Ibram</td>
+                        <td colspan="4" align="center" valign="middle">Fernanda Santana Rabello de Castro <br> <em>Presidenta do Ibram</em></td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>

@@ -4,7 +4,7 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.3.0
+ * Version: 0.3.12
  */
 
  /* Barra de busca dos banners */
@@ -18,13 +18,6 @@
     float: right;
     margin-top: 20px;
     margin-bottom: 20px;
-}
-.home .wp-block-getwid-section .wp-block-search__inside-wrapper {
-    --theme-form-field-height: 62px;
-}
-.home .wp-block-getwid-section .wp-block-search__inside-wrapper .wp-block-search__button svg {
-    min-height: 40px;
-    min-width: 40px;
 }
 
 @media screen and (max-width: 999px) {
@@ -55,33 +48,6 @@
         float: right;
         margin-right: 42px;
     }
-}
-
-/* Cartões com links da home */
-@media screen and (max-width: 1200px) {
-    .home .wp-block-getwid-section .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
-        flex-basis: 50%;
-    }
-}
-@media screen and (max-width: 768px) {
-    .home .wp-block-getwid-section .wp-block-group.is-content-justification-center.is-layout-flex > .wp-block-columns.are-vertically-aligned-center.is-not-stacked-on-mobile {
-        flex-basis: 100%;
-    }
-}
-
-/* Bloco de Abas */
-.wp-block-getwid-tabs {
-    border-radius: 0 0 10px 10px;
-    overflow: hidden;
-}
-.wp-block-getwid-tabs a {
-    color: var(--theme-headings-color);
-}
-.wp-block-getwid-tabs .wp-block-getwid-tabs__nav-link {
-    border-radius: 10px 10px 0px 0px;
-}
-.wp-block-getwid-tabs .wp-block-getwid-tabs__tab-content {
-    padding: 0;
 }
 
 /* Botão de login */
@@ -185,19 +151,19 @@
     gap: 2rem;	
 	justify-content: space-between;
 }
-.user-registration.ur-frontend-form  .ur-grid-1 {
+.user-registration.ur-frontend-form#user-registration-form-150358 .ur-grid-1 {
     max-width: 400px;	
 }
-.user-registration.ur-frontend-form .ur-grid-1::before {
+.user-registration.ur-frontend-form#user-registration-form-150358 .ur-grid-1::before {
     content: 'Crie login e senha';
     font-size: 1.5rem;
     margin-bottom: 1rem;
     display: block;
 }
-.user-registration.ur-frontend-form  .ur-grid-2 {
+.user-registration.ur-frontend-form#user-registration-form-150358 .ur-grid-2 {
 	max-width: 55%;
 }
-.user-registration.ur-frontend-form .ur-grid-2::before {
+.user-registration.ur-frontend-form#user-registration-form-150358 .ur-grid-2::before {
     content: 'Dados do usuário';
     font-size: 1.5rem;
     margin-bottom: 1rem;

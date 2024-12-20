@@ -6,7 +6,7 @@
 function museusbr_the_login_message( $message ) {
     return $message . '<div class="museusbr-login-message">
         <p>
-            Estamos de cara nova e trabalhando para melhorar ainda mais a experiência dos usuários! A nova Plataforma MuseusBR em breve será aberta para novos cadastros.
+            Estamos de cara nova e trabalhando para melhorar ainda mais a experiência dos usuários! A nova Plataforma MuseusBr em breve será aberta para novos cadastros.
         </p>
         <p>Até lá, caso deseje cadastrar novo museu, atualizar informações de museu já cadastrado ou obter dados e tirar dúvidas, não hesite em entrar em contato com nossa equipe:</p>
         <ul>

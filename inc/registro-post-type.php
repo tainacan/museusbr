@@ -9,16 +9,16 @@ function museusbr_create_registro_post_type() {
     register_post_type('registro',
         array(
             'labels' => array(
-                'name' => __('Registros'),
-                'singular_name' => __('Registro'),
-                'add_new' => __('Solicitar novo'),
-                'add_new_item' => __('Solicitar novo registro'),
-                'edit_item' => __('Editar registro'),
-                'new_item' => __('Novo registro'),
-                'view_item' => __('Ver registro'),
-                'search_items' => __('Buscar registros'),
-                'not_found' => __('Nenhum registro encontrado'),
-                'not_found_in_trash' => __('Nenhum registro arquivado'),
+                'name' => 'Registros',
+                'singular_name' => 'Registro',
+                'add_new' => 'Solicitar novo',
+                'add_new_item' => 'Solicitar novo registro',
+                'edit_item' => 'Editar registro',
+                'new_item' => 'Novo registro',
+                'view_item' => 'Ver registro',
+                'search_items' => 'Buscar registros',
+                'not_found' => 'Nenhum registro encontrado',
+                'not_found_in_trash' => 'Nenhum registro rejeitado',
             ),
             'description' => 'Pedidos de registros dos museus cadastrados',
             'public' => true,
@@ -100,7 +100,16 @@ function museusbr_create_registro_post_type() {
             return current_user_can('publish_posts');
         }
     ));
-    register_post_meta('registro', 'justificativa_arquivamento', array(
+    register_post_meta('registro', 'justificativa_rejeite_texto', array(
+        'type' => 'string',
+        'single' => true,
+        'show_in_rest' => false,
+        'default' => false,
+        'auth_callback' => function() {
+            return current_user_can('delete_posts');
+        }
+    ));
+    register_post_meta('registro', 'justificativa_rejeite_arquivo', array(
         'type' => 'integer',
         'single' => true,
         'show_in_rest' => false,
@@ -142,7 +151,7 @@ add_filter( 'admin_url', 'museusbr_change_add_new_link_for_registro', 10, 2 );
 // Substituir o link de edição de post
 function museusbr_replace_edit_link($actions, $post) {
     if ( get_post_type($post) === 'registro' )
-        $actions['edit'] = '<a href="' . admin_url('admin.php?page=registro&post=' . $post->ID) . '">' . __('Edit') . '</a>';
+        $actions['edit'] = '<a href="' . admin_url('admin.php?page=registro&post=' . $post->ID) . '">Editar</a>';
 
     return $actions;
 }
@@ -167,6 +176,7 @@ function museusbr_translate_words_array( $translated ) {
             'Rascunho' => 'Inicializado',
             'Rascunho automático' => 'Iniciado',
             'Lixeira' => 'Rejeitado',
+            'Lixos' => 'Rejeitados',
             'Colocar na lixeira' => 'Rejeitar',
         );
 
@@ -174,8 +184,8 @@ function museusbr_translate_words_array( $translated ) {
     }
    return $translated;
 }
-add_filter(  'gettext',  'museusbr_translate_words_array'  );
-add_filter(  'ngettext',  'museusbr_translate_words_array'  );
+add_filter( 'gettext', 'museusbr_translate_words_array' );
+add_filter( 'ngettext', 'museusbr_translate_words_array' );
 
 function museusbr_get_registro_status_label( $status_slug ) {
     switch ( $status_slug ) {

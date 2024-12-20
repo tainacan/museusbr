@@ -139,6 +139,12 @@ div.wp-menu-image::before {
 body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     display: block;
 }
+.user-is-gestor-do-museu #adminmenu #menu-posts,
+.user-is-gestor-do-museu #adminmenu #menu-comments,
+.user-is-gestor-do-museu #adminmenu #menu-tools {
+    display: none;
+    visibility: hidden;
+}
 .user-is-gestor-do-museu #tainacan-admin-app .is-secondary-content,
 .user-is-gestor-do-museu #tainacan-admin-app.is-fullheight,
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container {

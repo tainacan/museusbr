@@ -251,6 +251,7 @@ function museusbr_set_tainacan_admin_options($options) {
 		$options['hideItemSingleExposers'] = true;
 		$options['hideItemSingleActivities'] = true;
 		$options['itemEditionStatusOptionOnFooterDropdown'] = true;
+		$options['hideItemEditionStatusPublishOption'] = true;
 	}
 	return $options;
 };

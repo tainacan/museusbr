@@ -14,7 +14,7 @@ function museusbr_generate_metabase_iframe_url($dashboard_id = 2) {
 
     // Define the payload for the JWT token
     $payload = array(
-        "resource" => array("dashboard" => $dashboard_id),
+        "resource" => array("dashboard" => intval($dashboard_id)),
         "params" => (object)[], // Use instead of array(), as noted here: https://github.com/metabase/metabase/issues/11101#issuecomment-540147397
         "exp" => time() + (10 * 60) // 10 minute expiration
     );
@@ -35,17 +35,16 @@ function museusbr_generate_metabase_iframe_shortcode($atts) {
     // Extract shortcode attributes
     $atts = shortcode_atts(array(
         'dashboard' => 2,
+        'height' => 2720
     ), $atts);
 
-    // Obtain the iframe URL
-    $iframeUrl = museusbr_generate_metabase_iframe_url();
-    $iframeHTML = '<iframe id="metabase-iframe" src="' . $iframeUrl . '" frameborder="0" width="100%" height="2720px" allowtransparency></iframe>';
-
-    // Home dashboard
-    if ( $atts['dashboard'] == 3 ) {
-        $iframeUrl = museusbr_generate_metabase_iframe_url(3);
-        $iframeHTML = '<iframe id="metabase-iframe" src="' . $iframeUrl . '" frameborder="0" width="100%" height="860px" allowtransparency></iframe>';
+    if ( !is_numeric($atts['dashboard']) || !is_numeric($atts['height']) ) {
+        return '';
     }
+
+    // Obtain the iframe URL
+    $iframeUrl = museusbr_generate_metabase_iframe_url($atts['dashboard']);
+    $iframeHTML = '<iframe id="metabase-iframe" src="' . $iframeUrl . '" frameborder="0" width="100%" height="' . $atts['height'] . 'px" allowtransparency></iframe>';
 
     // Output the iframe from the shortcode
     return $iframeHTML;

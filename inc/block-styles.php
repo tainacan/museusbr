@@ -14,7 +14,7 @@ if ( function_exists('register_block_style') ) {
             'core/column',
             array(
                 'name'  => 'museusbr-clickable-card',
-                'label' =>  __('Cartão clicável', 'sesilab'),
+                'label' =>  'Cartão clicável',
                 'is_default' => false            
             )
         );
@@ -23,7 +23,7 @@ if ( function_exists('register_block_style') ) {
             'core/columns',
             array(
                 'name'  => 'museusbr-clickable-card',
-                'label' =>  __('Cartão clicável', 'sesilab'),
+                'label' =>  'Cartão clicável',
                 'is_default' => false            
             )
         );
@@ -32,7 +32,7 @@ if ( function_exists('register_block_style') ) {
             'core/group',
             array(
                 'name'  => 'museusbr-clickable-card',
-                'label' =>  __('Cartão clicável', 'sesilab'),
+                'label' =>  'Cartão clicável',
                 'is_default' => false            
             )
         );

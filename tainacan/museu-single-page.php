@@ -11,6 +11,7 @@ $prefix = blocksy_manager()->screen->get_prefix();
 function museusbr_single_museu_pre_get_post( $query ) {
     if ( is_admin() )
         return;
+
     if ( in_array($query->query_vars['post_type'], ['tainacan-metadatum', 'tainacan-metasection']) ) {
         if ( museusbr_user_is_gestor_or_parceiro() ){
             $query->set( 'post_status', 'publish' );
@@ -20,6 +21,7 @@ function museusbr_single_museu_pre_get_post( $query ) {
 add_action( 'pre_get_posts', 'museusbr_single_museu_pre_get_post' );
 
 $localization_metadata_section = get_theme_mod( 'museusbr_localization_metadata_section', 0 );
+$localization_metadata_section_pontos_de_memoria = get_theme_mod( 'museusbr_localization_metadata_section_pontos_de_memoria', 0 );
 $internal_data_for_banner_metadata_section = get_theme_mod( 'museusbr_internal_data_for_banner_metadata_section', 0 );
 
 $page_structure_type = get_theme_mod( $prefix . '_page_structure_type', 'type-dam');
@@ -105,7 +107,7 @@ add_filter('tainacan-get-metadata-section-as-html-before-name', function($before
 
 
 $sections_args = array(
-    'metadata_sections__not_in' => [ $localization_metadata_section, $internal_data_for_banner_metadata_section, \Tainacan\Entities\Metadata_Section::$default_section_slug ],
+    'metadata_sections__not_in' => is_singular( museusbr_get_pontos_de_memoria_collection_post_type() ) ? [ $localization_metadata_section_pontos_de_memoria, \Tainacan\Entities\Metadata_Section::$default_section_slug ] : [ $localization_metadata_section, $internal_data_for_banner_metadata_section, \Tainacan\Entities\Metadata_Section::$default_section_slug ],
     'before' => '',
     'after' => '',
     'before_name' => '<input name="tabs" type="radio" id="tab-section-$id" />
@@ -127,7 +129,7 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
 
 <div class="tainacan-item-section tainacan-item-section--metadata-sections">
     <h2 class="tainacan-single-item-section" id="tainacan-item-metadata-label">
-        <?php echo esc_html( get_theme_mod($prefix . '_section_metadata_label', __( 'Navegue pelas informações', 'tainacan-blocksy' ) ) ); ?>
+        <?php echo esc_html( get_theme_mod($prefix . '_section_metadata_label', 'Navegue pelas informações' ) ); ?>
     </h2>
     <div class="metadata-section-layout--tabs">
         <?php tainacan_the_metadata_sections( $sections_args ); ?>
@@ -143,10 +145,12 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
     tainacan_blocksy_get_template_part( 'template-parts/tainacan-item-single-attachments' );
 ?>
 </div>     
+
+<?php if ( $localization_metadata_section !== 0 || $localization_metadata_section_pontos_de_memoria !== 0 ) : ?>
 <div class="tainacan-item-section tainacan-item-section--special-museusbr-localization alignfull">
     <?php
     tainacan_the_metadata_sections( array(
-        'metadata_section' => $localization_metadata_section,
+        'metadata_section' => is_singular( museusbr_get_pontos_de_memoria_collection_post_type() ) ? $localization_metadata_section_pontos_de_memoria : $localization_metadata_section,
         'metadata_list_args' => array(
             'display_slug_as_class' => true
         )
@@ -158,3 +162,4 @@ do_action( 'tainacan-blocksy-single-item-after-title' );
     }
 ?>
 </div> 
+<?php endif; ?>

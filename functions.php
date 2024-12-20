@@ -1,6 +1,6 @@
 <?php
 /**
- * Funções do tema MuseusBR
+ * Funções do tema MuseusBr
  */
 
 if (! defined('WP_DEBUG')) {
@@ -10,12 +10,16 @@ if (! defined('WP_DEBUG')) {
 // Valor padrão para a coleção de Museus. Será definido no customizer.
 const MUSEUSBR_MUSEUS_COLLECTION_ID = 208; //267;
 const MUSEUSBR_PONTOS_DE_MEMORIA_COLLECTION_ID = 179824;
+const MUSEUSBR_FORMULARIOS_DE_VISITACAO_COLLECTION_ID = 219857;
+
+// Metadados especiais
+const MUSEUSBR_CODIGO_IDENTIFICADOR_IBRAM_METADATUM_ID = 15171;
 
 // Slug do papel de usuário "Gestor de Museu"
 const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
 const MUSEUSBR_PARCEIROS_DO_IBRAM_ROLE = 'tainacan-parceiros-do-ibram';
 
-// Novas funcionalidades criadas para o MuseusBR
+// Novas funcionalidades criadas para o MuseusBr
 const MUSEUSBR_ENABLE_REGISTRO = true;
 const MUSEUSBR_ENABLE_CERTIFICADO_CADASTRO = true;
 
@@ -34,6 +38,13 @@ function museusbr_get_pontos_de_memoria_collection_id() {
 }
 
 /**
+ * Função utilitária para obter o id da coleção dos Formulários de Visitação
+ */
+function museusbr_get_formularios_de_visitacao_collection_id() {
+	return get_theme_mod( 'museusbr_formularios_de_visitacao_collection', MUSEUSBR_FORMULARIOS_DE_VISITACAO_COLLECTION_ID );
+}
+
+/**
  * Função utilitaria para obter o tipo de post da coleção Museus
  */
 function museusbr_get_museus_collection_post_type() {
@@ -46,6 +57,21 @@ function museusbr_get_museus_collection_post_type() {
 function museusbr_get_pontos_de_memoria_collection_post_type() {
 	return 'tnc_col_' . museusbr_get_pontos_de_memoria_collection_id() . '_item';
 }
+
+/**
+ * Função utilitaria para obter o tipo de post da coleção dos Formulários de Visitação
+ */
+function museusbr_get_formularios_de_visitacao_collection_post_type() {
+	return 'tnc_col_' . museusbr_get_formularios_de_visitacao_collection_id() . '_item';
+}
+
+/**
+ * Função utilitária para obter o id do metadado do código identificador da coleção dos Museus
+ */
+function museusbr_get_codigo_identificador_ibram_metadatum_id() {
+	return get_theme_mod( 'museusbr_codigo_identificador_ibram_metadatum', MUSEUSBR_CODIGO_IDENTIFICADOR_IBRAM_METADATUM_ID );
+}
+
 
 /**
  * Registra Scripts e Estilos
@@ -130,7 +156,7 @@ function museusbr_preset_codigo_id($item) {
 			
 			try {
 				// O metadado da instituição deve vir pré-preenchido
-				$codigo_metadatum = new \Tainacan\Entities\Metadatum( 15171 );
+				$codigo_metadatum = new \Tainacan\Entities\Metadatum( museusbr_get_codigo_identificador_ibram_metadatum_id() );
 
 				if ( $codigo_metadatum instanceof \Tainacan\Entities\Metadatum ) {
 					

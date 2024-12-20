@@ -9,7 +9,7 @@
  */
 function museusbr_museu_single_page_hero_custom_meta_before() {
 
-	if ( get_post_type() == museusbr_get_museus_collection_post_type() ) {
+	if ( get_post_type() == museusbr_get_museus_collection_post_type() || get_post_type() == museusbr_get_pontos_de_memoria_collection_post_type() ) {
 		
 		$item = tainacan_get_item();
 
@@ -62,22 +62,28 @@ function museusbr_museu_single_page_hero_custom_meta_before() {
 			<div class="museu-item-thumbnail-container"> 
 				<?php the_post_thumbnail('tainacan-medium', array('class' => 'museu-item-thumbnail')); ?>
 			
-				<div class="museu-item-other-metadata">
-					<?php
-						$sections_args = array(
-							'metadata_section' => get_theme_mod( 'museusbr_internal_data_for_banner_metadata_section', 0 ),
-							'hide_name'	=> true,
-							'before' => '',
-							'after' => '',
-							'metadata_list_args' => array(
-								'exclude_core' => true,
-								'display_slug_as_class' => true
-							)
-						);
+				<?php
+				$extra_metadata_from_banner_section = get_theme_mod( 'museusbr_internal_data_for_banner_metadata_section', 0 );
 
-						tainacan_the_metadata_sections($sections_args);
-					?>
-				</div>
+				if ( $extra_metadata_from_banner_section ) : ?>
+					
+					<div class="museu-item-other-metadata">
+						<?php
+							$sections_args = array(
+								'metadata_section' => $extra_metadata_from_banner_section,
+								'hide_name'	=> true,
+								'before' => '',
+								'after' => '',
+								'metadata_list_args' => array(
+									'exclude_core' => true,
+									'display_slug_as_class' => true
+								)
+							);
+
+							tainacan_the_metadata_sections($sections_args);
+						?>
+					</div>
+				<?php endif; ?>
 			</div>
 
 			<div class="museu-item-extra-container">
@@ -123,7 +129,7 @@ function museusbr_museu_single_page_hero_custom_meta_after() {
 							<span class="navigator-icon">
 								<i class="las la-info-circle"></i>
 							</span>
-							<span class="navigator-text"><?php _e( 'Informações', 'museusbr'); ?></span>
+							<span class="navigator-text">Informações</span>
 						</a>
 					</li>
 					<li id="tainacan-item-documents-label-nav">
@@ -131,7 +137,7 @@ function museusbr_museu_single_page_hero_custom_meta_after() {
 							<span class="navigator-icon">
 								<i class="las la-image"></i>
 							</span>
-							<span class="navigator-text"><?php _e( 'Galeria de Fotos', 'museusbr'); ?></span>
+							<span class="navigator-text">Galeria de Fotos</span>
 						</a>
 					</li>
 					<li>
@@ -139,22 +145,27 @@ function museusbr_museu_single_page_hero_custom_meta_after() {
 							<span class="navigator-icon">
 								<i class="las la-map"></i>
 							</span>
-							<span class="navigator-text"><?php _e( 'Localização', 'museusbr'); ?></span>
+							<span class="navigator-text">Localização</span>
 						</a>
 					</li>
 				</ol>
 			</nav>
+		<?php
+	} else if ( get_post_type() == museusbr_get_pontos_de_memoria_collection_post_type() ) {
+		?>
+		</div> <!-- Close the "museu-item-description-and-meta-wrapper" div -->
+			</div> <!-- Close the "museu-item-extra-container" div -->
 		<?php
 	}
 }
 add_action('blocksy:hero:custom_meta:after', 'museusbr_museu_single_page_hero_custom_meta_after');
 
 /**
- * Sobrescreve o conteúdo da single do museu
+ * Sobrescreve o conteúdo da single do museu e dos pontos de memória
  */
 function museusbr_museu_single_page_content( $content ) {
 
-	if ( ! is_singular( museusbr_get_museus_collection_post_type() ) )
+	if ( ! is_singular( museusbr_get_museus_collection_post_type() ) && ! is_singular( museusbr_get_pontos_de_memoria_collection_post_type() ) )
 		return $content;
 	
 	ob_start();

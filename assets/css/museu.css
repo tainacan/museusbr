@@ -298,6 +298,10 @@
     background: #02181E;
     padding: 2.5rem 0 0.5rem 0;
 }
+.single .tainacan-item-section--special-museusbr-gallery:empty {
+    display: none;
+    visibility: hidden;
+}
 .single .tainacan-item-section--special-museusbr-localization h2,
 .single .tainacan-item-section--special-museusbr-gallery h2,
 .single .tainacan-item-section--special-museusbr-gallery .tainacan-media-component,
