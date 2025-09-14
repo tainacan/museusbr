@@ -4,7 +4,7 @@
     body {
         margin: 0 !important;
         padding: 0 !important;
-        font-family: 'Times New Roman', Times, serif;
+        font-family: Arial, sans-serif;
     }
     hr { 
         border-style: solid;
@@ -18,6 +18,8 @@
     table {
         width:100%;
         height: 90vh;
+    }
+    table {
         border-style: solid;
         border-width: 5px;
         -moz-border-image: url('../images/bg-borda-v.png') 5 round;
@@ -26,12 +28,16 @@
         border-image: url('../images/bg-borda-v.png') 5 round;
     }
     h1 {
-        font-weight: bold;
+        font-weight: bold !important;
     }
     p { font-size: 22px }
-
     .logo {
-        width: 70%; height: auto
+        width: 70%;
+        height: auto
+    }
+    .regua-de-logos {
+        width: 100%;
+        height: auto;
     }
 
     .admin_page_certificado #adminmenumain,
@@ -40,11 +46,11 @@
     .admin_page_certificado > :not(#wpwrap) {
         display: none;
     }
-    .admin_page_certificado {
+    .admin_page_certificado,
+    .admin_page_certificado-registro {
         margin:0;
         padding:0;
         height: 100%;
-        background: url('../images/bg-certificado.png') left bottom no-repeat;
     }
     .admin_page_certificado .wrap {
         border-style: solid;
@@ -53,6 +59,7 @@
         -webkit-border-image: url('../images/bg-borda-h.png') 5 round;
         -o-border-image: url('../images/bg-borda-h.png') 5 round;
         border-image: url('../images/bg-borda-h.png') 5 round;
+        background: url('../images/bg-certificado.png') left bottom no-repeat;
     }
     .admin_page_certificado #wpwrap,
     .admin_page_certificado #wpcontent,

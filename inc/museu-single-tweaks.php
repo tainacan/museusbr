@@ -5,7 +5,7 @@
  */
 
 /**
- * Adiciona Thumbnail do item na página do museu
+ * Adiciona Thumbnail do item na página do museu e modifica outros metadados
  */
 function museusbr_museu_single_page_hero_custom_meta_before() {
 
@@ -25,6 +25,30 @@ function museusbr_museu_single_page_hero_custom_meta_before() {
 				}
 			}
 			add_action( 'pre_get_posts', 'museusbr_single_museu_banner_pre_get_post' );			
+
+			// Coloca informação do autor do item e opção de reivindicar cadastro antes do metadado de Esfera Administrativa (ID 259)
+			add_filter( 'tainacan-get-item-metadatum-as-html-after--id-259', function($after, $item_metadatum ) {
+
+				$link_pagina_reinvindicacao = get_theme_mod( 'museusbr_reinvidicacao_cadastro_link', '' );
+
+				$gestor_responsavel = '<div class="metadata-slug-gestor-responsavel tainacan-item-section__metadatum">
+					<h4 class="tainacan-metadata-label">Cadastrado por</h4>' .
+					(
+						!empty( $link_pagina_reinvindicacao ) ? (
+							'<p class="tainacan-metadata-value" style="margin-block-end: 4px;">' . get_the_author_meta( 'display_name', get_the_author_ID() ) . '</p>' . 
+							'<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex" style="margin-block-end: var(--theme-content-spacing);">
+								<div class="wp-block-button">
+									<a class="wp-block-button__link wp-element-button" href="' . get_theme_mod( 'museusbr_reinvidicacao_cadastro_link', '') . '">
+										<i class="las la-gavel" style="font-size: 1.5em;"></i>&nbsp;<span style="text-transform: capitalize;">Reivindicar cadastro</span>
+									</a>
+								</div>
+							</div>'
+						) : '<p class="tainacan-metadata-value" >' . get_author_name() . '</p>'
+					) .
+				'</div>';
+
+				return $after . $gestor_responsavel;
+			}, 10, 2 );
 
 			add_filter( 'tainacan-get-item-metadatum-as-html-before-value', function($metadatum_value_before, $item_metadatum) {
 

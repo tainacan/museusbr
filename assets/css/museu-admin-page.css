@@ -1,0 +1,202 @@
+.admin_page_museu .container,
+.admin_page_museu .modal,
+.admin_page_museu .media-modal {
+    font-size: 14px;
+    --bulma-primary-h: 200deg;
+    --bulma-primary-l: 36%;
+    --bulma-link-h: 209deg;
+    --bulma-link-l: 55%;
+    --bulma-info-l: 69%;
+    --bulma-info-h: 256deg;
+    --bulma-info-s: 28%;
+    --bulma-success-h: 151deg;
+    --bulma-success-s: 64%;
+    --bulma-success-l: 56%;
+    --bulma-warning-h: 32deg;
+    --bulma-warning-s: 98%;
+    --bulma-warning-l: 50%;
+    --bulma-danger-h: 350deg;
+    --bulma-danger-s: 51%;
+    --bulma-danger-l: 49%;
+    --bulma-scheme-h: 209;
+    --bulma-family-primary: Roboto,Oxygen,Ubuntu,Helvetica Neue,Helvetica,Arial,sans-serif;
+    --bulma-family-secondary: Roboto,Oxygen,Ubuntu,Helvetica Neue,Helvetica,Arial,sans-serif;
+    --bulma-button-padding-vertical: 0.25em;
+    --bulma-button-padding-horizontal: 1.5em;
+}
+.admin_page_museu .control,
+.admin_page_museu .input,
+.admin_page_museu .select,
+.admin_page_museu .textarea {
+    --bulma-input-radius: 3px;
+}
+.museusbr-admin-header .image {
+    background-color: #f6f6f6;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    min-width: 80px;
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.museusbr-admin-header .image img {
+    max-height: 60px;
+    border-radius: 8px;
+}
+.admin_page_museu .title.is-1 {
+    font-size: 36px;
+    font-weight: 300;
+    padding: 0;
+    margin: 0;
+}
+.admin_page_museu .title.is-1 .tag {
+    --bulma-title-strong-weight: 600;
+    border-radius: 2px;
+    height: 1.65em;
+    font-size: 0.5em;
+    padding: 0.15em 0.5em;
+    margin-top: 0.65em;
+}
+.admin_page_museu .title.is-1 {
+    font-weight: 300;
+}
+.admin_page_museu .title.is-2 {
+    font-size: 18px;
+    font-weight: 500;
+}
+.admin_page_museu .label {
+    font-size: 14px;
+    font-weight: normal;
+}
+.admin_page_museu .museusbr-admin-info-area {
+    padding: 0.25rem 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: min(2rem, 5%);
+}
+.admin_page_museu .card {
+    padding: 0;
+    border: none;
+    height: 100%;
+    --bulma-card-shadow: none;
+    --bulma-card-header-shadow: none;
+    --bulma-card-header-background-color: #e8e8e8;
+}
+.admin_page_museu .card h2 {
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: bold;
+}
+.admin_page_museu .card .tag {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.admin_page_museu .card .card-header-icon {
+    background-color: #1d2d30b3;
+    border-top-left-radius: var(--bulma-card-radius);
+    width: 75px;
+    height: 75px;
+}
+.admin_page_museu .card .card-header-icon .icon {
+    --bulma-icon-dimensions: 36px;
+}
+.admin_page_museu .card .card-content.content {
+    background-color: #e3e3e334;
+    font-size: 12px;
+    color: #64666a;
+    margin-bottom: 0;
+}
+.admin_page_museu .card .card-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    grid-template-rows: auto;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+}
+.admin_page_museu .card .card-links>:only-child {
+    grid-column: 1 / -1;
+}
+.admin_page_museu .card .card-links--registro {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.admin_page_museu .card .card-links .card-links-button {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: 1.5em;
+    font-size: 0.875rem;
+    font-weight: normal;
+    border: none;
+    border-radius: 10px;
+    color: black;
+}
+.admin_page_museu .card .card-links a.card-links-button:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.admin_page_museu .card .card-links .card-links-button .icon {
+    width: 4rem;
+    height: 4rem;
+    background-color: #e3e3e3;
+    border: 2px solid #e3e3e3;
+    border-radius: 10px;
+}
+.admin_page_museu .card .card-links--registro .card-links-button:not(.cards-links-button-certificado) .icon {
+    background-color: transparent;
+    border-top-color: currentColor;
+    border-left-color: currentColor;
+    border-bottom-color: currentColor;
+    border-right-color: currentColor;
+}
+.admin_page_museu .button {
+    display: inline-flex;
+    align-items: baseline;
+    min-height: unset;
+    gap: 0.25em;
+}
+.admin_page_museu .button,
+.admin_page_museu .button:hover,
+.admin_page_museu .button:focus,
+.admin_page_museu .button:focus-visible {
+    font-weight: var(--bulma-button-weight);
+    padding: calc(var(--bulma-button-padding-vertical) - var(--bulma-button-border-width)) calc(var(--bulma-button-padding-horizontal) - var(--bulma-button-border-width));
+    background-color: hsl(var(--bulma-button-h),var(--bulma-button-s),calc(var(--bulma-button-background-l) + var(--bulma-button-background-l-delta)));
+    border-color: hsl(var(--bulma-button-h),var(--bulma-button-s),calc(var(--bulma-button-border-l) + var(--bulma-button-border-l-delta)));
+    border-style: var(--bulma-button-border-style);
+    border-width: var(--bulma-button-border-width);
+    box-shadow: 0 .0625em .125em hsla(var(--bulma-button-outer-shadow-h),var(--bulma-button-outer-shadow-s),var(--bulma-button-outer-shadow-l),var(--bulma-button-outer-shadow-a)),0 .125em .25em hsla(var(--bulma-button-outer-shadow-h),var(--bulma-button-outer-shadow-s),var(--bulma-button-outer-shadow-l),var(--bulma-button-outer-shadow-a));
+    color: hsl(var(--bulma-button-h),var(--bulma-button-s),var(--bulma-button-color-l));
+    cursor: pointer;
+}
+.admin_page_museu .button .icon {
+    align-self: center;
+    line-height: 1em;
+}
+.admin_page_museu .button .icon svg {
+    height: 20px;
+}
+.admin_page_museu .attachment-edit-buttons {
+    display: flex;
+    gap: 1em;
+}
+.admin_page_museu .card-content.panel {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 0;
+    --bulma-card-content-padding: 1em;
+    --bulma-panel-shadow: none;
+}
+.admin_page_museu .panel-block {
+    font-size: 0.875em;
+    gap: 0.875rem;
+}
+.admin_page_museu .panel-block .tag {
+    font-size: 0.875em;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 2px solid hsl(var(--bulma-success-h),var(--bulma-success-s),var(--bulma-success-l));
+}

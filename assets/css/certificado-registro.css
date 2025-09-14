@@ -1,0 +1,67 @@
+/* Página do certificado de registro */
+@media print {
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: Arial, sans-serif;
+    }
+    h1 {
+        font-weight: bold !important;
+        font-size: 36px !important;
+        text-align: center;
+        margin: 4rem auto 2rem;
+    }
+    p { font-size: 18px }
+    .logo {
+        width: 70%;
+        height: auto
+    }
+    .certificado-registro-conteudo {
+        max-width: 500px;
+        margin: auto 0;
+    }
+    .regua-de-logos {
+        margin: 2rem 2rem 0 2rem;
+        width: 90%;
+        height: auto;
+        align-self: center;
+    }
+
+    .admin_page_certificado-registro #adminmenumain,
+    .admin_page_certificado-registro #wpadminbar,
+    .admin_page_certificado-registro #wpfooter,
+    .admin_page_certificado-registro > :not(#wpwrap) {
+        display: none;
+    }
+    .admin_page_certificado-registro {
+        margin:0;
+        padding:0;
+        height: 100%;
+    }
+    .admin_page_certificado-registro .wrap{
+        background: url('../images/bg-certificado-registro.png') left bottom no-repeat;
+        background-size: cover;
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 24px 10%;
+        margin: 0;
+    }
+    .admin_page_certificado-registro #wpwrap,
+    .admin_page_certificado-registro #wpcontent,
+    .admin_page_certificado-registro #wpbody {
+        height: auto;
+        min-height: unset;
+    }
+    .admin_page_certificado-registro #wpcontent {
+        margin-left: 0;
+        padding-left: 0;
+    }
+    .admin_page_certificado-registro #wpbody-content {
+        margin: 0;
+        padding: 0;
+    }
+}

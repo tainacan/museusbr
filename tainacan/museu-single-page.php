@@ -101,7 +101,7 @@ add_filter('tainacan-get-metadata-section-as-html-before-name--index-1', functio
 
 
 add_filter('tainacan-get-metadata-section-as-html-before-name', function($before, $metadata_section) {
-    $output = str_replace('<h3', '<i style="float: left; font-size: 2.5rem; margin: 2px 0.5rem 2px 0.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
+    $output = str_replace('<h3', '<i style="float: left; font-size: 1.875rem; margin: 2px 0.5rem 2px 0.5rem;" class="' . get_post_meta($metadata_section->get_ID(), 'museusbr_metadata_section_icon', true) . '"></i><h3', $before);
     return $output;
 }, 10, 2);
 

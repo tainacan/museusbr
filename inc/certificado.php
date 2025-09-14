@@ -31,8 +31,8 @@ class MUSEUSBR_Certificado_Page {
     public function add_menu_certificado_page() {
         add_submenu_page(
             '', // Definindo o parent como nulo para não criar um menu, apenas registrar a página
-            'Certificado',
-            'Certificado',
+            'Certificado de Cadastro',
+            'Certificado de Cadastro',
             'read',
             'certificado',
             array($this, 'render_certificado_page')
@@ -43,7 +43,7 @@ class MUSEUSBR_Certificado_Page {
      * Add the custom column to the table
      */
     function set_custom_museu_certificado_column($columns) {
-        $columns['author'] = 'Autor';
+        $columns['author'] = 'Cadastrado por';
         unset($columns['comments']);
         $columns['museu_certificado'] = 'Cadastro';
        
@@ -98,29 +98,38 @@ class MUSEUSBR_Certificado_Page {
 
         if ( get_post_status( $post ) !== 'publish' ) : ?>
             <p>O certificado poderá ser impresso assim que o cadastro for publicado.</p>
-        <?php else : ?>
-            <a 
-                class="wp-button button"
-                style="cursor: pointer;"
-                onclick="
-                    var iframe = document.createElement('iframe');
-                    iframe.className='pdfIframe'
-                    document.body.appendChild(iframe);
-                    iframe.style.display = 'none';
-                    iframe.onload = function () {
-                        setTimeout(function () {
-                            iframe.focus();
-                            iframe.contentWindow.print();
-                            window.URL.revokeObjectURL('<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>')
-                            document.body.removeChild(iframe)
-                        }, 1);
-                    };
-                    iframe.src = '<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>';
-                    
-                ">
-                Imprimir certificado
-            </a>
-        <?php endif;
+        <?php else :
+            $this->render_certificado_button($post);
+        endif;
+    }
+    
+    public static function render_certificado_button($post, $classes = 'wp-button button', $icon = null ) {
+    ?>
+        <a 
+            class="<?php echo $classes; ?>"
+            style="cursor: pointer;"
+            onclick="
+                var iframe = document.createElement('iframe');
+                iframe.className='pdfIframe'
+                document.body.appendChild(iframe);
+                iframe.style.display = 'none';
+                iframe.onload = function () {
+                    setTimeout(function () {
+                        iframe.focus();
+                        iframe.contentWindow.print();
+                        window.URL.revokeObjectURL('<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>')
+                        document.body.removeChild(iframe)
+                    }, 1);
+                };
+                iframe.src = '<?php echo admin_url( 'admin.php?page=certificado&id=' . $post->ID ); ?>';
+                
+            ">
+            <?php if ( $icon ) : ?>
+                <span class="icon"><?php echo $icon; ?></span>
+            <?php endif; ?>
+            <span>Imprimir certificado</span>
+        </a>
+    <?php
     }
 
     /**
@@ -134,7 +143,7 @@ class MUSEUSBR_Certificado_Page {
             ?>  
                 <div class="wrap">
                     <h1>Certificado</h1>
-                    <p>ID do museu certificado não informado.</p>
+                    <p>ID do museu cadastrado não informado.</p>
                 </div>
             <?php
             
@@ -161,7 +170,7 @@ class MUSEUSBR_Certificado_Page {
         $codigo_identificador_ibram = '';
 			
         try {
-            // O metadado da instituição deve vir pré-preenchido
+            // O metadado do código de identificação do Ibram
             $codigo_metadatum = new \Tainacan\Entities\Metadatum( museusbr_get_codigo_identificador_ibram_metadatum_id() );
 
             if ( $codigo_metadatum instanceof \Tainacan\Entities\Metadatum ) {
@@ -192,9 +201,20 @@ class MUSEUSBR_Certificado_Page {
                 <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td>&nbsp;</td>
-                        <td colspan="4">&nbsp;</td>
+                        <?php 
+                            $logo = get_theme_mod('museusbr_certificado_cadastro_logo', null);
+                            $logo_url = $logo && !empty($logo) && isset($logo['url']) ? $logo['url'] : null;
+                    
+                        if ( $logo_url ) : ?>
+                            <td colspan="4" align="center" valign="middle"><img src="<?php echo esc_url($logo_url); ?>" class="logo-topo" height="120px" /></td>
+                        <?php else: ?>
+                            <td colspan="4" align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo_cadastro.jpg" class="logo-topo" height="120px" /></td>
+                        <?php endif; ?>
                         <td>&nbsp;</td>
                     </tr>
+                        <td>&nbsp;</td>
+                        <td colspan="4" align="center" valign="middle"><hr /></td>
+                        <td>&nbsp;</td>
                     <tr>
                         <td width="10%" height="40">&nbsp;</td>
                         <td colspan="4" align="center" valign="middle"><h1><strong>CERTIFICADO DE MUSEU CADASTRADO</strong></h1></td>
@@ -217,21 +237,6 @@ class MUSEUSBR_Certificado_Page {
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle"><p>Brasília, DF, <?php echo date(get_option('date_format')); ?></p></td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/img-assinatura.png" alt="" width="282" height="65" /></td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="4" align="center" valign="middle">Fernanda Santana Rabello de Castro <br> <em>Presidenta do Ibram</em></td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
                         <td colspan="4" align="center" valign="middle">&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
@@ -242,10 +247,18 @@ class MUSEUSBR_Certificado_Page {
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-sbm.png" class="logo" /></td>
-                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-ibram.png" class="logo" /></td>
-                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-gov.png" class="logo" /></td>
-                        <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-museu.png" class="logo" /></td>
+                        <?php 
+                            $regua_de_logos = get_theme_mod('museusbr_certificado_cadastro_regua_de_logos', null);
+                            $regua_de_logos_url = $regua_de_logos && !empty($regua_de_logos) && isset($regua_de_logos['attachment_id']) ? wp_get_attachment_image_src($regua_de_logos['attachment_id'], 'full') : null;
+                    
+                        if ( $regua_de_logos_url && isset($regua_de_logos_url[0]) ) : ?>
+                            <td align="center" valign="middle"><img src="<?php echo $regua_de_logos_url[0]; ?>" class="regua-de-logos" /></td>
+                        <?php else: ?>
+                            <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-sbm.png" class="logo" /></td>
+                            <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-ibram.png" class="logo" /></td>
+                            <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-gov.png" class="logo" /></td>
+                            <td align="center" valign="middle"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-museu.png" class="logo" /></td>
+                        <?php endif; ?>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>

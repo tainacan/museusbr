@@ -12,13 +12,13 @@ function museusbr_create_registro_post_type() {
                 'name' => 'Registros',
                 'singular_name' => 'Registro',
                 'add_new' => 'Solicitar novo',
-                'add_new_item' => 'Solicitar novo registro',
-                'edit_item' => 'Editar registro',
-                'new_item' => 'Novo registro',
-                'view_item' => 'Ver registro',
-                'search_items' => 'Buscar registros',
-                'not_found' => 'Nenhum registro encontrado',
-                'not_found_in_trash' => 'Nenhum registro rejeitado',
+                'add_new_item' => 'Solicitar novo Registro',
+                'edit_item' => 'Editar Registro',
+                'new_item' => 'Novo Registro',
+                'view_item' => 'Ver Registro',
+                'search_items' => 'Buscar solicitações',
+                'not_found' => 'Nenhum Registro encontrado',
+                'not_found_in_trash' => 'Nenhum Registro Indeferido',
             ),
             'description' => 'Pedidos de registros dos museus cadastrados',
             'public' => true,
@@ -83,7 +83,7 @@ function museusbr_create_registro_post_type() {
         }
     ));
     register_post_meta('registro', 'aderir_sbm', array(
-        'type' => 'boolean',
+        'type' => 'string',
         'single' => true,
         'show_in_rest' => true,
         'default' => false,
@@ -95,7 +95,6 @@ function museusbr_create_registro_post_type() {
         'type' => 'integer',
         'single' => true,
         'show_in_rest' => false,
-        'default' => false,
         'auth_callback' => function() {
             return current_user_can('publish_posts');
         }
@@ -104,7 +103,6 @@ function museusbr_create_registro_post_type() {
         'type' => 'string',
         'single' => true,
         'show_in_rest' => false,
-        'default' => false,
         'auth_callback' => function() {
             return current_user_can('delete_posts');
         }
@@ -113,11 +111,20 @@ function museusbr_create_registro_post_type() {
         'type' => 'integer',
         'single' => true,
         'show_in_rest' => false,
-        'default' => false,
         'auth_callback' => function() {
             return current_user_can('delete_posts');
         }
     ));
+    array_map(function($i) {
+        register_post_meta('registro', 'documento_complementar_' . $i, array(
+            'type' => 'integer',
+            'single' => true,
+            'show_in_rest' => true,
+            'auth_callback' => function() {
+                return current_user_can('edit_registros');
+            }
+        ));
+    }, range(1, 5));
 
     add_registro_custom_capabilities();
     add_filter( 'map_meta_cap', 'registro_custom_capabilities', 10, 4 );
@@ -166,26 +173,26 @@ function museusbr_registro_edit_post_link( $url, $post_ID ) {
 }
 add_filter('get_edit_post_link', 'museusbr_registro_edit_post_link', 10, 2);
 
-function museusbr_translate_words_array( $translated ) {
+function museusbr_registro_translate_words_array( $translated ) {
     if ( get_post_type() === 'registro' ) {
         $words = array(
             // 'word to translate' = > 'translation'
-            'Publicado' => 'Aprovados',
-            'Privado' => 'Pendente',
-            'Pendente' => 'Em análise',
-            'Rascunho' => 'Inicializado',
-            'Rascunho automático' => 'Iniciado',
-            'Lixeira' => 'Rejeitado',
-            'Lixos' => 'Rejeitados',
-            'Colocar na lixeira' => 'Rejeitar',
+            'Publicado' => 'Aprovado',
+            'Privado' => 'pendente', // Usando 'pendente' com p minúsculo para diferenciar de 'Pendente' do WordPress.
+            'Pendente' => 'Enviado para análise',
+            'Rascunho' => 'Em preenchimento',
+            'Rascunho automático' => 'Em preenchimento',
+            'Lixeira' => 'Indeferido',
+            'Lixos' => 'Indeferidos',
+            'Colocar na lixeira' => 'Indeferir',
         );
 
         $translated = str_replace(  array_keys($words),  $words,  $translated );
     }
    return $translated;
 }
-add_filter( 'gettext', 'museusbr_translate_words_array' );
-add_filter( 'ngettext', 'museusbr_translate_words_array' );
+add_filter( 'gettext', 'museusbr_registro_translate_words_array' );
+add_filter( 'ngettext', 'museusbr_registro_translate_words_array' );
 
 function museusbr_get_registro_status_label( $status_slug ) {
     switch ( $status_slug ) {
@@ -194,13 +201,12 @@ function museusbr_get_registro_status_label( $status_slug ) {
         case 'private':
             return 'Pendente';
         case 'pending':
-            return 'Em análise';
+            return 'Enviado para análise';
         case 'draft':
-            return 'Em preenchimento';
         case 'auto-draft':
-            return 'Iniciado';
+            return 'Em preenchimento';
         case 'trash':
-            return 'Rejeitado';
+            return 'Indeferido';
         default:
             return $status_slug;
     }
@@ -340,3 +346,14 @@ function registro_upload_dir($uploads) {
 
     return $uploads;
 }
+
+/**
+ * Adiciona um botão extra a tela da lsita de registros
+ */
+function museusbr_add_registros_download_button($where) {
+    global $post_type_object;
+    if ($post_type_object->name === 'registro') {
+        echo '<div class="alignright actions" style="margin-left: 1rem;"><a class="button action" href="' . esc_url(get_theme_mod('museusbr_lista_de_registro_metabase_link', 'https://metabase.tainacan.org/public/question/ffd491bf-ab44-4465-b972-9350807b33bc.csv')) . '" download target="_blank">Baixar lista de registros</a></div>';
+    }
+}
+add_action('manage_posts_extra_tablenav', 'museusbr_add_registros_download_button');

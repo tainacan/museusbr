@@ -38,7 +38,7 @@ if ($current_user->ID != $file_owner_id && !current_user_can('edit_registros')) 
 }
 
 header('Content-Type: ' . get_post_mime_type($file_id));
-header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
+header('Content-Disposition: inline; filename="' . basename($file_path) . '"');
 readfile($file_path);
 
 exit;

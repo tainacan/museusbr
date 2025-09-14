@@ -390,7 +390,7 @@ function mountCommentForm() {
         e.preventDefault();
 
         if ( !commentField.value ) {
-            alert('Por favor, preencha o campo de comentário.');
+            alert('Por favor, preencha o campo de observação.');
             return;
         }
 

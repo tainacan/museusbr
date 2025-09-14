@@ -6,8 +6,9 @@
     --bulma-primary-l: 36%;
     --bulma-link-h: 209deg;
     --bulma-link-l: 55%;
-    --bulma-info-h: 225deg;
-    --bulma-info-s: 3%;
+    --bulma-info-l: 69%;
+    --bulma-info-h: 256deg;
+    --bulma-info-s: 28%;
     --bulma-success-h: 151deg;
     --bulma-success-s: 64%;
     --bulma-success-l: 56%;
@@ -22,6 +23,8 @@
     --bulma-family-secondary: Roboto,Oxygen,Ubuntu,Helvetica Neue,Helvetica,Arial,sans-serif;
     --bulma-button-padding-vertical: 0.25em;
     --bulma-button-padding-horizontal: 1.5em;
+    --bulma-label-weight: bold;
+    --bulma-modal-content-width: 62rem;
 }
 .admin_page_registro .control,
 .admin_page_registro .input,
@@ -56,7 +59,6 @@
 }
 .admin_page_registro .label {
     font-size: 14px;
-    font-weight: normal;
 }
 .admin_page_registro .media-left .image {
     border-radius: 2px;

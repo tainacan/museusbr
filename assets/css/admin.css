@@ -56,7 +56,10 @@ div.wp-menu-image::before {
 }
 .wrap .subsubsub {
     margin: 1.875rem 2rem 0;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+}
+.wrap .subsubsub a {
+    text-transform: uppercase;
 }
 .wrap .wp-list-table {
     border-radius: 5px;
@@ -89,10 +92,79 @@ div.wp-menu-image::before {
     display: none;
     visibility: hidden;
 }
+.user-is-gestor-do-museu .wp-list-table .check-column,
+.user-is-gestor-do-museu .tablenav .actions.bulkactions { 
+    display: none; 
+}
+.museu-admin-main-row,
+.museu-admin-links-row {
+    display: grid;
+    gap: 0.25rem;
+    align-items: center;
+}
+.museu-admin-main-row {
+    grid-template-columns: 1fr 110px;
+}
+.museu-admin-links-row {
+    grid-template-columns: 180px 180px;
+}
+.museu-admin-main-row .row-title {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-top: 0.25em;
+}
+.museu-admin-main-row .row-title .image {
+    margin: 0;
+    min-width: 32px;
+    text-align: center;
+}
+.museu-admin-main-row .row-title .image img {
+    border-radius: 4px;
+    width: 32px;
+    height: auto;
+}
+.column-museu_links {
+    width: 25%;
+}
+@media screen and (max-width: 1340px) {
+    .museu-admin-main-row {
+        grid-template-columns: 1fr 110px;
+    }
+    .museu-admin-links-row {
+        grid-template-columns: 1fr;
+    }
+    .museu-admin-main-row>:first-child {
+        grid-column: 1 / span 2;
+        height: 42px;
+    }
+    .column-museu_links {
+        width: 20%;
+    }
+}
+@media screen and (max-width: 980px) {
+    .museu-admin-main-row {
+        grid-template-columns: 1fr;
+    }
+    .museu-admin-main-row>:first-child {
+        grid-column: 1 / span 1;
+    }
+}
+.museu-admin-main-row .button,
+.museu-admin-links-row .button {
+    border: none;
+    padding: 0.25em 0.5em !important;
+    line-height: 14px;
+    background-color: transparent !important;
+}
+.museu-admin-main-row+.row-actions {
+    display: none;
+    visibility: hidden;
+}
 .wp-button-has-icon {
     display: inline-flex !important;
-    gap: 0.5em;
-    align-items: center;
+    gap: 0.5em !important;
+    align-items: center !important;
 }
 .wp-core-ui .button,
 .wp-core-ui .button:hover,
@@ -180,7 +252,7 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     border-radius: 10px 10px 0 0;
 }
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container > .tainacan-form > .columns {
-    max-width: 1344px;
+    max-width: 100%;
     margin: 0 auto;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title {
@@ -188,7 +260,7 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     margin-bottom: 24px;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title h1 {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 300;
     margin: 0;
     margin-right: 0px;
@@ -198,6 +270,10 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu .page-container.item-edition-container .tainacan-page-title .status-tag,
 .user-is-gestor-do-museu .page-container.item-creation-container .tainacan-page-title .status-tag {
     font-size: 0.5em;
+}
+.user-is-gestor-do-museu .page-container.item-creation-container .tainacan-page-title h1 > span:last-child {
+    display: none;
+    visibility: hidden;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title .breadcrumbs,
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title hr,
@@ -236,6 +312,10 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     z-index: 999;
     background-color: var(--tainacan-white);
 }
+.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .metadata-section-header .collapse-handle label .has-text-gray {
+    display: none;
+    visibility: hidden;
+}
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .metadata-section-header,
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column.is-5 .section-label {
     padding: 8px 12px;
@@ -251,6 +331,9 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list {
     column-width: 350px;
 }
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > *:only-child {
+    column-span: all;
+}
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > * {
     break-inside: avoid;
     margin-left: 6px;
@@ -265,9 +348,17 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list > .tainacan-metadatum-component--tainacan-compound {
     column-span: all;
 }
-.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .tainacan-metadatum-component--tainacan-metadata-type-url .add-link {
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .tainacan-metadatum-component--tainacan-metadata-type-url .add-link,
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .tainacan-metadatum-component--tainacan-relationship .add-link {
     display: none;
     visibility: hidden;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .metadata-section-metadata-list .tainacan-metadatum-component--tainacan-relationship .relationship-value-button--edit {
+    display: none;
+    visibility: hidden;
+}
+.user-is-gestor-do-museu #tainacan-admin-app .required-metadatum-asterisk {
+    color: var(--tainacan-danger) !important;
 }
 .user-is-gestor-do-museu #tainacan-admin-app  .document-field-placeholder {
     display: block;
@@ -427,6 +518,10 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu .media-sidebar .copy-to-clipboard-container,
 .user-is-gestor-do-museu .media-sidebar .setting[data-setting="url"] {
     display: none;
+}
+.user-is-gestor-do-museu .tainacan-modal .status-radios .radio.is-disabled {
+    display: none;
+    visibility: hidden;
 }
 
 /* Seção de dados internos para o banner não deve aparecer para o gestor */

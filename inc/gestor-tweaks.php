@@ -52,24 +52,12 @@ function museusbr_user_is_gestor( $user = NULL ) {
 }
 
 /**
- * Altera o link de edição de posts da coleção dos museus
- */
-function museusbr_museus_collection_edit_post_link( $url, $post_ID) {
-
-	if ( get_post_type($post_ID) == museusbr_get_museus_collection_post_type() ) 
-		$url = admin_url( '?page=tainacan_admin#/collections/' . museusbr_get_museus_collection_id() . '/items/' . $post_ID . '/edit' );
-
-    return $url;
-}
-add_filter( 'get_edit_post_link', 'museusbr_museus_collection_edit_post_link', 10, 2 );
-
-/**
  * Altera o link de criação de posts da coleção dos museus na página dos museus
  */
 function museusbr_museus_collection_add_new_post( $url, $path) {
 
 	if ( str_contains($path, "post-new.php") && str_contains( $path, 'post_type=' . museusbr_get_museus_collection_post_type() ) )
-		$url = admin_url( '?page=tainacan_admin#/collections/' . museusbr_get_museus_collection_id() . '/items/new' );
+		$url = admin_url( 'admin.php?page=tainacan_admin#/collections/' . museusbr_get_museus_collection_id() . '/items/new' );
 	
     return $url;
 }
@@ -80,8 +68,19 @@ add_filter( 'admin_url', 'museusbr_museus_collection_add_new_post', 10, 2 );
  */
 function museusbr_museus_login_redirect($redirect_url, $request, $user) {
 
-	if ( museusbr_user_is_gestor_or_parceiro($user) )
+	if ( museusbr_user_is_gestor_or_parceiro($user) ) {
+
+		// Se o usuário possui apenas um item na coleção de museus, redireciona para a página de admin do museu
+		$items = get_posts( array(
+			'post_type' => museusbr_get_museus_collection_post_type(),
+			'author' => $user->ID,
+		) );
+		
+		if ( count($items) == 1 )
+			return admin_url( 'admin.php?page=museu&post=' . $items[0]->ID );
+
 		return admin_url( 'edit.php?post_type=tnc_col_' . museusbr_get_museus_collection_id() . '_item' );
+	}
 
 	return $redirect_url;	
 }	
@@ -233,6 +232,24 @@ function museusbr_custom_body_class($classes) {
 }
 add_filter('admin_body_class', 'museusbr_custom_body_class');
 
+/**
+ * Traduz palavras específicas para o gestor do museu
+ */
+function museusbr_gestor_translate_words_array( $translated ) {
+	if ( get_post_type() !== 'registro' ) {
+		$words = array(
+			'Pendente' => 'Em análise',
+		);
+		
+
+		$translated = str_replace(  array_keys($words),  $words,  $translated );
+	}
+    
+   return $translated;
+}
+add_filter( 'gettext', 'museusbr_gestor_translate_words_array' );
+add_filter( 'ngettext', 'museusbr_gestor_translate_words_array' );
+
 
 /*
  * Adiciona parâmetros para o Admin Tainacan para esconder elementos que não são necessários
@@ -251,8 +268,39 @@ function museusbr_set_tainacan_admin_options($options) {
 		$options['hideItemSingleExposers'] = true;
 		$options['hideItemSingleActivities'] = true;
 		$options['itemEditionStatusOptionOnFooterDropdown'] = true;
-		$options['hideItemEditionStatusPublishOption'] = true;
+		// $options['hideItemEditionStatusPublishOption'] = true;
 	}
 	return $options;
 };
 add_filter('tainacan-admin-ui-options', 'museusbr_set_tainacan_admin_options');
+
+function museusbr_desabilita_notificacoes_para_gestores() {
+
+	if ( !museusbr_user_is_gestor_or_parceiro() )
+		return;
+
+	// Remove as notificações do WordPress
+	remove_action('admin_notices', 'update_nag', 3);
+	remove_action('admin_notices', 'maintenance_nag');
+	
+	// Remove notificações de atualizações
+	remove_action('admin_init', '_maybe_update_core');
+	remove_action('admin_init', '_maybe_update_plugins');
+	remove_action('admin_init', '_maybe_update_themes');
+	
+	// Remove o widget de eventos e notícias do dashboard
+	remove_meta_box('dashboard_primary', 'dashboard', 'side');
+	
+	// Esconde a contagem de atualizações no menu admin
+	add_action('admin_head', function() {
+		echo '<style>
+			#adminmenu .update-plugins,
+			#adminmenu .awaiting-mod,
+			#wp-admin-bar-updates,
+			.update-nag {
+				display: none !important;
+			}
+		</style>';
+	});
+}
+add_filter('admin_init', 'museusbr_desabilita_notificacoes_para_gestores');

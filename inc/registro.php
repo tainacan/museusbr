@@ -36,8 +36,8 @@ class MUSEUSBR_Registro_Form_Page {
         add_filter( 'manage_' . museusbr_get_museus_collection_post_type() . '_posts_columns', array($this, 'set_custom_museu_registro_column'));
         add_action( 'manage_' . museusbr_get_museus_collection_post_type() . '_posts_custom_column', array($this, 'museu_registro_column'), 10, 2);
         add_filter( 'post_row_actions', array($this, 'remove_quick_edit'), 10, 2);
-        add_action( 'private_registro', array($this, 'private_registro_send_email'), 10, 3);
-        add_action( 'transition_post_status', array($this, 'update_registro_logs'), 10, 3 );
+        add_action( 'transition_post_status', array($this, 'update_registro_logs_and_send_email'), 10, 3 );
+        add_filter( 'bulk_actions-edit-registro', array($this, 'remove_bulk_actions'), 10, 1);
 
         if ( !wp_next_scheduled('museusbr_registro_cron_hook') )
             wp_schedule_event(time(), 'daily', 'museusbr_registro_cron_hook');
@@ -64,7 +64,7 @@ class MUSEUSBR_Registro_Form_Page {
     {
         if (isset($_GET['page']) && $_GET['page'] === 'registro') {
             wp_enqueue_style('museusbr-registro-bulma', 'https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-no-dark-mode.min.css');
-            wp_enqueue_style('registro-form-styles', get_stylesheet_directory_uri() . '/assets/css/registro.css');
+            wp_enqueue_style('registro-form-styles', get_stylesheet_directory_uri() . '/assets/css/registro.css', array(), wp_get_theme()->get('Version'));
         }
     }
 
@@ -146,7 +146,7 @@ class MUSEUSBR_Registro_Form_Page {
         <div class="wrap">
             <form method="post" action="<?php echo admin_url('admin-post.php'); ?>" enctype="multipart/form-data">
 
-                <div class="container py-4">
+                <div class="container py-4 is-fluid">
 
                     <h1 class="title is-1">
                         <?php echo ($post && $post->post_title ? $post->post_title : 'Formulário de Registro'); ?>
@@ -227,7 +227,7 @@ class MUSEUSBR_Registro_Form_Page {
                                                 <span>Museu cadastrado</span>
                                             </label>
                                             <div class="control">
-                                                <select required name="registro_museu_id" id="registro_museu_id" class="select" <?php echo ( !$is_editable ? 'disabled' : ''); ?>>
+                                                <select <?php echo $post_status_slug !== 'auto-draft' ? 'required' : ''; ?> name="registro_museu_id" id="registro_museu_id" class="select" <?php echo ( !$is_editable ? 'disabled' : ''); ?>>
                                                     <option value="" selected="<?php echo ($selected_museu_id ? 'false' : 'true'); ?>">Selecione um museu cadastrado</option>
                                                     <?php
                                                     $museus = museusbr_get_meus_museus_cadastrados(); // Função para obter a lista de museus da coleção do Tainacan
@@ -241,10 +241,16 @@ class MUSEUSBR_Registro_Form_Page {
                                         </div>
                                     <?php endif; ?>
                                     <div class="field">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="aderir_sbm" value="1" <?php checked(get_post_meta($post_id, 'aderir_sbm', true), 1); ?>  <?php echo ( !$is_editable ? 'disabled' : ''); ?>>
-                                            Deseja aderir ao Sistema Brasileiro de Museus?
+                                        <label class="label" for="aderir_sbm">
+                                            Deseja aderir ao Sistema Brasileiro de Museus? *
                                         </label>
+                                        <div class="control">
+                                            <select name="aderir_sbm" id="aderir_sbm" <?php echo $post_status_slug !== 'auto-draft' ? 'required' : ''; ?> <?php echo ( !$is_editable ? 'disabled' : ''); ?>>
+                                                <option value="" <?php selected(get_post_meta($post_id, 'aderir_sbm', true), ''); ?>>Selecione uma opção</option>
+                                                <option value="sim" <?php selected(get_post_meta($post_id, 'aderir_sbm', true), 'sim'); ?>>Sim</option>
+                                                <option value="não" <?php selected(get_post_meta($post_id, 'aderir_sbm', true), 'não'); ?>>Não</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -253,12 +259,12 @@ class MUSEUSBR_Registro_Form_Page {
                                     <?php if ( current_user_can('publish_posts', $post_id) ) : ?>
                                         <div class="ml-auto field is-grouped">
                                             <?php if (current_user_can('delete_posts', $post_id)) : ?>
-                                                <input type="submit" name="save_trash" class="button is-fullwidth is-danger is-light" value="<?php echo ($post_status_slug === 'trash' ? 'Manter como rejeitado' : 'Definir como rejeitado'); ?>">
+                                                <input type="submit" name="save_trash" class="button is-fullwidth is-danger is-light" value="<?php echo ($post_status_slug === 'trash' ? 'Manter como indeferido' : 'Definir como indeferido'); ?>">
                                             <?php endif; ?>
                                                 <input type="submit" name="save_pending" class="button is-fullwidth is-link is-light" value="<?php echo ($post_status_slug === 'pending' ? 'Manter como em análise' : 'Retornar para análise'); ?>">
                                             <?php if (current_user_can('publish_posts', $post_id)) : ?>
                                                 <input type="submit" name="save_private" class="button is-fullwidth is-warning is-light" value="<?php echo ($post_status_slug === 'private' ? 'Manter como pendente' : 'Definir como pendente'); ?>">
-                                                <input type="submit" name="save_publish" class="button is-fullwidth is-success has-text-white" value="<?php echo ($post_status_slug === 'publish' ? 'Salvar mantendo aprovação' : 'Aprovar registro'); ?>">
+                                                <input type="submit" name="save_publish" class="button is-fullwidth is-success has-text-white" value="<?php echo ($post_status_slug === 'publish' ? 'Salvar mantendo aprovação' : 'Aprovar Registro'); ?>">
                                             <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
@@ -290,7 +296,7 @@ class MUSEUSBR_Registro_Form_Page {
                             <div class="column is-8">
                               
                                 <div class="box">
-                                    <div class="columns">
+                                    <div class="columns is-multiline">
                                     <?php
 
                                     $dados_do_registro = array(
@@ -330,12 +336,19 @@ class MUSEUSBR_Registro_Form_Page {
                                                 <?php 
                                                     foreach ($secao_do_registro['fields'] as $slug => $label) {
                                                         $is_missing = $missing_required_fields && in_array($slug, $missing_required_fields);
-                                                        $this->render_file_input_field($slug, $label, $post_id, $is_editable, $is_missing);
+                                                        $this->render_file_input_field(
+                                                            $slug,
+                                                            $label,
+                                                            $post_id,
+                                                            $is_editable && $post->post_author == get_current_user_id(),
+                                                            $is_missing
+                                                        );
                                                     }
                                                 ?>
                                             </fieldset>
                                         </div>
                                     <?php endforeach; ?>
+
                                     </div>
                                 </div>
 
@@ -364,17 +377,46 @@ class MUSEUSBR_Registro_Form_Page {
                                         </div>
                                         <div class="column is-3">
                                             <div class="field px-0">
-                                                <label class="label">2: Assine o termo digitalmente usando uma ferramenta como a <a href="https://www.gov.br/governodigital/pt-br/identidade/assinatura-eletronica" name="Assinatura Eletrônica GovBR" target="_blank">Assinatura Eletrônica do GovBR</a>.</label>
+                                                <label class="label">2: Assine o termo digitalmente usando a <a href="https://www.gov.br/governodigital/pt-br/identidade/assinatura-eletronica" name="Assinatura Eletrônica GovBR" target="_blank">Assinatura Eletrônica do GovBR</a>.</label>
                                             </div>
                                         </div>
                                         <div class="column is-6">
                                             <?php
                                                 $is_missing = $missing_required_fields && in_array('termo_solicitacao', $missing_required_fields);
-                                                $this->render_file_input_field('termo_solicitacao', '3. Anexe o termo assinado digitalmente.', $post_id, $is_editable, $is_missing);
+                                                $this->render_file_input_field(
+                                                    'termo_solicitacao',
+                                                    '3. Anexe o termo assinado digitalmente.',
+                                                    $post_id,
+                                                    $is_editable && $post->post_author == get_current_user_id(),
+                                                    $is_missing
+                                                );
                                             ?>
                                         </div>
                                     </div>    
                                 </div>
+
+                                <div class="box">
+                                    <h2 class="title is-2 has-text-dark">
+                                        <span style="whitespace: nowrap;">Documentos complementares</span>
+                                    </h2>
+                                           
+                                    <p class="has-text-grey"><em>Caso tenha mais de um documento complementar, anexe-os aqui.</em></p>
+                                    <div class="columns is-multiline is-mobile">
+                                        <?php array_map(function($i) use($post_id, $is_editable, $post) { ?>
+                                            <div class="column is-5-desktop">
+                                                <?php
+                                                    $this->render_file_input_field(
+                                                        'documento_complementar_' . $i,
+                                                        'Documento complementar ' . $i,
+                                                        $post_id,
+                                                        $is_editable && $post->post_author == get_current_user_id(),
+                                                    );
+                                                ?>
+                                            </div>
+                                        <?php }, range(1, 5)); ?>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="column is-4">
@@ -403,7 +445,7 @@ class MUSEUSBR_Registro_Form_Page {
                                             <!-- Campos do formulário que variam a depender do status. -->
                                             <?php if ( current_user_can( 'delete_posts', $post_id ) && $post_status_slug === 'trash' ) : ?>
                                                 <div class="field">
-                                                    <label class="label" for="justificativa_rejeite_texto">Justificativa para rejeite</label>
+                                                    <label class="label" for="justificativa_rejeite_texto">Justificativa para indeferimento</label>
                                                     <div class="control">
                                                         <textarea id="justificativa_rejeite_texto" name="justificativa_rejeite_texto" class="textarea" rows="3"><?php echo esc_html( get_post_meta($post_id, 'justificativa_rejeite_texto', true) ); ?></textarea>
                                                     </div>
@@ -413,11 +455,11 @@ class MUSEUSBR_Registro_Form_Page {
                                             <?php endif;
                                                 $status_based_fields = array();
 
-                                                if ( current_user_can( 'publish_posts', $post_id ) && $post_status_slug === 'publish' )
+                                                if ( !MUSEUSBR_ENABLE_CERTIFICADO_REGISTRO && current_user_can( 'publish_posts', $post_id ) && $post_status_slug === 'publish' )
                                                     $status_based_fields['certificado_registro'] = 'Certificado de Registro';
 
                                                 if ( current_user_can( 'delete_posts', $post_id ) && $post_status_slug === 'trash' )
-                                                    $status_based_fields['justificativa_rejeite_arquivo'] = 'Justificativa para rejeite';
+                                                    $status_based_fields['justificativa_rejeite_arquivo'] = 'Parecer de indeferimento';
                                             
                                                 foreach ($status_based_fields as $slug => $label) {
                                                     $is_missing = $missing_required_fields && in_array($slug, $missing_required_fields);
@@ -471,13 +513,13 @@ class MUSEUSBR_Registro_Form_Page {
                                                 </ul>
                                             <?php else : ?>
                                                 <ul class="comment-list">
-                                                    <p id="empty-message-warning">Observações podem ser colocadas nesta área pela equipe que está analisando o pedido de registro.</p>
+                                                    <p id="empty-message-warning">Observações podem ser colocadas nesta área pela equipe que está analisando o pedido de Registro.</p>
                                                 </ul>
                                             <?php endif;
                                         } else {
                                             ?>
                                                 <ul class="comment-list">
-                                                    <p id="empty-message-warning">Observações podem ser colocadas nesta área pela equipe que está analisando o pedido de registro.</p>
+                                                    <p id="empty-message-warning">Observações podem ser colocadas nesta área pela equipe que está analisando o pedido de Registro.</p>
                                                 </ul>
                                             <?php 
                                         }
@@ -512,40 +554,6 @@ class MUSEUSBR_Registro_Form_Page {
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-
-                                <?php if ( museusbr_user_is_gestor_or_parceiro() ) : ?>
-
-                                    <div class="box content">
-                                        <h2 class="title is-2 has-text-dark">
-                                            <span class="icon">
-                                                <i>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
-                                                        <rect fill="none" height="24" width="24" />
-                                                        <path d="M11,7H2v2h9V7z M11,15H2v2h9V15z M16.34,11l-3.54-3.54l1.41-1.41l2.12,2.12l4.24-4.24L22,5.34L16.34,11z M16.34,19 l-3.54-3.54l1.41-1.41l2.12,2.12l4.24-4.24L22,13.34L16.34,19z" />
-                                                    </svg>
-                                                </i>
-                                            </span>
-                                            <span>Documentos necessários</span>
-
-                                        </h2>
-                                        <details class="ml-4 my-3">
-                                            <summary class="title is-6 mb-0">Documentos da instituição</summary>
-                                            <ul class="px-1 mb-4">
-                                                <li>CNPJ do museu ou da instituição mantenedora.</li>
-                                                <li>Instrumento de criação do museu: Documento oficial da instituição que comprove a criação e a vinculação do museu, como um ato ou instrumento de criação.</li>
-                                                <li>Termo de Solicitação de Registro: O termo deve estar assinado conforme a assinatura nos documentos de identificação enviados.</li>
-                                            </ul>
-                                        </details>
-                                        <details class="ml-4 my-3">
-                                            <summary class="title is-6 mb-0">Documentos do solicitante</summary>
-                                            <ul class="px-1">
-                                                <li>CPF e RG do responsável pelo museu.</li>
-                                                <li>Documento de comprovação de responsabilidade: termo de posse, ato de nomeação ou outro documento equivalente que confirme o vínculo do responsável ao museu. Caso não exista documento oficial que indique o responsável, será aceito um documento assinado pelo representante máximo da instituição mantenedora, declarando quem é o responsável pelo museu. Nesta situação, o representante máximo deverá enviar cópia de seu RG, CPF e documento oficial que comprove sua ocupação no cargo.</li>
-                                            </ul>
-                                        </details>
-                                    </div>
-
                                 <?php endif; ?>
 
                             </div>
@@ -589,8 +597,9 @@ class MUSEUSBR_Registro_Form_Page {
             if ( museusbr_user_is_gestor_or_parceiro() )
                 wp_redirect( admin_url('edit.php?post_type=' . museusbr_get_museus_collection_post_type()) );
             else
-                wp_redirect( admin_url('edit.php?post_type=registro&status=canceled') );
-            exit;
+                wp_redirect( admin_url('edit.php?post_type=registro') );
+
+            return;
         }
 
         // Se o post_id for 0, criar um novo post
@@ -613,8 +622,8 @@ class MUSEUSBR_Registro_Form_Page {
 
             // Atualizar o meta do post
             update_post_meta( $post_id, 'registro_museu_id', intval($_POST['registro_museu_id']) );
-            update_post_meta( $post_id, 'aderir_sbm', isset($_POST['aderir_sbm']) && $_POST['aderir_sbm'] ? 1 : 0 );
-            update_post_meta( $post_id, 'justificativa_rejeite_texto', sanitize_text_field($_POST['justificativa_rejeite_texto']) );
+            update_post_meta( $post_id, 'aderir_sbm', isset($_POST['aderir_sbm']) ? sanitize_text_field($_POST['aderir_sbm']) : '' );
+            update_post_meta( $post_id, 'justificativa_rejeite_texto', isset($_POST['justificativa_rejeite_texto']) ? sanitize_text_field($_POST['justificativa_rejeite_texto']) : '' );
 
             $attachment_fields = array(
                 'cnpj',
@@ -624,6 +633,11 @@ class MUSEUSBR_Registro_Form_Page {
                 'termo_solicitacao',
                 'certificado_registro',
                 'justificativa_rejeite_arquivo',
+                'documento_complementar_1',
+                'documento_complementar_2',
+                'documento_complementar_3',
+                'documento_complementar_4',
+                'documento_complementar_5'
             );
 
             foreach ($attachment_fields as $meta_key) {
@@ -646,6 +660,7 @@ class MUSEUSBR_Registro_Form_Page {
              */
             if ( $post_status === 'publish' || $post_status === 'pending' || $post_status == 'private' ) {
                 $required_fields = array(
+                    'aderir_sbm',
                     'registro_museu_id',
                     'cnpj',
                     'instrumento_criacao',
@@ -675,7 +690,7 @@ class MUSEUSBR_Registro_Form_Page {
         }
 
         if ( museusbr_user_is_gestor_or_parceiro() )
-            wp_redirect(admin_url('edit.php?post_type=' . museusbr_get_museus_collection_post_type()));
+            wp_redirect(admin_url( 'admin.php?page=museu&post=' . $_POST['registro_museu_id'] ));
         else
             wp_redirect(admin_url('admin.php?page=registro&post=' . $post_id));
 
@@ -727,7 +742,7 @@ class MUSEUSBR_Registro_Form_Page {
      */
     function render_file_input_field($slug, $label, $post_id, $is_editable = false, $is_missing = false) {
         $valor = esc_attr( get_post_meta($post_id, $slug, true) );
-        $is_required = ( $slug !== 'justificativa_rejeite_arquivo' && $slug !== 'certificado_registro' );
+        $is_required = ( $slug !== 'justificativa_rejeite_arquivo' && $slug !== 'certificado_registro' && !str_contains($slug, 'documento_complementar_') );
     ?>
         <div class="field">
             <label class="label <?php echo ($is_missing ? 'might-have-text-warning' : ''); ?>">
@@ -813,10 +828,17 @@ class MUSEUSBR_Registro_Form_Page {
                                     </span>
                                 </label>
                             </div>
+                        <?php else : ?>
+                            <p class="help"><em>Nenhum arquivo enviado ainda.</em></p>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
+            <?php if ( $slug === 'instrumento_criacao' ) : ?>
+                <p class="help">Instrumento de criação do museu: Documento oficial da instituição que comprove a criação e a vinculação do museu, como um ato ou instrumento de criação.</p>
+            <?php elseif ( $slug === 'documentos_identidade' ) : ?>
+                <p class="help">Documento de comprovação de responsabilidade: termo de posse, ato de nomeação ou outro documento equivalente que confirme o vínculo do responsável ao museu. Caso não exista documento oficial que indique o responsável, será aceito um documento assinado pelo representante máximo da instituição mantenedora, declarando quem é o responsável pelo museu. Nesta situação, o representante máximo deverá enviar cópia de seu RG, CPF e documento oficial que comprove sua ocupação no cargo.</p>
+            <?php endif; ?>
         </div>
     <?php
     }
@@ -919,24 +941,34 @@ class MUSEUSBR_Registro_Form_Page {
                 'content' => get_comment_text($comment),
             ));
         } else {
-            wp_send_json_error(array('message' => 'Erro ao salvar o comentário.'));
+            wp_send_json_error(array('message' => 'Erro ao salvar a observação.'));
         }
     }
 
     /**
-     * Toda vez que o status é atualizado, criamos um comentário.
+     * Toda vez que o status é atualizado, criamos um comentário
+     * para guardar como log e enviamos um email para o autor do registro
      *
      * @param string  $new_status Novo status.
      * @param string  $old_status Status anterior.
      * @param WP_Post $post       Objeto de post.
      */
-    function update_registro_logs( $new_status, $old_status, $post ) {
+    function update_registro_logs_and_send_email( $new_status, $old_status, $post ) {
+
+        // Esta action ocorre toda vez que um post é atualizado, mesmo que não mude o status
         if ( $old_status == $new_status || $post->post_type !== 'registro' )
             return;
 
+        // Criando o comentário de log
+        $comment_content = '';
+        if ( $old_status == 'new' )
+            $comment_content = 'Pedido de registro inicializado.';
+        else
+            $comment_content = sprintf( 'Status alterado de %s para %s.', $this->get_label_by_status($old_status), $this->get_label_by_status($new_status) );
+
         $comment_data = array(
             'comment_post_ID' => $post->ID,
-            'comment_content' => sprintf( 'Status alterado de %s para %s.', $old_status, $new_status ),
+            'comment_content' => $comment_content,
             'user_id' => get_current_user_id(),
             'comment_author' => wp_get_current_user()->display_name,
             'comment_author_email' => wp_get_current_user()->user_email,
@@ -948,7 +980,85 @@ class MUSEUSBR_Registro_Form_Page {
         $comment_id = wp_insert_comment($comment_data);
 
         if ( !$comment_id )
-            error_log( 'Erro ao salvar o comentário de registro.' );
+            error_log( 'Erro ao salvar uma observação sobre registro.' );       
+
+        // Enviando email para o autor do registro
+        $registro_museu_id = get_post_meta($post->ID, 'registro_museu_id', true);
+        
+        if ( !$registro_museu_id )
+            return;
+
+        add_filter('wp_mail_content_type', array($this,'museusbr_set_html_mail_content_type'));
+
+        $author = $post->post_author;
+
+        $author_name = get_the_author_meta('display_name', $author);
+        $author_email = get_the_author_meta('user_email', $author);
+
+        $to = $author_email ? sprintf('%s <%s>', $author_name, $author_email) : get_bloginfo('admin_email');
+
+        $link_to_museu_admin_page = admin_url( 'admin.php?page=museu&post=' . $registro_museu_id );  
+
+        $body = 'Prezado(a) Gestor(a),<br>';
+
+        switch( $new_status ) {
+            case 'publish':
+                $subject =  'MuseusBr: Registro aprovado';
+                $body .= '                    
+
+                    Informamos que a solicitação de Registro de Museu enviada por você foi <strong>aprovada</strong>. O Certificado de Registro já está disponível para consulta.<br>
+
+                    Para fazer o download ou imprimir o certificado, acesse o Painel da Plataforma MuseusBr <a target="_blank" name="MuseusBr: Página administrativa do museu" href="' . $link_to_museu_admin_page . '">' . $link_to_museu_admin_page . '</a><br>
+
+                    ';
+            break;
+            case 'trash':
+                $subject =  'MuseusBr: Registro indeferido';
+                $body = '
+
+                    Informamos que a sua solicitação de Registro de Museu foi <strong>indeferida</strong>.<br>
+
+                    Os motivos do indeferimento, bem como os procedimentos que poderão ser adotados, estão disponíveis na página do pedido. Para acessá-la, entre no Painel da Plataforma MuseusBr: <a target="_blank" name="MuseusBr: Página administrativa do museu" href="' . $link_to_museu_admin_page . '">' . $link_to_museu_admin_page . '</a><br>
+
+                    A equipe do Registro de Museus permanece à disposição para quaisquer esclarecimentos que se façam necessários. Clique aqui para acessar os contatos: <a href="https://cadastro.museus.gov.br/contato/">https://cadastro.museus.gov.br/contato/</a>.<br>
+                    
+                    ';
+            break;
+            case 'pending':
+                $subject =  'MuseusBr: Registro em análise';
+                $body .= '
+
+                    A solicitação de Registro de Museu enviada por você encontra-se <strong>em análise</strong>.<br>
+
+                    Para acompanhar o andamento do processo, acesse a página do pedido no Painel da Plataforma MuseusBr: <a target="_blank" name="MuseusBr: Página administrativa do museu" href="' . $link_to_museu_admin_page . '">' . $link_to_museu_admin_page . '</a><br>
+                    
+                    Em caso de dúvidas ou necessidade de esclarecimentos, nossa equipe está à disposição. Clique aqui para acessar os contatos: <a href="https://cadastro.museus.gov.br/contato/">https://cadastro.museus.gov.br/contato/</a>.<br>
+                    
+                    ';
+            break;
+            case 'private':
+                $subject =  'MuseusBr: Registro em análise';
+                $body .= '
+
+                    Uma solicitação de Registro de Museu enviada por você encontra-se <strong>pendente</strong> devido à ausência de documentos necessários à análise ou à identificação de inconsistências em algumas informações fornecidas.<br>
+
+                    Para verificar as observações feitas pela equipe e regularizar sua solicitação, acesse a página do pedido no Painel da Plataforma MuseusBr: <a target="_blank" name="MuseusBr: Página administrativa do museu" href="' . $link_to_museu_admin_page . '">' . $link_to_museu_admin_page . '</a><br>
+                    
+                    ';
+            break;
+        }
+        $body .= '
+                    Atenciosamente,<br>
+                    
+                    Equipe Registro de Museus - Plataforma MuseusBr';
+    
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        wp_mail($to, $subject, $body, $headers);
+
+        error_log('Email enviado para ' . $to . ' sobre o Registro #' . $post->ID . ' mudar de status de "' . $this->get_label_by_status($old_status) . '" para "' . $this->get_label_by_status($new_status) . '"');
+
+        remove_filter('wp_mail_content_type', array($this,'museusbr_set_html_mail_content_type'));
     }
 
     /**
@@ -1028,7 +1138,7 @@ class MUSEUSBR_Registro_Form_Page {
         $museu_id = get_post_meta($post_id, 'registro_museu_id', true);
 
         if ($museu_id) : $museu = get_post($museu_id); ?>
-            <p><strong><?php echo esc_html($museu->post_title); ?></strong></p>
+            <p><strong><a href="<?php echo get_permalink($museu_id); ?>" title="Ver página do museu no site"><?php echo esc_html($museu->post_title); ?></strong></a></p>
         <?php else : ?>
             <p><em>Nenhum museu cadastrado vinculado.</em></p>
         <?php endif;
@@ -1079,24 +1189,34 @@ class MUSEUSBR_Registro_Form_Page {
                             break;
 
                         case 'private':
-                            echo '<a class="wp-button button" style="white-space: wrap" href="' . admin_url('admin.php?page=registro&post=' . $registro->ID) . '">Atualizar pedido</a>';
+                            echo '<a class="wp-button button" style="white-space: wrap" href="' . admin_url('admin.php?page=registro&post=' . $registro->ID) . '">Verificar pendências</a>';
                             break;
 
                         case 'publish':
-                            $certificado_registro = get_post_meta($registro->ID, 'certificado_registro', true);
+                            if ( MUSEUSBR_ENABLE_CERTIFICADO_REGISTRO ) {
+                                \MUSEUSBR_Certificado_Registro_Page::render_certificado_button( $registro );
+                            } else {
+                                $certificado_registro = get_post_meta($registro->ID, 'certificado_registro', true);
 
-                            if ( $certificado_registro )
-                                echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Baixar certificado</a>';
-                            else
-                                echo '<p><em>Certificado ainda não disponível.</em></p>';
+                                if ( $certificado_registro )
+                                    echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Baixar certificado</a>';
+                                else
+                                    echo '<p><em>Certificado ainda não disponível.</em></p>';
+                            }
                             break;
                         case 'trash':
                             $justificativa_rejeite_arquivo = get_post_meta($registro->ID, 'justificativa_rejeite_arquivo', true);
+                            $justificativa_rejeite_texto = get_post_meta($registro->ID, 'justificativa_rejeite_texto', true);
+
+                            if ( !$justificativa_rejeite_arquivo && !$justificativa_rejeite_texto )
+                                echo '<p><em>justificativa de indeferimento ainda não disponível.</em></p>';
 
                             if ( $justificativa_rejeite_arquivo )
-                                echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Justificativa do refeite</a>';
-                            else
-                                echo '<p><em>Justificativa de arquivamento ainda não disponível.</em></p>';
+                                echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Parecer de indeferimento</a><br>';
+                            
+                            if ( $justificativa_rejeite_texto )
+                                echo '<p><strong>justificativa de indeferimento:</strong> ' . $justificativa_rejeite_texto . '</p>'; 
+
                             break;
                         default:
                             break;
@@ -1108,30 +1228,15 @@ class MUSEUSBR_Registro_Form_Page {
 
         } else {
 
-            $has_all_required_for_registro = $this->check_if_has_all_required_for_registro($post_id);
-
-            if ( $has_all_required_for_registro ) : ?>
+            if ( get_post_status($post_id) === 'publish' ) : ?>
                 <a class="wp-button button wp-button-has-icon" href="<?php echo admin_url('admin.php?page=registro&museu_id=' . $post_id); ?>">
                     <svg width="22" xmlns="http://www.w3.org/2000/svg" height="22" viewBox="1032 -188 22 22" fill="none">
                         <path d="M1034.359-186.821c0-.654-.526-1.179-1.18-1.179-.653 0-1.179.525-1.179 1.179v19.642c0 .654.526 1.179 1.179 1.179.654 0 1.18-.525 1.18-1.179v-16.293l.614-.118c.821-.157 1.548-.418 2.172-.643.182-.064.349-.128.511-.182.747-.256 1.494-.447 2.516-.447 1.258 0 2.113.295 3.12.653l.025.01c1.027.363 2.201.781 3.887.781 1.587 0 2.639-.334 4.447-.963v11.648l-.467.162c-2.039.708-2.712.943-3.98.943-1.263 0-2.118-.294-3.125-.653l-.03-.01c-1.022-.363-2.201-.776-3.882-.776-.825 0-1.523.099-2.157.246a1.183 1.183 0 0 0-.88 1.419 1.182 1.182 0 0 0 1.42.879 7.064 7.064 0 0 1 1.617-.181c1.258 0 2.113.294 3.12.653l.025.009c1.027.364 2.202.781 3.887.781 1.69 0 2.772-.378 4.806-1.09l1.199-.417.796-.27v-16.648l-1.548.536c-.477.162-.894.309-1.263.437-2.039.707-2.712.942-3.98.942-1.263 0-2.118-.294-3.125-.653l-.03-.009c-1.022-.364-2.201-.776-3.882-.776-1.366 0-2.383.27-3.273.569-.241.084-.457.162-.668.236-.585.211-1.081.388-1.705.506l-.167.029v-.952Z" style="fill: rgb(0, 0, 0); fill-opacity: 1;" class="fills"/>
                     </svg>
-                    <span>Iniciar registro</span>
+                    <span>Iniciar Registro</span>
                 </a>
             <?php else : ?>
-                <p><em>Para iniciar o registro, certifique-se de estão preenchidos:</em></p>
-                <details style="margin-top: -0.5rem;">
-                    <summary> Campos obrigatórios </summary>
-                    <ul style="list-style: disc; margin-left: 1rem; column-count: 2;">
-                        <li><em>Tipo do Museu</em></li>
-                        <li><em>E-mail para divulgação</em></li>
-                        <li><em>Telefone para divulgação</em></li>
-                        <li><em>Esfera administrativa</em></li>
-                        <li><em>CNPJ</em></li>
-                        <li><em>Temática do Museu</em></li>
-                        <li><em>Com relação à PROPRIEDADE do acervo</em></li>
-                        <li><em>Status do Museu</em></li>
-                    </ul>
-                </details>
+                <p><em>Para iniciar a solicitação de Registro, é necessário que todos os campos obrigatórios, identificados com asterisco (*), estejam preenchidos no Cadastro e este esteja aprovado.</em></p>
             <?php endif;
         
         }
@@ -1140,12 +1245,13 @@ class MUSEUSBR_Registro_Form_Page {
     }
 
     /**
-     * Remove a opção de edição rápida para o post type 'registro'
+     * Remove a opção de edição rápida e de enviar para a lixeira para o post type 'registro'
      */
     function remove_quick_edit($actions, $post) {
         if ($post->post_type == 'registro') {
             unset($actions['inline hide-if-no-js']);
             unset($actions['view']);
+            unset($actions['trash']);
         }
 
         return $actions;
@@ -1157,19 +1263,18 @@ class MUSEUSBR_Registro_Form_Page {
     function get_label_by_status($post_status_slug) {
         switch ($post_status_slug) {
             case 'auto-draft':
-                return 'Iniciado';
             case 'draft':
                 return 'Em preenchimento';
             case 'pending':
-                return 'Em análise';
+                return 'Enviado para análise';
             case 'private':
                 return 'Pendente';
             case 'publish':
                 return 'Aprovado';
             case 'trash':
-                return 'Rejeitado';
+                return 'Indeferido';
             default:
-                return 'Iniciado';
+                return 'Em preenchimento';
         }
     }
 
@@ -1201,7 +1306,7 @@ class MUSEUSBR_Registro_Form_Page {
         switch ($post_status_slug) {
             case 'auto-draft':
             case 'draft':
-                return 'rgb(115, 130, 130)';
+                return 'rgb(165, 153, 198)';
             case 'pending':
                 return 'rgb(0, 122, 184)';
             case 'private':
@@ -1213,44 +1318,6 @@ class MUSEUSBR_Registro_Form_Page {
             default:
                 return 'rgb(115, 130, 130)';
         }
-    }
-
-    /**
-     * Checa se todos os metadados esperados para o registro estão preenchidos
-     */
-    function check_if_has_all_required_for_registro($post_id) {
-        global $wpdb;
-
-        // Lista de IDs de metadados
-        $meta_keys = [
-            274,  // 1.2 - Tipo do Museu
-            1213, // 1.8 - E-mail para divulgação
-            1219, // 1.10 - Telefone
-            259,  // 4.1 - Esfera administrativa
-            1430, // 4.2 - CNPJ
-            279,  // 7.3 - Temática do Museu
-            2150, // 8.2 - Com relação à PROPRIEDADE do acervo
-            269,  // 9.1 Status do Museu    
-        ];
-
-        $meta_keys_placeholder = implode(',', array_fill(0, count($meta_keys), '%s'));
-        $query = $wpdb->prepare(
-            "SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d AND meta_key IN ($meta_keys_placeholder)",
-            array_merge([$post_id], $meta_keys)
-        );
-
-        $results = $wpdb->get_results($query, OBJECT_K);
-        
-        foreach ( $meta_keys as $meta_key ) {
-            if (
-                !isset( $results[$meta_key] ) ||
-                empty( $results[$meta_key]->meta_value ) &&
-                $results[$meta_key]->meta_value !== '0'
-            )
-                return false; // Retorna falso se qualquer valor for vazio ou não definido
-        }
-    
-        return true; // Todos os meta_keys possuem valores
     }
 
     /**
@@ -1275,7 +1342,7 @@ class MUSEUSBR_Registro_Form_Page {
         $registros_pendentes = get_posts($args_pendentes);
 
         /**
-         * Rejeita os registros Pendentes modificados há mais de 6 meses.
+         * Indefere os registros Pendentes modificados há mais de 6 meses.
          */
         if ($registros_pendentes) {
             foreach ($registros_pendentes as $registro_pendente) {
@@ -1283,7 +1350,7 @@ class MUSEUSBR_Registro_Form_Page {
                     'ID' => $registro_pendente->ID,
                     'post_status' => 'trash'
                 ));
-                error_log('Registro ' . $registro_pendente->ID . ' rejeitado por estar pendente há mais de 6 meses.');
+                error_log('Registro ' . $registro_pendente->ID . ' indeferido por estar pendente há mais de 6 meses.');
             }
         }
 
@@ -1304,7 +1371,7 @@ class MUSEUSBR_Registro_Form_Page {
         $registros_aprovados = get_posts($args_aprovados);
 
         /**
-         * Rejeita\ os registros Pendentes há mais de 6 meses.
+         * Define como Pendentes os aprovados há mais de 6 meses.
          */
         if ($registros_aprovados) {
             foreach ($registros_aprovados as $registro_aprovado) {
@@ -1326,7 +1393,7 @@ class MUSEUSBR_Registro_Form_Page {
                 $subject = 'MuseusBr: Registro retornado ao status pendente';
                 $body = 'Caro gestor,<br>
 
-                        O registro de seu museu foi classificado como "pendente" por não ter sido atualizado nos últimos 5 anos.<br>
+                        O Registro de seu museu foi classificado como "pendente" por não ter sido atualizado nos últimos 5 anos.<br>
                         Este é um procedimento padrão, visto que o Registro de Museus tem validade de 5 anos.<br>
                         
                         Assim, recomendamos a atualização periódica dos seus dados para garantir a validade do Registro. <br>
@@ -1351,34 +1418,12 @@ class MUSEUSBR_Registro_Form_Page {
         return 'text/html';
     }
 
-    /**
-     * Adiciona a ação de enviar emails para diferentes condições do registro
-     */
-    function private_registro_send_email($post_id, $post, $old_status){
+     // Remover ações em massa
+     function remove_bulk_actions($actions) {
+        if ( museusbr_user_is_gestor() )
+            return array();
 
-        add_filter('wp_mail_content_type', array($this,'museusbr_set_html_mail_content_type'));
-
-        $author = $post->post_author;
-
-        $author_name = get_the_author_meta('display_name', $author);
-        $author_email = get_the_author_meta('user_email', $author);
-
-        $to = $author_email ? sprintf('%s <%s>', $author_name, $author_email) : get_bloginfo('admin_email');
-
-        $subject =  'MuseusBr: Registro pendente de documentos';
-        $body = 'Caro gestor,<br>
-
-            Uma solicitação de Registro de seu museu encontra-se pendente por falta de documentos necessários à análise ou incorreção de algum dado.<br>
-            Visite a <a target="_blank" name="MuseusBr: Edição de Registro" href="' . get_edit_post_link($post_id) . '">a página do pedido</a> na Plataforma MuseusBr para ver as observações relacionadas feitas pela equipe e completar sua solicitação.<br>
-            
-            Atenciosamente, Equipe CPAI - MuseusBr';
-        $headers = array('Content-Type: text/html; charset=UTF-8');
-
-        wp_mail($to, $subject, $body, $headers);
-
-        error_log('Email enviado para ' . $to . ' sobre o registro ' . $post_id . ' estar pendente de documentos.');
-
-        remove_filter('wp_mail_content_type', array($this,'museusbr_set_html_mail_content_type'));
+        return $actions;
     }
 
 }
