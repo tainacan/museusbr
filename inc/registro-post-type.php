@@ -125,6 +125,7 @@ function museusbr_create_registro_post_type() {
             }
         ));
     }, range(1, 5));
+    register_taxonomy_for_object_type( 'tnc_tax_' . MUSEUSBR_ESTADO_DO_MUSEU_TAXONOMY_ID, 'registro' );
 
     add_registro_custom_capabilities();
     add_filter( 'map_meta_cap', 'registro_custom_capabilities', 10, 4 );
@@ -352,7 +353,7 @@ function registro_upload_dir($uploads) {
  */
 function museusbr_add_registros_download_button($where) {
     global $post_type_object;
-    if ($post_type_object->name === 'registro') {
+    if ( $post_type_object->name === 'registro' && !museusbr_user_is_gestor() ) {
         echo '<div class="alignright actions" style="margin-left: 1rem;"><a class="button action" href="' . esc_url(get_theme_mod('museusbr_lista_de_registro_metabase_link', 'https://metabase.tainacan.org/public/question/ffd491bf-ab44-4465-b972-9350807b33bc.csv')) . '" download target="_blank">Baixar lista de registros</a></div>';
     }
 }

@@ -38,6 +38,7 @@ class MUSEUSBR_Registro_Form_Page {
         add_filter( 'post_row_actions', array($this, 'remove_quick_edit'), 10, 2);
         add_action( 'transition_post_status', array($this, 'update_registro_logs_and_send_email'), 10, 3 );
         add_filter( 'bulk_actions-edit-registro', array($this, 'remove_bulk_actions'), 10, 1);
+        add_action( 'update_post_meta', array($this, 'sync_taxonomy_terms_on_museu_change'), 10, 4);
 
         if ( !wp_next_scheduled('museusbr_registro_cron_hook') )
             wp_schedule_event(time(), 'daily', 'museusbr_registro_cron_hook');
@@ -622,6 +623,7 @@ class MUSEUSBR_Registro_Form_Page {
 
             // Atualizar o meta do post
             update_post_meta( $post_id, 'registro_museu_id', intval($_POST['registro_museu_id']) );
+            
             update_post_meta( $post_id, 'aderir_sbm', isset($_POST['aderir_sbm']) ? sanitize_text_field($_POST['aderir_sbm']) : '' );
             update_post_meta( $post_id, 'justificativa_rejeite_texto', isset($_POST['justificativa_rejeite_texto']) ? sanitize_text_field($_POST['justificativa_rejeite_texto']) : '' );
 
@@ -1383,7 +1385,7 @@ class MUSEUSBR_Registro_Form_Page {
                 /**
                  * Envia um email notificando o author do pedido de registro
                  */
-                add_filter('wp_mail_content_type', array( $this, 'museusbr_set_html_mail_content_type' ));
+                add_filter('wp_mail_content_type', array( 'MUSEUSBR_Registro_Form_Page', 'museusbr_set_html_mail_content_type' ));
 
                 $author_name = get_the_author_meta('display_name', $registro_aprovado->post_author);
                 $author_email = get_the_author_meta('user_email', $registro_aprovado->post_author);
@@ -1404,7 +1406,7 @@ class MUSEUSBR_Registro_Form_Page {
 
                 wp_mail($to, $subject, $body, $headers);
 
-                remove_filter('wp_mail_content_type', array($this, 'museusbr_set_html_mail_content_type'));
+                remove_filter('wp_mail_content_type', array('MUSEUSBR_Registro_Form_Page', 'museusbr_set_html_mail_content_type'));
 
                 error_log('Registro ' . $registro_pendente->ID . ' retornado ao status pendente por não ser atualizado há mais de 6 meses.');
             }
@@ -1424,6 +1426,48 @@ class MUSEUSBR_Registro_Form_Page {
             return array();
 
         return $actions;
+    }
+
+    /**
+     * Sincroniza os termos de taxonomia do post museu para o post registro quando o registro_museu_id é alterado
+     */
+    public function sync_taxonomy_terms_on_museu_change($meta_id, $post_id, $meta_key, $meta_value) {
+        // Processa apenas se a chave meta for 'registro_museu_id'
+        if ($meta_key !== 'registro_museu_id') {
+            return;
+        }
+
+        // Processa apenas se o tipo de post for 'registro'
+        if (get_post_type($post_id) !== 'registro') {
+            return;
+        }
+
+        // Obtém o ID do post museu
+        $museu_id = intval($meta_value);
+        
+        if (!$museu_id) {
+            return;
+        }
+
+        // Obtém o nome da taxonomia
+        $taxonomy_name = 'tnc_tax_' . MUSEUSBR_ESTADO_DO_MUSEU_TAXONOMY_ID;
+
+        // Obtém os termos associados ao post museu
+        $museu_terms = wp_get_post_terms($museu_id, $taxonomy_name, array('fields' => 'ids'));
+
+        if (is_wp_error($museu_terms)) {
+            error_log('Erro ao obter os termos para o post museu ' . $museu_id . ': ' . $museu_terms->get_error_message());
+            return;
+        }
+
+        // Define os mesmos termos para o post registro
+        $result = wp_set_post_terms($post_id, $museu_terms, $taxonomy_name);
+
+        if ( is_wp_error($result) ) {
+            error_log('Erro ao definir os termos para o post registro ' . $post_id . ': ' . $result->get_error_message());
+        } else {
+            error_log('Sincronização bem-sucedida de ' . count($museu_terms) . ' termos de taxonomia do museu ' . $museu_id . ' para o registro ' . $post_id);
+        }
     }
 
 }

@@ -110,13 +110,13 @@ add_action( 'admin_menu', 'museusbr_museus_menu_page_removing' );
  * Lista somente os museus do usuário atual, se ele for gestor
  */
 function museusbr_pre_get_post( $query ) {
-    if ( !is_admin() )
+    if ( !is_admin() || !$query->is_main_query() )
         return;
 
-    if ( $query->is_main_query() && $query->query_vars['post_type'] == museusbr_get_museus_collection_post_type() ) {
-        if ( museusbr_user_is_gestor() )
+    if ( $query->query_vars['post_type'] == museusbr_get_museus_collection_post_type() || $query->query_vars['post_type'] == 'registro' ) {
+        if ( museusbr_user_is_gestor() ) {
 			$query->set( 'author', get_current_user_id() );
-		else if ( museusbr_user_is_parceiro() ) {
+		}else if ( museusbr_user_is_parceiro() ) {
 
 			// Descobre qual o estado do usuário parceiro atual
 			$user_id = get_current_user_id();
@@ -126,7 +126,7 @@ function museusbr_pre_get_post( $query ) {
 				return; 
 			}
 
-			// Obtem a informação doe stado do usuário, que está guardado com o user meta
+			// Obtem a informação do estado do usuário, que está guardado com o user meta
 			$user_meta = get_user_meta($user_id);
 			$user_estado = ( isset($user_meta['user_registration_estado']) && count($user_meta['user_registration_estado']) >= 0 ) ? $user_meta['user_registration_estado'][0] : NULL;
 
@@ -138,15 +138,27 @@ function museusbr_pre_get_post( $query ) {
 			}
 
 			// Pega o valor do metadado de ID 15202, que guarda o estado do museu
-			$tax_query = (array) $query->get('tax_query');
+			$tax_query = $query->get('tax_query');
 
+			// Se não há tax_query existente, cria um novo array
+			if (empty($tax_query)) {
+				$tax_query = array();
+			}
+
+			// Adiciona a nova query de taxonomia
 			$tax_query[] = array(
-				'taxonomy' => 'tnc_tax_1056',// 'tnc_tax_15202'
+				'taxonomy' => 'tnc_tax_' . MUSEUSBR_ESTADO_DO_MUSEU_TAXONOMY_ID,
 				'field' => 'slug',
 				'terms'   => $user_estado_term
-			);    
+			);
+
+			// Se há múltiplas queries de taxonomia, define a relação como AND
+			if (count($tax_query) > 1) {
+				$tax_query['relation'] = 'AND';
+			}
 			
-			$query->set('tax_query',$tax_query);
+			$query->set('tax_query', $tax_query);
+
 		}
     }
 }

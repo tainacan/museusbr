@@ -18,6 +18,9 @@ const MUSEUSBR_FORMULARIO_DE_VISITACAO_TITULO_METADATUM_ID = 219860;
 const MUSEUSBR_FORMULARIO_DE_VISITACAO_MUSEU_METADATUM_ID = 234544;
 const MUSEUSBR_FORMULARIO_DE_VISITACAO_ANO_METADATUM_ID = 235999;
 
+// Taxonomia de Estado do Museu que também é referência aos parceiros do IBRAM
+const MUSEUSBR_ESTADO_DO_MUSEU_TAXONOMY_ID = 1056;
+
 // Slug do papel de usuário "Gestor de Museu"
 const MUSEUSBR_GESTOR_DE_MUSEU_ROLE = 'tainacan-gestor-de-museu';
 const MUSEUSBR_PARCEIROS_DO_IBRAM_ROLE = 'tainacan-parceiros-do-ibram';
