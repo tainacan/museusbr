@@ -1,5 +1,7 @@
 <?php
 
+namespace MuseusBr;
+
 trait Singleton {
 
 	protected static $instance;

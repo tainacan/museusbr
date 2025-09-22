@@ -1,4 +1,4 @@
-const museuMuseusBRPerformWhenDocumentIsLoaded = callback => {
+const museuMuseusBrPerformWhenDocumentIsLoaded = callback => {
     if (/comp|inter|loaded/.test(document.readyState))
         callback();
     else
@@ -28,7 +28,7 @@ function defineAmountOfTabs() {
         sectionLabels.style.setProperty('--section-tabs-count', Math.round(totalOfTabbedSections/3));
 }
 
-museuMuseusBRPerformWhenDocumentIsLoaded(() => {
+museuMuseusBrPerformWhenDocumentIsLoaded(() => {
     hideUnecessaryGalleryNavIcon();
     defineAmountOfTabs();
 });

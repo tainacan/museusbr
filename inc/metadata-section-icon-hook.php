@@ -1,9 +1,11 @@
 <?php
 
+namespace MuseusBr;
+
 /**
  * Esta classe contém a lógica para adicionar um campo de ícone para as seções de metadados 
  */
-class MUSEUSBRMetadataSectionIconHook {
+class MetadataSectionIconHook {
 
 	use Singleton;
 
@@ -73,5 +75,5 @@ class MUSEUSBRMetadataSectionIconHook {
 	}
 }
 
-MUSEUSBRMetadataSectionIconHook::get_instance();
+MetadataSectionIconHook::get_instance();
 

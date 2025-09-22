@@ -309,6 +309,12 @@ function museusbr_options_panel($options) {
 }
 add_filter( 'blocksy_extensions_customizer_options', 'museusbr_options_panel', 10, 1 );
 
+/**
+ * Acrescenta opção de renderizar o documento em vez da imagem destacada
+ * no banner da página do museu e dos pontos de memória
+ *
+ * @return void
+ */
 function tainacan_blocksy_render_document_instead_of_featured_image() {
     $prefix = blocksy_manager()->screen->get_prefix();
 
@@ -326,6 +332,11 @@ function tainacan_blocksy_render_document_instead_of_featured_image() {
 }
 add_action( 'blocksy:hero:before', 'tainacan_blocksy_render_document_instead_of_featured_image');
 
+/**
+ * Acrescenta uma barra de busca na página do museu e dos pontos de memória
+ *
+ * @return void
+ */
 function museusbr_add_search_bar_on_title_banners() {
     echo do_shortcode( "[wp_reusable_render id='215351']" );
 }

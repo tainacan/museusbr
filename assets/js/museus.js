@@ -1,4 +1,4 @@
-const museusMuseusBRPerformWhenDocumentIsLoaded = callback => {
+const museusMuseusBrPerformWhenDocumentIsLoaded = callback => {
     if (/comp|inter|loaded/.test(document.readyState))
         callback();
     else
@@ -12,6 +12,6 @@ function changeItemsListLabels() {
         exposersButton.children[0].lastChild.innerText = 'Baixar'
 }
 
-museusMuseusBRPerformWhenDocumentIsLoaded(() => {
+museusMuseusBrPerformWhenDocumentIsLoaded(() => {
     document.addEventListener('tainacan-items-list-is-loading-items', changeItemsListLabels);
 });
