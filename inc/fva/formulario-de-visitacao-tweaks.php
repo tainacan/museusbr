@@ -93,7 +93,7 @@ add_action('tainacan-insert', 'museusbr_preset_formulario_de_visitacao', 10, 1);
 /**
  * Oculta alguns metadados do formulário de visitação
  */
-function iphan_customize_control_collection_css() {
+function museusbr_customize_collection_admin_css() {
 
     if (  !museusbr_user_is_gestor() ) {
         return;
@@ -105,12 +105,12 @@ function iphan_customize_control_collection_css() {
     $fva_ano_metadatum_id = museusbr_get_formulario_de_visitacao_ano_metadatum_id();
 	
 	$css = '
-    /* Hides elements not necessary for control collections inside the item edition modal */
     #collection-page-container[collection-id="' . $fva_collection_id . '"]>.tainacan-form>.columns>.column:first-of-type .tainacan-metadatum-id--' . $fva_titulo_metadatum_id . ' {
         display: none;
         visibility: hidden;
     }
     #collection-page-container[collection-id="' . $fva_collection_id . '"]>.tainacan-form>.columns>.column:first-of-type .tainacan-metadatum-id--' . $fva_museu_metadatum_id . ' .tabs,
+    #collection-page-container[collection-id="' . $fva_collection_id . '"]>.tainacan-form>.columns>.column:first-of-type .tainacan-metadatum-id--' . $fva_museu_metadatum_id . ' .relationship-value-button--edit,
     #collection-page-container[collection-id="' . $fva_collection_id . '"]>.tainacan-form>.columns>.column:first-of-type .tainacan-metadatum-id--' . $fva_museu_metadatum_id . ' .relationship-value-button--remove {
         display: none;
         visibility: hidden;
@@ -130,4 +130,4 @@ function iphan_customize_control_collection_css() {
 
     echo '<style type="text/css" id="tainacan-museusbr-fva-style">' . sprintf( $css ) . '</style>';
 }
-add_action('admin_head', 'iphan_customize_control_collection_css');
+add_action('admin_head', 'museusbr_customize_collection_admin_css');

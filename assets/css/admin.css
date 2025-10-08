@@ -195,9 +195,19 @@ div.wp-menu-image::before {
     --tainacan-primary: #f6f7f7;
     --wordpress-topbar-height: 32px;
 }
+.user-is-gestor-do-museu.tainacan-pages-container {
+    --tainacan-admin-background-color: var(--tainacan-white);
+    --tainacan-admin-background-image: unset;
+    --tainacan-admin-button-background-color: var(--tainacan-gray1);
+    --tainacan-admin-button-hover-background-color: color-mix(in srgb, var(--tainacan-gray2) 30%, transparent);
+    --tainacan-admin-button-active-background-color: color-mix(in srgb, var(--tainacan-gray2) 50%, transparent);
+    --tainacan-admin-navigation-sidebar-background-color: var(--tainacan-white);
+    --tainacan-page-container--inner-padding-y: 0px;
+    --tainacan-page-container--inner-padding-x: 0px;
+    --tainacan-page-container-box-shadow: none;
+}
 .user-is-gestor-do-museu #tainacan-admin-app {
     --tainacan-font-family: "Poppins", -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-    --tainacan-background-color: #f9f9f9;
     --tainacan-sidebar-width: 0px;
     --tainacan-one-column: 1.25rem;
     --tainacan-gray1: #fafafa;
@@ -226,9 +236,6 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu #tainacan-admin-app {
     background-color: transparent !important;
 }
-.user-is-gestor-do-museu #tainacan-admin-app #collection-page-container {
-    padding: 24px 0;
-}
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .tainacan-form > .columns .column {
     padding-left: 0px;
     padding-right: 0px;
@@ -255,10 +262,6 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     max-width: 100%;
     margin: 0 auto;
 }
-.user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title {
-    margin-top: 0;
-    margin-bottom: 24px;
-}
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title h1 {
     font-size: 32px;
     font-weight: 300;
@@ -274,6 +277,10 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu .page-container.item-creation-container .tainacan-page-title h1 > span:last-child {
     display: none;
     visibility: hidden;
+}
+.user-is-gestor-do-museu .tainacan-page-title.tainacan-page-title--sticky {
+    position: initial !important;
+    --tainacan-input-border-color: transparent;
 }
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title .breadcrumbs,
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-page-title hr,
@@ -308,7 +315,7 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 }
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .metadata-section-header {
     position: sticky;
-    top: -24px;
+    top: 0px;
     z-index: 999;
     background-color: var(--tainacan-white);
 }
@@ -365,6 +372,7 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     padding: 1rem 0px;
     border: none;
     font-size: 1.25rem;
+    background-color: transparent;
 }
 .user-is-gestor-do-museu #tainacan-admin-app  .document-field-placeholder button {
     width: 100%;
@@ -385,34 +393,6 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-last-active .b-radio.radio input[type="radio"]:not(:checked) + .check,
 .user-is-gestor-do-museu #tainacan-admin-app .tainacan-finder-columns-container .tainacan-li-checkbox-parent-active .b-radio.radio input[type="radio"]:not(checked) + .check {
     visibility: hidden;
-}
-.user-is-gestor-do-museu #tainacan-admin-app input.input,
-.user-is-gestor-do-museu #tainacan-admin-app .input,
-.user-is-gestor-do-museu #tainacan-admin-app textarea.textarea,
-.user-is-gestor-do-museu #tainacan-admin-app .textarea,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="color"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="date"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime-local"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="datetime"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="email"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="number"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="month"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="password"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="search"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="tel"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="text"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="time"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="url"].input,
-.user-is-gestor-do-museu #tainacan-admin-app input[type="week"].input,
-.user-is-gestor-do-museu #tainacan-admin-app .taginput .taginput-container.is-focusable,
-.user-is-gestor-do-museu #tainacan-admin-app .select select {
-    box-shadow: 0 0 0 transparent !important;
-    border-radius: 3px !important;
-    border: 1px solid var(--tainacan-input-border-color);
-    color: var(--tainacan-input-color);
-}
-.user-is-gestor-do-museu #tainacan-admin-app .taginput .taginput-container input {
-    height: calc(2.5em - 1px) !important;
 }
 .user-is-gestor-do-museu #tainacan-admin-app input.input:not(.is-danger):focus,
 .user-is-gestor-do-museu #tainacan-admin-app .input:not(.is-danger):focus,
@@ -461,12 +441,18 @@ body.user-is-gestor-do-museu.tainacan-admin-page #adminmenumain {
     background-color: var(--tainacan-primary) !important;
 }
 .user-is-gestor-do-museu #tainacan-admin-app #collection-page-container .footer {
-    position: absolute;
-    background-color: var(--tainacan-white);
-    top: calc(100vh - 60px - var(--wordpress-topbar-height));
     border: 1px solid var(--tainacan-gray2);
     box-shadow: 0 -1px 1px rgba(0,0,0,.075);
     border-radius: 10px 10px 0px 0px;
+}
+.user-is-gestor-do-museu #tainacan-admin-app #repository-container #collection-page-container .footer {
+    position: absolute;
+    width: calc(100% - (var(--tainacan-sidebar-width, 3.25em)/2));
+}
+.user-is-gestor-do-museu .page-container .footer::before,
+.user-is-gestor-do-museu .page-container .footer::after {
+    display: none;
+    visibility: hidden;
 }
 
 /* Nesta altura a barra do WordPress fica maior */

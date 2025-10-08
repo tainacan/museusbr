@@ -5,7 +5,7 @@
  * Ela contém a lógica para proteger o acesso aos arquivos, permitindo apenas
  * que o autor do post ou administradores possam baixar os arquivos.
  */
-require_once('../../../../wp-load.php');
+require_once('../../../../../wp-load.php');
 
 if (!is_user_logged_in()) {
     wp_redirect(home_url());

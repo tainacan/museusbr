@@ -152,6 +152,13 @@ function museusbr_options_panel($options) {
                         'design' => 'inline',
                         'sync' => ''
                     ],
+                    'museusbr_cadastro_descricao_texto' => [
+                        'label' => 'Descrição do cartão de Cadastro',
+                        'type' => 'textarea',
+                        'value' => 'Criado em 2006, no âmbito da Política Nacional de Museus, o Cadastro Nacional de Museus (CNM) reúne e sistematiza informações sobre os museus brasileiros. De caráter auto declaratório, seus dados são essenciais para a gestão, pesquisa e formulação e monitoramento de políticas públicas do setor museológico e da cultura.',
+                        'design' => 'block',
+                        'sync' => ''
+                    ],
                     'museusbr_certificado_cadastro_logo' => [
                         'label' => 'Logo do certificado de cadastro',
                         'type' => 'ct-image-uploader',
@@ -178,6 +185,13 @@ function museusbr_options_panel($options) {
                         'type' => 'text',
                         'value' => '',
                         'design' => 'inline',
+                        'sync' => ''
+                    ],
+                    'museusbr_registro_descricao_texto' => [
+                        'label' => 'Descrição do cartão de Registro',
+                        'type' => 'textarea',
+                        'value' => 'O Registro de Museus visa estimular a formalização dos museus, acompanhando suas dinâmicas de criação, fusão, extinção, incorporação e cisão. É obrigatório para todos os museus do Brasil, conforme o Estatuto de Museus e a legislação vigente. Por meio dele, os museus podem aderir ao Sistema Brasileiro de Museus (SBM) e fortalecem a Política Nacional de Museus',
+                        'design' => 'block',
                         'sync' => ''
                     ],
                     'museusbr_certificado_registro_regua_de_logos' => [
@@ -279,6 +293,13 @@ function museusbr_options_panel($options) {
                         'choices' => blocksy_ordered_keys(
                             $valores_ano_options
                         )
+                    ],
+                    'museusbr_fva_descricao_texto' => [
+                        'label' => 'Descrição do cartão de FVA',
+                        'type' => 'textarea',
+                        'value' => 'O Formulário de Visitação Anual (FVA) é o instrumento pelo qual os museus devem informar ao Ibram sua visitação anual. Ele gera dados essenciais para a criação de indicadores, planejamento e formulação de políticas públicas, contribuindo para o desenvolvimento do setor museológico no Brasil.',
+                        'design' => 'block',
+                        'sync' => ''
                     ],
                     blocksy_rand_md5() => [
                         'type' => 'ct-divider',

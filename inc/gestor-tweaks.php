@@ -101,6 +101,7 @@ add_filter('blocksy:account:modal:login:redirect_to', 'museusbr_museus_modal_log
 function museusbr_museus_menu_page_removing() {
     if ( museusbr_user_is_gestor_or_parceiro() ) {
         remove_menu_page( 'tainacan_admin' );
+		remove_menu_page( 'tainacan_dashboard' );
         remove_menu_page( 'upload.php' );
 	}
 }
@@ -269,10 +270,18 @@ add_filter( 'ngettext', 'museusbr_gestor_translate_words_array' );
 function museusbr_set_tainacan_admin_options($options) {
 	
 	if ( museusbr_user_is_gestor_or_parceiro() ) {
+		// Variáveis legadas, pré-1.0.0
 		$options['hideTainacanHeader'] = true;
 		$options['hidePrimaryMenu'] = true;
 		$options['hideRepositorySubheader'] = true;
 		$options['hideCollectionSubheader'] = true;
+
+		// Variáveis da 1.0.0
+		$options['hideBreadcrumbs'] = true;
+		$options['hideFullscreenTogglerButton'] = true;
+		$options['hideNavigationSidebar'] = true;
+
+		// Demais variáveis
 		$options['hideItemEditionCollectionName'] = true;
 		$options['hideItemEditionCommentsToggle'] = true;
 		$options['hideItemEditionCollapses'] = true;

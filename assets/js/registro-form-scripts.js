@@ -96,7 +96,7 @@ function mountMediaUploaders() {
                             linkButton.type = 'button';
                             linkButton.classList.add('file-preview-modal-trigger', 'button');
                             linkButton.setAttribute('data-target', 'file-preview-modal');
-                            linkButton.setAttribute('data-file-url', registro_script_settings.theme_uri + '/inc/registro-serve-file.php?file_id=' + attachment.id);
+                            linkButton.setAttribute('data-file-url', registro_script_settings.theme_uri + '/inc/registro/registro-serve-file.php?file_id=' + attachment.id);
                             linkButton.setAttribute('data-file-field', label);
                             linkButton.title = attachment.title && attachment.title.rendered ? attachment.title.rendered : attachment.source_url;
                             linkButton.innerHTML = `

@@ -755,7 +755,7 @@ class MUSEUSBR_Registro_Form_Page {
                 <div class="media">
                     <?php if ($valor) : ?>
                         <?php
-                        $attachment_url = add_query_arg('file_id', $valor, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php');
+                        $attachment_url = add_query_arg('file_id', $valor, get_stylesheet_directory_uri() . '/inc/registro/registro-serve-file.php');
                         $attachment_title = get_the_title($valor);
                         ?>
                         <div class="media-content">
@@ -1201,7 +1201,7 @@ class MUSEUSBR_Registro_Form_Page {
                                 $certificado_registro = get_post_meta($registro->ID, 'certificado_registro', true);
 
                                 if ( $certificado_registro )
-                                    echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Baixar certificado</a>';
+                                    echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $certificado_registro, get_stylesheet_directory_uri() . '/inc/registro/registro-serve-file.php') . '">Baixar certificado</a>';
                                 else
                                     echo '<p><em>Certificado ainda não disponível.</em></p>';
                             }
@@ -1214,7 +1214,7 @@ class MUSEUSBR_Registro_Form_Page {
                                 echo '<p><em>justificativa de indeferimento ainda não disponível.</em></p>';
 
                             if ( $justificativa_rejeite_arquivo )
-                                echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro-serve-file.php') . '">Parecer de indeferimento</a><br>';
+                                echo '<a class="wp-button button" style="white-space: wrap" download="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro/registro-serve-file.php') . '" href="' . add_query_arg('file_id', $justificativa_rejeite_arquivo, get_stylesheet_directory_uri() . '/inc/registro/registro-serve-file.php') . '">Parecer de indeferimento</a><br>';
                             
                             if ( $justificativa_rejeite_texto )
                                 echo '<p><strong>justificativa de indeferimento:</strong> ' . $justificativa_rejeite_texto . '</p>'; 

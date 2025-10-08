@@ -22,7 +22,9 @@ class MUSEUSBR_Certificado_Page {
         add_action( 'admin_print_styles-admin_page_certificado', array( $this, 'admin_print_certificado_custom_css' ) );
         add_filter( 'admin_title', array( $this, 'certificado_admin_title' ), 10, 2);
 
-        $this->tainacan_items_repository = \Tainacan\Repositories\Items::get_instance();
+        if ( class_exists( '\Tainacan\Repositories\Items' ) ) {
+            $this->tainacan_items_repository = \Tainacan\Repositories\Items::get_instance();
+        }
     }
 
     /**
