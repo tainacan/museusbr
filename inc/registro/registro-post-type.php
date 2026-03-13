@@ -351,10 +351,32 @@ function registro_upload_dir($uploads) {
 /**
  * Adiciona um botão extra a tela da lsita de registros
  */
-function museusbr_add_registros_download_button($where) {
+function museusbr_add_registros_download_button() {
     global $post_type_object;
     if ( $post_type_object->name === 'registro' && !museusbr_user_is_gestor() ) {
-        echo '<div class="alignright actions" style="margin-left: 1rem;"><a class="button action" href="' . esc_url(get_theme_mod('museusbr_lista_de_registro_metabase_link', 'https://metabase.tainacan.org/public/question/ffd491bf-ab44-4465-b972-9350807b33bc.csv')) . '" download target="_blank">Baixar lista de registros</a></div>';
+
+        if ( museusbr_user_is_parceiro() ) {
+
+            // Descobre qual o estado do usuário parceiro atual
+			$user_id = get_current_user_id();
+
+			if ( $user_id <= 0 )
+				return; 
+
+			// Obtem a informação do estado do usuário, que está guardado com o user meta
+			$user_meta = get_user_meta($user_id);
+			$user_estado = ( isset($user_meta['user_registration_estado']) && count($user_meta['user_registration_estado']) >= 0 ) ? $user_meta['user_registration_estado'][0] : NULL;
+
+			$user_estado_term = museusbr_get_estado_term_from_user_meta($user_estado);
+
+			if ( $user_estado_term === NULL )
+				return;
+        
+            echo '<div class="alignright actions" style="margin-left: 1rem;"><a class="button action" href="' . esc_url(museusbr_generate_metabase_iframe_url(get_theme_mod('museusbr_fva_metabase_question_registros_id', 41), array( 'filtro_registro_museu_estado' => $user_estado_term ), true)) . '" target="_blank">Lista de registros (' . strtoupper($user_estado_term) . ')</a></div>';
+
+        } else {
+            echo '<div class="alignright actions" style="margin-left: 1rem;"><a class="button action" href="' . esc_url(museusbr_generate_metabase_iframe_url(get_theme_mod('museusbr_fva_metabase_question_registros_id', 41), null, true)) . '" target="_blank">Lista completa de registros</a></div>';
+        }
     }
 }
 add_action('manage_posts_extra_tablenav', 'museusbr_add_registros_download_button');

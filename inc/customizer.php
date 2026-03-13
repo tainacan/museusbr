@@ -204,12 +204,13 @@ function museusbr_options_panel($options) {
                         'filledLabel' => __('Change Image', 'blocksy'),
                         'sync' => '',
                     ],
-                    'museusbr_lista_de_registro_metabase_link' => [
-                        'label' =>  'Link de download da lista de registros no Metabase',
+                    'museusbr_fva_metabase_question_registros_id' => [
+                        'label' =>  'ID da Pergunta Metabase com a lista de Registros',
                         'type' => 'text',
-                        'value' => 'https://metabase.tainacan.org/public/question/ffd491bf-ab44-4465-b972-9350807b33bc.csv',
+                        'value' => get_theme_mod('museusbr_fva_metabase_question_registros_id', 41),
+                        'view' => 'text',
                         'design' => 'inline',
-                        'sync' => ''
+                        'sync' => '',
                     ],
                     blocksy_rand_md5() => [
                         'type' => 'ct-divider',
