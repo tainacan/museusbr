@@ -4,7 +4,7 @@
  * Author: mateuswetah
  * Template: blocksy
  * Text Domain: museusbr
- * Version: 0.4.37
+ * Version: 0.4.38
  */
 
  /* Barra de busca dos banners */
@@ -78,24 +78,16 @@
 }
 
 /* Blocks style */
-.wp-block-group.is-style-museusbr-clickable-card:hover a,
-.wp-block-column.is-style-museusbr-clickable-card:hover a,
-.wp-block-columns.is-style-museusbr-clickable-card:hover a,
-.wp-block-group.is-style-museusbr-clickable-card:focus a,
-.wp-block-column.is-style-museusbr-clickable-card:focus a,
-.wp-block-columns.is-style-museusbr-clickable-card:focus a  {
-    z-index: 1;
-    position: relative;
-}
+
 .wp-block-column.is-style-museusbr-clickable-card,
 .wp-block-columns.is-style-museusbr-clickable-card,
 .wp-block-group.is-style-museusbr-clickable-card {
 	cursor: pointer;
 	position: relative;
 }
-.wp-block-column.is-style-museusbr-clickable-card::before,
-.wp-block-columns.is-style-museusbr-clickable-card::before,
-.wp-block-group.is-style-museusbr-clickable-card::before {
+.wp-block-column.is-style-museusbr-clickable-card a::before,
+.wp-block-columns.is-style-museusbr-clickable-card a::before,
+.wp-block-group.is-style-museusbr-clickable-card a::before {
 	content: "";
 	width: 100%;
 	height: 100%;
