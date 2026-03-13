@@ -114,11 +114,11 @@ class MUSEUSBR_Museu_Admin_Page {
                             <?php $this->museusbr_get_cadastro_card($post); ?>
                         </div>
 
-                        <?php if ( MUSEUSBR_ENABLE_REGISTRO ) : ?>
+                        <?php /* if ( MUSEUSBR_ENABLE_REGISTRO ) : ?>
                             <div class="column">
                                 <?php $this->museusbr_get_registro_card($post); ?>
                             </div>
-                        <?php endif; ?>
+                        <?php endif; */ ?>
 
                         <?php if ( MUSEUSBR_ENABLE_FORMULARIO_VISITACAO ) : ?>
                             <div class="column is-full">

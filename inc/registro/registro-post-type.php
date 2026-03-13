@@ -26,7 +26,7 @@ function museusbr_create_registro_post_type() {
             'publicly_queryable' => false,
             'show_in_admin_bar' => false,
             'show_in_rest' => true,
-            'show_in_menu' => 'edit.php?post_type=' . museusbr_get_museus_collection_post_type(),
+            'show_in_menu' => false,
             'show_in_nav_menus' => false,
             'has_archive' => false,
             'supports' => array('title', 'custom-fields', 'comments', 'author'),
